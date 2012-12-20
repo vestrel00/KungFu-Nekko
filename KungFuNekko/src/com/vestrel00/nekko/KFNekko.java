@@ -8,11 +8,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vestrel00.nekko.actors.Actor;
+import com.vestrel00.nekko.actors.Nekko;
+import com.vestrel00.nekko.actors.components.Location;
+import com.vestrel00.nekko.actors.states.CombatState;
+import com.vestrel00.nekko.actors.states.FaceState;
+import com.vestrel00.nekko.actors.states.HorizontalMotionState;
+import com.vestrel00.nekko.actors.states.StatusState;
+import com.vestrel00.nekko.actors.states.VerticalMotionState;
 import com.vestrel00.nekko.interf.Drawable;
 import com.vestrel00.nekko.interf.Updatable;
 import com.vestrel00.nekko.maps.Map;
 import com.vestrel00.nekko.maps.components.Background;
 import com.vestrel00.nekko.ui.HUD;
+import com.vestrel00.nekko.ui.components.HUDInputProcessor;
 
 public class KFNekko implements ApplicationListener {
 
@@ -27,6 +36,8 @@ public class KFNekko implements ApplicationListener {
 	public static Map map;
 	public static Resource resource;
 	public static HUD hud;
+	public static Array<Actor> allies, enemies;
+	public static Actor player;
 
 	public static final long UPS = 50L;
 	public static final long UPDATE_TIME = 1000000000 / UPS;
@@ -49,20 +60,33 @@ public class KFNekko implements ApplicationListener {
 		map = new Map();
 		camera = new Camera();
 		background = new Background(resource.atlas.findRegion("background"));
-
+		hud = new HUD(new HUDInputProcessor());
+		initPlayer();
 		initVars();
 		initArrays();
+	}
+
+	private void initPlayer() {
+		Location location = new Location(240.0f, 160.0f, 8.0f, 22.0f, 100.0f,
+				18.0f);
+		player = new Nekko(resource.atlas, location);
+		player.setState(FaceState.RIGHT, StatusState.ALIVE, CombatState.IDLE,
+				HorizontalMotionState.IDLE, VerticalMotionState.FALLING);
+		location.setActor(player);
+		camera.targetActor = player;
 	}
 
 	private void initVars() {
 		worldColor = new Color(0.7f, 0.7f, 0.7f, 1.0f);
 		targetWorldColor = new Color(worldColor);
 		colorSpeed = 0.01f;
-
-		hud = new HUD();
 	}
 
 	private void initArrays() {
+		enemies = new Array<Actor>();
+		allies = new Array<Actor>();
+		allies.add(player);
+
 		updatables = new Array<Updatable>();
 		updatables.add(camera);
 		updatables.add(hud);

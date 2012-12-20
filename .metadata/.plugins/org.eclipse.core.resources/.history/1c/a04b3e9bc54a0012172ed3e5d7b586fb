@@ -1,0 +1,9 @@
+package com.vestrel00.nekko.actors.states;
+
+public enum CombatState {
+	IDLE, // out of combat
+	// normal default attack
+	FASTSHOT, 
+	// double hit attacks 1 damage * 2
+	ONETWOCOMBO, LOWMIDDLEKICK,
+}

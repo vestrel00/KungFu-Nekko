@@ -1,0 +1,11 @@
+package com.vestrel00.nekko.actors.components;
+
+public class NekkoSprite extends Sprite {
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

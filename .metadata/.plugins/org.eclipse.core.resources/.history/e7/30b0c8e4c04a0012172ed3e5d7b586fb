@@ -1,0 +1,7 @@
+package com.vestrel00.nekko.interf;
+
+public class Touchable {
+	
+	public onTouchDown(float x, float y);
+
+}

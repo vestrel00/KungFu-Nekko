@@ -1,0 +1,19 @@
+package com.vestrel00.nekko.ui.components;
+
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+
+public class HUDPad {
+
+	private Array<Rectangle> baseRects, rects;
+	private Array<AtlasRegion> regions;
+	// screen rectangles
+	private Rectangle leftBase, rightBase, upBase, downBase, dPadBase,
+			jumpBase, attackBase, pauseBase, optionsBase, topLeftBase,
+			topRightBase;
+	// scene rectangles
+	private Rectangle left, right, up, down, dPad, jump, attack, pause,
+			options, topLeft, topRight;
+
+}

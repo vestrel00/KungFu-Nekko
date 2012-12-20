@@ -1,0 +1,32 @@
+package com.vestrel00.nekko.actors.components;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.vestrel00.nekko.actors.Actor;
+import com.vestrel00.nekko.actors.states.Visibility;
+import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.Updatable;
+
+public class Sprite implements Updatable, Drawable {
+
+	protected Actor actor;
+	protected AtlasRegion currentTexture;
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		if (actor.visibility == Visibility.VISIBLE) {
+			batch.setColor(Color.WHITE);
+			batch.draw(region, x, y, originX, originY, width, height, scaleX,
+					scaleY, rotation);
+
+		}
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

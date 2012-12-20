@@ -1,9 +1,0 @@
-package com.vestrel00.nekko;
-
-import com.vestrel00.nekko.interf.Updatable;
-
-public class Camera implements Updatable{
-	
-	public OrthogrographicCamera camera;
-
-}

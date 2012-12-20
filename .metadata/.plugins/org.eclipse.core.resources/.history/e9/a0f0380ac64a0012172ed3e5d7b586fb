@@ -1,0 +1,17 @@
+package com.vestrel00.nekko.actors;
+
+import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.Updatable;
+
+public abstract class Actor implements Updatable, Drawable {
+
+	public Sprite sprite;
+	public Location location;
+
+	public FaceState faceState;
+	public StatusState statusState;
+	public CombatState combatState;
+	public HorizontalMotionState horizontalMotionState;
+	public VerticalMotionState verticalMotionState;
+
+}

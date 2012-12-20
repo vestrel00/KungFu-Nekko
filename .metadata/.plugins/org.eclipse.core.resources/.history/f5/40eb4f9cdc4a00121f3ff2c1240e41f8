@@ -1,0 +1,23 @@
+package com.vestrel00.nekko.actors.components;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.Updatable;
+
+public class Sprite implements Updatable, Drawable {
+	
+	protected Actor actor;
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

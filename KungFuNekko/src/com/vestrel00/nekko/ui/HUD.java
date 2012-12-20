@@ -1,5 +1,6 @@
 package com.vestrel00.nekko.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -7,19 +8,25 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Disposable;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.Touchable;
 import com.vestrel00.nekko.interf.Updatable;
+import com.vestrel00.nekko.ui.components.HUDInputProcessor;
+import com.vestrel00.nekko.ui.components.HUDPad;
 
-public class HUD implements Updatable, Drawable, Disposable {
+public class HUD implements Updatable, Drawable, Disposable, Touchable {
 
 	private ShapeRenderer shape;
+	private HUDPad pad;
 
-	public HUD() {
+	public HUD(HUDInputProcessor processor) {
 		shape = new ShapeRenderer();
+		pad = new HUDPad();
+		Gdx.input.setInputProcessor(processor);
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		pad.update();
 
 	}
 
@@ -47,11 +54,20 @@ public class HUD implements Updatable, Drawable, Disposable {
 		shape.filledCircle(KFNekko.camera.rect.x + 90.0f,
 				KFNekko.camera.rect.y, 100.0f);
 		shape.end();
+
+		batch.begin();
+		pad.draw(batch);
+		batch.end();
 	}
 
 	@Override
 	public void dispose() {
 		shape.dispose();
+	}
+
+	@Override
+	public boolean onTouchDown(float x, float y) {
+		return pad.onTouchDown(x, y);
 	}
 
 }

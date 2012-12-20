@@ -1,0 +1,53 @@
+package com.vestrel00.nekko.ui.components;
+
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+import com.vestrel00.nekko.KFNekko;
+
+public class HUDPad {
+
+	private Array<Rectangle> baseRects, rects;
+	private Array<AtlasRegion> regions;
+	// screen rectangles
+	private Rectangle leftBase, rightBase, upBase, downBase, dPadBase,
+			jumpBase, attackBase, pauseBase, optionsBase, topLeftBase,
+			topRightBase;
+	// scene rectangles
+	private Rectangle left, right, up, down, dPad, jump, attack, pause,
+			options, topLeft, topRight;
+	private AtlasRegion dPadRegion, topRightRegion, topLeftRegion,
+			attackRegion, jumpRegion, pauseRegion, optionsRegion;
+
+	public HUDPad() {
+
+		initRegions();
+		initRects();
+	}
+
+	private void initRegions() {
+		topLeftRegion = KFNekko.resource.atlas.findRegion("topLeftCorner");
+		topRightRegion = KFNekko.resource.atlas.findRegion("topRightCorner");
+		dPadRegion = KFNekko.resource.atlas.findRegion("dPad");
+		jumpRegion = KFNekko.resource.atlas.findRegion("jump");
+		attackRegion = KFNekko.resource.atlas.findRegion("attack");
+		pauseRegion = KFNekko.resource.atlas.findRegion("pause");
+		optionsRegion = KFNekko.resource.atlas.findRegion("options");
+
+		regions = new Array<AtlasRegion>();
+		regions.add(topLeftRegion);
+		regions.add(topRightRegion);
+		regions.add(dPadRegion);
+		regions.add(jumpRegion);
+		regions.add(attackRegion);
+		regions.add(pauseRegion);
+		regions.add(optionsRegion);
+
+	}
+
+	private void initRects() {
+		// SCREEN RECTS
+		leftBase = new Rectangle(22.0f, 8.0f, (float))
+	}
+
+}
