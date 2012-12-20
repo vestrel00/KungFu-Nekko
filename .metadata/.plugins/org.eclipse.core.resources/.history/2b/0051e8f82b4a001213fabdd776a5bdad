@@ -1,0 +1,15 @@
+package com.vestrel00.nekko;
+
+import com.badlogic.gdx.Gdx;
+
+public class Settings {
+
+	public float viewWidth, viewHeight, viewWidthHalf, viewHeightHalf,
+			viewWidthQuarter, viewHeightQuarter;
+
+	public Settings() {
+		Gdx.input.setCatchBackKey(false);
+		Gdx.input.setCatchMenuKey(false);
+	}
+
+}

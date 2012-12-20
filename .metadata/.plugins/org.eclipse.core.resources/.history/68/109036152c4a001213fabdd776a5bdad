@@ -1,0 +1,20 @@
+package com.vestrel00.nekko;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+
+public class Settings {
+	
+	public Preferences prefs = Gdx.app.getPreferences("Nekko Settings");
+
+	public float viewWidth, viewHeight, viewWidthHalf, viewHeightHalf,
+			viewWidthQuarter, viewHeightQuarter;
+
+	public Settings() {
+		Gdx.input.setCatchBackKey(false);
+		Gdx.input.setCatchMenuKey(false);
+		
+		viewWidth = 480
+	}
+
+}

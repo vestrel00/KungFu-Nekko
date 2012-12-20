@@ -1,0 +1,16 @@
+package com.vestrel00.nekko;
+
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.vestrel00.nekko.interf.Updatable;
+
+public class Camera implements Updatable{
+	
+	public OrthographicCamera camera;
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

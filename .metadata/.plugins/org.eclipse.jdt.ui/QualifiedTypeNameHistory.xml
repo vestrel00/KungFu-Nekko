@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.SpriteBatch"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.OrthographicCamera"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.Preferences"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.math.Rectangle"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.maps.components.Background"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.KFNekko"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Updatable"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Drawable"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.maps.Map"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.utils.Disposable"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.TextureAtlas"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
+</qualifiedTypeNameHistroy>

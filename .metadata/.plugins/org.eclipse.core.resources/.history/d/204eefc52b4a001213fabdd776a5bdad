@@ -1,0 +1,7 @@
+package com.vestrel00.nekko;
+
+public class Settings {
+	
+	public float viewWidth, viewHeight, viewWidthHalf, viewHeightHalf, viewWidthQuarter, viewHeightQuarter;
+
+}
