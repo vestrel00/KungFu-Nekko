@@ -5,12 +5,19 @@
 <fullyQualifiedTypeName name="com.badlogic.gdx.Preferences"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.math.Rectangle"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.maps.components.Background"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.KFNekko"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Updatable"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Drawable"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.maps.Map"/>
-<fullyQualifiedTypeName name="com.badlogic.gdx.utils.Disposable"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.TextureAtlas"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.utils.TimeUtils"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.utils.Array"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Updatable"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Drawable"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.utils.Disposable"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.glutils.ShapeRenderer"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.KFNekko"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Color"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.ui.HUD"/>
 </qualifiedTypeNameHistroy>

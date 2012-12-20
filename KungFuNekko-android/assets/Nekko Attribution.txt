@@ -1,0 +1,26 @@
+KungFu Nekko Assets
+
+------------------------------------------------------------------------------------------------
+Assets taken from Dogchicken Under CC-BY 3.0 License:
+-----------------------------------------------------------------------------------------------
+"Flying Tongue Monster Sprite Sheet"
+"Cute Monster Sprite Sheet"
+"Skull Monster Sprite Sheet"
+http://opengameart.org/users/dogchicken
+
+------------------------------------------------------------------------------------------------
+Assets taken from Buch Under CC-BY 3.0 License:
+-----------------------------------------------------------------------------------------------
+"Minimal sidescroller tileset"
+http://opengameart.org/content/minimal-sidescroller-tileset
+
+------------------------------------------------------------------------------------------------
+Assets taken from RedShrike Under CC-BY 3.0 License:
+-----------------------------------------------------------------------------------------------
+Effects from the USF sheets
+http://opengameart.org/users/redshrike
+
+------------------------------------------------------------------------------------------------
+Assets taken Under CC0 License:
+-----------------------------------------------------------------------------------------------
+http://opengameart.org/content/on-screen-controller-kit

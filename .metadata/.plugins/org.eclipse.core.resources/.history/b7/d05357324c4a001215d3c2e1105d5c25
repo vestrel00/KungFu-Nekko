@@ -1,0 +1,34 @@
+package com.vestrel00.nekko.ui;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Disposable;
+import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.Updatable;
+
+public class HUD implements Updatable, Drawable, Disposable {
+
+	private ShapeRenderer shape;
+
+	public HUD() {
+
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

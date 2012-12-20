@@ -14,7 +14,7 @@ public class Background implements Updatable, Drawable {
 	public Background(AtlasRegion background) {
 		this.background = background;
 		// the height of the bottom hud cover
-		yOffset = KFNekko.settings.viewHeight * 0.2f;
+		yOffset = KFNekko.settings.viewHeight * 0.1f;
 		// calculate the amount of unseen space in the texture
 		maxXOffset = (float) background.originalWidth
 				- KFNekko.settings.viewWidth;
