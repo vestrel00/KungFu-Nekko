@@ -63,4 +63,12 @@ public abstract class Actor implements Updatable, Drawable {
 		// TODO
 	}
 
+	public void onDeactivateCombat() {
+		combatState = CombatState.IDLE;
+	}
+
+	public void setCombatState(CombatState combatState) {
+		this.combatState = combatState;
+	}
+
 }

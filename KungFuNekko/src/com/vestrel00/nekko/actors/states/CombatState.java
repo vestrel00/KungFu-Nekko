@@ -11,7 +11,7 @@ public enum CombatState {
 	// aoe attacks 1 damage
 	TWOSIDEDATTACK,
 	// aoe power attacks 2 damage
-	ROUNDCKICK, DOWNWARDKICK, HIGHKICK,
+	ROUNDKICK, DOWNWARDKICK, HIGHKICK,
 	// ultimate attack aoe 3 damage
 	SUPERUPPERCUT,
 	// jump attack 1 damage

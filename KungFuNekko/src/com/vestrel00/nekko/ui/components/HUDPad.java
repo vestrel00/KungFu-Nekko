@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.vestrel00.nekko.KFNekko;
+import com.vestrel00.nekko.actors.Nekko;
 import com.vestrel00.nekko.interf.Drawable;
 import com.vestrel00.nekko.interf.Touchable;
 import com.vestrel00.nekko.interf.Updatable;
@@ -24,8 +25,12 @@ public class HUDPad implements Updatable, Drawable, Touchable {
 	private AtlasRegion dPadRegion, topRightRegion, topLeftRegion,
 			attackRegion, jumpRegion, pauseRegion, optionsRegion;
 
-	public HUDPad() {
+	private Nekko player;
+	private HUDInputProcessor processor;
 
+	public HUDPad(Nekko player, HUDInputProcessor processor) {
+		this.player = player;
+		this.processor = processor;
 		initRegions();
 		initRects();
 	}
@@ -148,22 +153,24 @@ public class HUDPad implements Updatable, Drawable, Touchable {
 	@Override
 	public boolean onTouchDown(float x, float y) {
 		if (left.contains(x, y)) {
-			// TODO
+			processor.attackManager.input(ComboAttackManager.INPUT_LEFT);
 			return true;
-		} else if (left.contains(x, y)) {
-			// TODO
+		} else if (right.contains(x, y)) {
+			processor.attackManager.input(ComboAttackManager.INPUT_RIGHT);
 			return true;
-		} else if (left.contains(x, y)) {
-			// TODO
+		} else if (up.contains(x, y)) {
+			processor.attackManager.input(ComboAttackManager.INPUT_UP);
 			return true;
-		} else if (left.contains(x, y)) {
-			// TODO
+		} else if (down.contains(x, y)) {
+			processor.attackManager.input(ComboAttackManager.INPUT_DOWN);
 			return true;
-		} else if (left.contains(x, y)) {
-			// TODO
+		} else if (jump.contains(x, y)) {
+			processor.attackManager.input(ComboAttackManager.INPUT_JUMP);
+			player.jump();
 			return true;
-		} else if (left.contains(x, y)) {
-			// TODO
+		} else if (attack.contains(x, y)) {
+			player.setCombatState(processor.attackManager
+					.input(ComboAttackManager.INPUT_ATTACK));
 			return true;
 		} else
 			return false;

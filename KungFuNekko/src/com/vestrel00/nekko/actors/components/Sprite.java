@@ -3,6 +3,7 @@ package com.vestrel00.nekko.actors.components;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.Actor;
 import com.vestrel00.nekko.actors.states.Visibility;
 import com.vestrel00.nekko.interf.Drawable;
@@ -29,7 +30,7 @@ public abstract class Sprite implements Updatable, Drawable {
 					actor.location.rect.height * 0.5f,
 					actor.location.rect.width, actor.location.rect.height,
 					xScale, 1.0f, 0.0f);
-
+			batch.setColor(KFNekko.worldColor);
 		}
 	}
 

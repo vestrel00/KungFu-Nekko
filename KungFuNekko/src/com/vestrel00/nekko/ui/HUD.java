@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Disposable;
 import com.vestrel00.nekko.KFNekko;
+import com.vestrel00.nekko.actors.Nekko;
 import com.vestrel00.nekko.interf.Drawable;
 import com.vestrel00.nekko.interf.Touchable;
 import com.vestrel00.nekko.interf.Updatable;
@@ -18,9 +19,9 @@ public class HUD implements Updatable, Drawable, Disposable, Touchable {
 	private ShapeRenderer shape;
 	private HUDPad pad;
 
-	public HUD(HUDInputProcessor processor) {
+	public HUD(Nekko player, HUDInputProcessor processor) {
 		shape = new ShapeRenderer();
-		pad = new HUDPad();
+		pad = new HUDPad(player, processor);
 		Gdx.input.setInputProcessor(processor);
 	}
 

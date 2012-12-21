@@ -1,5 +1,5 @@
 content_assist_disabled_computers=org.eclipse.jdt.ui.javaAllProposalCategory\u0000org.eclipse.jdt.ui.javaNoTypeProposalCategory\u0000org.eclipse.jdt.ui.textProposalCategory\u0000org.eclipse.jdt.ui.javaTypeProposalCategory\u0000
-content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="com.badlogic.gdx.graphics.Color"><rhs name\="com.badlogic.gdx.graphics.Color"/></lhs><lhs name\="java.lang.Enum"><rhs name\="com.badlogic.gdx.graphics.glutils.ShapeRenderer$ShapeType"/><rhs name\="com.vestrel00.nekko.actors.states.Visibility"/><rhs name\="com.vestrel00.nekko.actors.states.FaceState"/><rhs name\="com.vestrel00.nekko.actors.states.StatusState"/><rhs name\="com.vestrel00.nekko.actors.states.CombatState"/><rhs name\="com.vestrel00.nekko.actors.states.HorizontalMotionState"/><rhs name\="com.vestrel00.nekko.actors.states.VerticalMotionState"/></lhs><lhs name\="com.vestrel00.nekko.actors.states.Visibility"><rhs name\="com.vestrel00.nekko.actors.states.Visibility"/></lhs><lhs name\="com.vestrel00.nekko.actors.states.StatusState"><rhs name\="com.vestrel00.nekko.actors.states.StatusState"/></lhs><lhs name\="com.vestrel00.nekko.actors.states.FaceState"><rhs name\="com.vestrel00.nekko.actors.states.FaceState"/></lhs><lhs name\="com.vestrel00.nekko.actors.states.CombatState"><rhs name\="com.vestrel00.nekko.actors.states.CombatState"/></lhs><lhs name\="com.vestrel00.nekko.actors.states.HorizontalMotionState"><rhs name\="com.vestrel00.nekko.actors.states.HorizontalMotionState"/></lhs><lhs name\="com.vestrel00.nekko.actors.states.VerticalMotionState"><rhs name\="com.vestrel00.nekko.actors.states.VerticalMotionState"/></lhs></history>
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="com.badlogic.gdx.graphics.Color"><rhs name\="com.badlogic.gdx.graphics.Color"/></lhs><lhs name\="java.lang.Enum"><rhs name\="com.badlogic.gdx.graphics.glutils.ShapeRenderer$ShapeType"/><rhs name\="com.vestrel00.nekko.actors.states.Visibility"/><rhs name\="com.vestrel00.nekko.actors.states.StatusState"/><rhs name\="com.vestrel00.nekko.actors.states.VerticalMotionState"/><rhs name\="com.vestrel00.nekko.actors.states.CombatState"/><rhs name\="com.vestrel00.nekko.actors.states.FaceState"/><rhs name\="com.vestrel00.nekko.actors.states.HorizontalMotionState"/></lhs><lhs name\="com.vestrel00.nekko.actors.states.Visibility"><rhs name\="com.vestrel00.nekko.actors.states.Visibility"/></lhs><lhs name\="com.vestrel00.nekko.actors.states.StatusState"><rhs name\="com.vestrel00.nekko.actors.states.StatusState"/></lhs><lhs name\="com.vestrel00.nekko.actors.states.FaceState"><rhs name\="com.vestrel00.nekko.actors.states.FaceState"/></lhs><lhs name\="com.vestrel00.nekko.actors.states.CombatState"><rhs name\="com.vestrel00.nekko.actors.states.CombatState"/></lhs><lhs name\="com.vestrel00.nekko.actors.states.HorizontalMotionState"><rhs name\="com.vestrel00.nekko.actors.states.HorizontalMotionState"/></lhs><lhs name\="com.vestrel00.nekko.actors.states.VerticalMotionState"><rhs name\="com.vestrel00.nekko.actors.states.VerticalMotionState"/></lhs></history>
 content_assist_number_of_computers=18
 content_assist_proposals_background=255,255,255
 content_assist_proposals_foreground=0,0,0
@@ -14,7 +14,18 @@ org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" 
 org.eclipse.jdt.ui.text.templates_migrated=true
 org.eclipse.jface.textfont=1|Consolas|10.0|0|WINDOWS|1|0|0|0|0|0|0|0|0|1|0|0|0|0|Consolas;
 proposalOrderMigrated=true
+spelling_ignore_ampersand_in_properties=true
+spelling_ignore_digits=true
+spelling_ignore_java_strings=true
+spelling_ignore_mixed=true
+spelling_ignore_non_letters=true
+spelling_ignore_sentence=true
+spelling_ignore_single_letters=true
+spelling_ignore_upper=true
+spelling_ignore_urls=true
 spelling_locale_initialized=true
+spelling_user_dictionary=C\:\\Users\\Gundum48\\Desktop\\KungFuNekko\\KungFuNekko-android\\assets\\dic.txt
+spelling_user_dictionary_encoding=
 tabWidthPropagated=true
 useAnnotationsPrefPage=true
 useQuickDiffPrefPage=true

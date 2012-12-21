@@ -1,7 +1,0 @@
-package com.vestrel00.nekko.ui.components;
-
-import com.badlogic.gdx.InputProcessor;
-
-public class HUDInputProcessor implements InputProcessor {
-
-}

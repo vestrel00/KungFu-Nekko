@@ -37,7 +37,7 @@ public class KFNekko implements ApplicationListener {
 	public static Resource resource;
 	public static HUD hud;
 	public static Array<Actor> allies, enemies;
-	public static Actor player;
+	public static Nekko player;
 
 	public static final long UPS = 50L;
 	public static final long UPDATE_TIME = 1000000000 / UPS;
@@ -60,8 +60,8 @@ public class KFNekko implements ApplicationListener {
 		map = new Map();
 		camera = new Camera();
 		background = new Background(resource.atlas.findRegion("background"));
-		hud = new HUD(new HUDInputProcessor());
 		initPlayer();
+		hud = new HUD(player,new HUDInputProcessor(player));
 		initVars();
 		initArrays();
 	}
@@ -88,6 +88,7 @@ public class KFNekko implements ApplicationListener {
 		allies.add(player);
 
 		updatables = new Array<Updatable>();
+		updatables.add(player);
 		updatables.add(camera);
 		updatables.add(hud);
 		updatables.add(map);
@@ -96,6 +97,7 @@ public class KFNekko implements ApplicationListener {
 		drawables = new Array<Drawable>();
 		drawables.add(background);
 		drawables.add(map);
+		drawables.add(player);
 
 		disposables = new Array<Disposable>();
 		disposables.add(batch);

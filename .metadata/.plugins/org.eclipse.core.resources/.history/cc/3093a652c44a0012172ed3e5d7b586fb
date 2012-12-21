@@ -1,5 +1,0 @@
-package com.vestrel00.nekko.actors;
-
-public class Actor implements Updatable, Drawable {
-
-}
