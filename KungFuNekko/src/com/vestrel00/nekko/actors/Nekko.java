@@ -1,6 +1,7 @@
 package com.vestrel00.nekko.actors;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.components.Location;
 import com.vestrel00.nekko.actors.components.NekkoSprite;
 import com.vestrel00.nekko.actors.states.CombatState;
@@ -106,6 +107,7 @@ public class Nekko extends Actor {
 		if (nekkoSprite.combatIndex == 0) {
 			this.combatState = combatState;
 			executeCombatMove();
+			KFNekko.bumpWC(0.2f, 0.2f, 0.2f);
 		}
 	}
 

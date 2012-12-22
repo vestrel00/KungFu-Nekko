@@ -1,0 +1,26 @@
+package com.vestrel00.nekko.maps.components;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.vestrel00.nekko.KFNekko;
+import com.vestrel00.nekko.interf.Drawable;
+
+public class MapPiece implements Drawable {
+
+	public Rectangle rect;
+	public AtlasRegion[] regions;
+	public float[] regionXCoords, regionYCoords;
+	public float[] horizontal, vertical, slope;
+
+	public MapPiece(float width, float height) {
+		rect = new Rectangle(0, 0, width, height);
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		if (KFNekko.camera.rect.overlaps(rect))
+			for (int i = 0; i < regions.length; i++)
+	}
+
+}

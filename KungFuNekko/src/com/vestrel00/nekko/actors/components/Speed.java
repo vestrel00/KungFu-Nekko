@@ -51,21 +51,21 @@ public class Speed {
 	}
 
 	public void accelDown() {
-		if (xDirection == DIRECTION_UP) {
-			if (xSpeed > 0.0f)
+		if (yDirection == DIRECTION_UP) {
+			if (ySpeed > 0.0f)
 				decreaseVerticalSpeed();
 			else
-				xDirection = DIRECTION_DOWN;
+				yDirection = DIRECTION_DOWN;
 		} else
 			increaseVerticalSpeed();
 	}
 
 	public void accelUp() {
-		if (xDirection == DIRECTION_DOWN) {
-			if (xSpeed > 0.0f)
+		if (yDirection == DIRECTION_DOWN) {
+			if (ySpeed > 0.0f)
 				decreaseVerticalSpeed();
 			else
-				xDirection = DIRECTION_UP;
+				yDirection = DIRECTION_UP;
 		} else
 			increaseVerticalSpeed();
 	}
@@ -77,7 +77,7 @@ public class Speed {
 
 	public void decreaseHorizontalSpeed() {
 		if (xSpeed > 0.0f && (xSpeed -= HORI_ACCEL) < 0.0f)
-			xSpeed = maxXSpeed;
+			xSpeed = 0.0f;
 	}
 
 	public void increaseVerticalSpeed() {
@@ -87,7 +87,7 @@ public class Speed {
 
 	public void decreaseVerticalSpeed() {
 		if (ySpeed > 0.0f && (ySpeed -= VERT_ACCEL) < 0.0f)
-			ySpeed = maxYSpeed;
+			ySpeed = 0.0f;
 	}
 
 	public float getXVelocity() {

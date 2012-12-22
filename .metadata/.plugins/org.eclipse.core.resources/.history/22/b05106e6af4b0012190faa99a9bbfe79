@@ -1,0 +1,17 @@
+package com.vestrel00.nekko.maps.components;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.vestrel00.nekko.interf.Drawable;
+
+public class MapSection implements Drawable {
+	
+	public Array<MapPiece> pieces;
+	public Rectangle rect;
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

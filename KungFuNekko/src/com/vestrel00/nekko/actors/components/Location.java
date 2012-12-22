@@ -25,8 +25,7 @@ public class Location implements Updatable {
 		this.jumpSpeed = jumpSpeed;
 		speed = new Speed(maxXSpeed, maxYSpeed);
 		rect = new Rectangle();
-		// TODO set to false;
-		onPlatform = true;
+		onPlatform = false;
 		onSlope = false;
 	}
 
@@ -88,9 +87,37 @@ public class Location implements Updatable {
 			float dx = speed.getXVelocity();
 			float dy = speed.getYVelocity();
 
+			// decrease dx while on slope to patch up our flawed slope detection
+			// algorithm
+			if (onSlope)
+				dx *= 0.4f;
+
+			if (actor.location.rect.x > 0.0f
+					&& actor.location.rect.x + actor.location.rect.width < KFNekko.map.width)
+				x += dx;
+			else if (actor.location.rect.x <= 0.0f)
+				x += 1.0f;
+			else if (actor.location.rect.x + actor.location.rect.width >= KFNekko.map.width)
+				x -= 1.0f;
 			// TODO wall detection
 
-			// TODO detect slope and platform
+			// detect slope first
+			if (!KFNekko.map.platform.hitSlope(actor, dx, dy)
+					&& !KFNekko.map.platform.hitPlatform(actor, dx, dy))
+				y += dy;
+			else {
+				if (speed.yDirection == Speed.DIRECTION_DOWN)
+					speed.ySpeed = 0.0f;
+				else
+					actor.verticalMotionState = VerticalMotionState.FALLING;
+			}
+
+			rect.set(x - (float) actor.sprite.currentTexture.originalWidth
+					* 0.5f,
+					y - (float) actor.sprite.currentTexture.originalHeight
+							* 0.5f,
+					(float) actor.sprite.currentTexture.originalWidth,
+					(float) actor.sprite.currentTexture.originalHeight);
 
 		}
 	}

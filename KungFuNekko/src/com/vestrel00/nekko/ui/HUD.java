@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Disposable;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.Nekko;
+import com.vestrel00.nekko.actors.states.FaceState;
+import com.vestrel00.nekko.actors.states.HorizontalMotionState;
 import com.vestrel00.nekko.interf.Drawable;
 import com.vestrel00.nekko.interf.Touchable;
 import com.vestrel00.nekko.interf.Updatable;
@@ -18,8 +20,10 @@ public class HUD implements Updatable, Drawable, Disposable, Touchable {
 
 	private ShapeRenderer shape;
 	private HUDPad pad;
+	private Nekko player;
 
 	public HUD(Nekko player, HUDInputProcessor processor) {
+		this.player = player;
 		shape = new ShapeRenderer();
 		pad = new HUDPad(player, processor);
 		Gdx.input.setInputProcessor(processor);
@@ -28,6 +32,25 @@ public class HUD implements Updatable, Drawable, Disposable, Touchable {
 	@Override
 	public void update() {
 		pad.update();
+
+		// -y(-10) <-------------landscape---------------> +y
+		float accel = Gdx.input.getAccelerometerY();
+		if (accel < -0.6f) {
+			player.faceState = FaceState.LEFT;
+			player.horizontalMotionState = HorizontalMotionState.MOVING;
+			if (accel < -1.5f)
+				accel = -1.5f;
+			player.location.speed.maxXSpeed = -accel * 5.0f;
+		} else if (accel > 0.6f) {
+			player.faceState = FaceState.RIGHT;
+			player.horizontalMotionState = HorizontalMotionState.MOVING;
+			if (accel > 1.5f)
+				accel = 1.5f;
+			player.location.speed.maxXSpeed = accel * 5.0f;
+		} else {
+			//player.horizontalMotionState = HorizontalMotionState.IDLE;
+			//player.location.speed.maxXSpeed = 0.0f;
+		}
 
 	}
 

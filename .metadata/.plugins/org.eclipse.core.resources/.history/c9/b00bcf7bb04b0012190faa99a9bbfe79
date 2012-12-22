@@ -1,0 +1,19 @@
+package com.vestrel00.nekko.maps.components;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.vestrel00.nekko.interf.Drawable;
+
+public class MapPiece implements Drawable {
+
+	public Rectangle rect;
+	public AtlasRegion[] regions;
+	public float[] regionXCoords, regionYCoords;
+	public float[] horizontal, vertical, slope;
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

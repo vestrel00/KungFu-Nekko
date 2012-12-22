@@ -109,7 +109,10 @@ public class NekkoSprite extends Sprite {
 				if (++walkIndex == walk.length)
 					walkIndex = 0;
 				currentTexture = walk[walkIndex];
-				animationDelay = 20000000L;
+				if (actor.location.onSlope)
+					animationDelay = 40000000L;
+				else
+					animationDelay = 20000000L;
 				return true;
 			default:
 				return false;

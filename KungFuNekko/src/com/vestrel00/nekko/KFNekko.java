@@ -25,6 +25,7 @@ import com.vestrel00.nekko.ui.components.HUDInputProcessor;
 
 public class KFNekko implements ApplicationListener {
 
+	// the public static modifier without the final modifier is not secure.
 	public static final int VIEW_LOADING = 0;
 	public static final int VIEW_GAME = 1;
 	public static int view;
@@ -61,13 +62,13 @@ public class KFNekko implements ApplicationListener {
 		camera = new Camera();
 		background = new Background(resource.atlas.findRegion("background"));
 		initPlayer();
-		hud = new HUD(player,new HUDInputProcessor(player));
+		hud = new HUD(player, new HUDInputProcessor(player));
 		initVars();
 		initArrays();
 	}
 
 	private void initPlayer() {
-		Location location = new Location(240.0f, 160.0f, 8.0f, 22.0f, 100.0f,
+		Location location = new Location(240.0f, 500.0f, 8.0f, 22.0f, 100.0f,
 				18.0f);
 		player = new Nekko(resource.atlas, location);
 		player.setState(FaceState.RIGHT, StatusState.ALIVE, CombatState.IDLE,
@@ -163,6 +164,20 @@ public class KFNekko implements ApplicationListener {
 			lastGCTime = TimeUtils.nanoTime();
 			System.gc();
 		}
+	}
+
+	public static void bumpWC(float r, float g, float b) {
+		worldColor.r += r;
+		worldColor.g += g;
+		worldColor.b += b;
+
+		// clip
+		if (worldColor.r > 1.0f)
+			worldColor.r = 1.0f;
+		if (worldColor.g > 1.0f)
+			worldColor.g = 1.0f;
+		if (worldColor.b > 1.0f)
+			worldColor.b = 1.0f;
 	}
 
 	// ////////////////

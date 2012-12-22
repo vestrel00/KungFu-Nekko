@@ -1,0 +1,9 @@
+package com.vestrel00.nekko.maps.components;
+
+import com.vestrel00.nekko.interf.Drawable;
+
+public class MapPiece implements Drawable {
+	
+	
+
+}
