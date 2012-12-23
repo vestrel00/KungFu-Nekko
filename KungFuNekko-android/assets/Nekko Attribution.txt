@@ -17,8 +17,20 @@ http://opengameart.org/content/minimal-sidescroller-tileset
 ------------------------------------------------------------------------------------------------
 Assets taken from RedShrike Under CC-BY 3.0 License:
 -----------------------------------------------------------------------------------------------
-Effects from the USF sheets
+Electric from the USF's Surge sprite sheet
 http://opengameart.org/users/redshrike
+
+----------------------------------------------------------------------------
+Assets taken from "Pow Studios" under CC-BY 3.0  License:
+----------------------------------------------------------------------
+http://powstudios.com/content/smoke-animation-pack-1
+
+----------------------------------------------------------------------------
+Assets taken from Gregoire Lourme under CC-BY-SA 3.0  License:
+Copyright 2012 "Commando Team (Action)" Grégoire Lourme <http://www.jamendo.com/en/artist/560/gregoire-lourme> 
+Copyright 2012 Iwan Gabovitch "Commando Team (Action) [loop cut]" (editing to make it loop)
+----------------------------------------------------------------------
+http://opengameart.org/content/commando-team-action-loop-cut
 
 ------------------------------------------------------------------------------------------------
 Assets taken Under CC0 License:

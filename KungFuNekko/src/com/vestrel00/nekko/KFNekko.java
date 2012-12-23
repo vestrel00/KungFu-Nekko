@@ -38,7 +38,7 @@ public class KFNekko implements ApplicationListener {
 	public static Resource resource;
 	public static HUD hud;
 	public static Array<Actor> allies, enemies;
-	public static Nekko player;
+	public static Actor player;
 
 	public static final long UPS = 50L;
 	public static final long UPDATE_TIME = 1000000000 / UPS;
@@ -54,6 +54,8 @@ public class KFNekko implements ApplicationListener {
 
 	@Override
 	public void create() {
+		enemies = new Array<Actor>();
+		allies = new Array<Actor>();
 		view = VIEW_GAME;
 		resource = new Resource();
 		batch = new SpriteBatch();
@@ -70,7 +72,7 @@ public class KFNekko implements ApplicationListener {
 	private void initPlayer() {
 		Location location = new Location(240.0f, 500.0f, 8.0f, 22.0f, 100.0f,
 				18.0f);
-		player = new Nekko(resource.atlas, location);
+		player = new Nekko(resource.atlas, location, enemies, 100, Color.PINK);
 		player.setState(FaceState.RIGHT, StatusState.ALIVE, CombatState.IDLE,
 				HorizontalMotionState.IDLE, VerticalMotionState.FALLING);
 		location.setActor(player);
@@ -84,8 +86,6 @@ public class KFNekko implements ApplicationListener {
 	}
 
 	private void initArrays() {
-		enemies = new Array<Actor>();
-		allies = new Array<Actor>();
 		allies.add(player);
 
 		updatables = new Array<Updatable>();
@@ -135,7 +135,7 @@ public class KFNekko implements ApplicationListener {
 				drawables.get(i).draw(batch);
 			batch.end();
 
-			// draw separately since thisconflicts with the SpriteBatch in use
+			// draw separately since this conflicts with the SpriteBatch in use
 			hud.draw(batch);
 			break;
 		}

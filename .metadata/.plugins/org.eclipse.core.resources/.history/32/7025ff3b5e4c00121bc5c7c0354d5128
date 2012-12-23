@@ -1,0 +1,44 @@
+package com.vestrel00.nekko.actors.components.effects;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.Updatable;
+
+public class AfterImage implements Updatable, Drawable {
+
+	private AtlasRegion image;
+	private float alpha, alphaSpeed, centerX, centerY, halfWidth, halfHeight,
+			xSpeed, xScale, xSpeedDecrease;
+	private boolean isActive;
+
+	public AfterImage() {
+		isActive = false;
+	}
+
+	public void activate(AtlasRegion image, float centerX, float centerY,
+			float alphaSpeed, float xSpeed, boolean flipped) {
+		this.image = image;
+		this.xSpeed = xSpeed;
+		this.centerX = centerX;
+		this.centerY = centerY;
+		this.alphaSpeed = alphaSpeed;
+		this.xSpeedDecrease = xSpeedDecrease;
+
+		isActive = true;
+		alpha = 1.0f;
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

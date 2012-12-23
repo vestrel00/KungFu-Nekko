@@ -1,28 +1,59 @@
 package com.vestrel00.nekko.actors.components;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vestrel00.nekko.Camera;
 import com.vestrel00.nekko.KFNekko;
-import com.vestrel00.nekko.actors.Actor;
+import com.vestrel00.nekko.actors.Nekko;
+import com.vestrel00.nekko.actors.components.effects.AfterImage;
+import com.vestrel00.nekko.actors.states.CombatState;
 import com.vestrel00.nekko.actors.states.FaceState;
 
 public class NekkoSprite extends Sprite {
 
-	// attack frames
-	private AtlasRegion[] idle, walk, jump, spinKick, powerShot, fastShot,
-			flyingKick, superUppercut, oneTwoCombo, lowMiddleKick, highKick,
-			downwardKick, twoSidedAttack, roundKick, uppercut;
+	// animation frames
+	private AtlasRegion[] idle, walk, jump, doubleJump, spinKick, powerShot,
+			fastShot, flyingKick, superUppercut, oneTwoCombo, lowMiddleKick,
+			highKick, downwardKick, twoSidedAttack, roundKick, uppercut;
 
-	public int idleIndex = 0, walkIndex = 0, jumpIndex = 0, combatIndex = 0;
+	public int idleIndex = 0, walkIndex = 0, jumpIndex = 0,
+			doubleJumpIndex = 0;
 
-	public NekkoSprite(Actor actor, TextureAtlas atlas) {
-		super(actor);
+	// afterImages
+	private AfterImage[] combatImages, effectImages;
+	private int combatImgIndex = 0, effectImgIndex = 0;
+	private AtlasRegion attackEffect1, smokeEffect;
+
+	private Nekko nekko;
+	public long speedUp, lastCombatImage;
+	public int damageMultiplier;
+
+	public NekkoSprite(Nekko nekko, TextureAtlas atlas, Color color) {
+		super(nekko, color);
+		this.nekko = nekko;
 		initTextures(atlas);
+		initEffects(atlas);
+		speedUp = 0L;
+		damageMultiplier = 1;
+	}
+
+	private void initEffects(TextureAtlas atlas) {
+		combatImages = new AfterImage[6];
+		effectImages = new AfterImage[10];
+		for (int i = 0; i < combatImages.length; i++)
+			combatImages[i] = new AfterImage();
+		for (int i = 0; i < effectImages.length; i++)
+			effectImages[i] = new AfterImage();
+		attackEffect1 = atlas.findRegion("attackEffect1");
+		smokeEffect = atlas.findRegion("smokeEffect");
 	}
 
 	private void initTextures(TextureAtlas atlas) {
 		idle = new AtlasRegion[4];
+		doubleJump = new AtlasRegion[4];
 		highKick = new AtlasRegion[6];
 		fastShot = new AtlasRegion[6];
 		powerShot = new AtlasRegion[7];
@@ -39,8 +70,11 @@ public class NekkoSprite extends Sprite {
 		superUppercut = new AtlasRegion[13];
 
 		int i = 0;
-		for (i = 0; i < 4; i++)
+		for (i = 0; i < 4; i++) {
 			idle[i] = atlas.findRegion("nekkoIdle" + String.valueOf(i));
+			doubleJump[i] = atlas.findRegion("nekkoDoubleJump"
+					+ String.valueOf(i));
+		}
 		for (i = 0; i < 6; i++) {
 			highKick[i] = atlas.findRegion("nekkoHighKick" + String.valueOf(i));
 			fastShot[i] = atlas.findRegion("nekkoFastShot" + String.valueOf(i));
@@ -81,11 +115,20 @@ public class NekkoSprite extends Sprite {
 
 	@Override
 	public void update() {
+		// update after images
+		for (int i = 0; i < combatImages.length; i++)
+			combatImages[i].update();
+		// update after images
+		for (int i = 0; i < effectImages.length; i++)
+			effectImages[i].update();
+
 		if (TimeUtils.nanoTime() - lastAnimationTime < animationDelay)
 			return;
 		lastAnimationTime = TimeUtils.nanoTime();
 
-		xScale = (actor.faceState == FaceState.LEFT) ? -1.0f : 1.0f;
+		xScale = (nekko.faceState == FaceState.LEFT) ? -1.0f : 1.0f;
+
+		switchCombatImages();
 
 		// animate
 		if (switchCombatState())
@@ -96,9 +139,147 @@ public class NekkoSprite extends Sprite {
 		switchHorizontalMotionState();
 	}
 
+	private int incrementIndex(int index, int maxIndex) {
+		if (++index == maxIndex)
+			return 0;
+		else
+			return index;
+	}
+
+	private void stepForward(float amount) {
+		// step forward
+		if (!nekko.location.onSlope
+				&& actor.location.rect.x >= 12.0f
+				&& actor.location.rect.x + actor.location.rect.width <= KFNekko.map.width - 12.0f)
+			actor.location.x += (nekko.faceState == FaceState.LEFT) ? -amount
+					: amount;
+	}
+
+	private void activateEffect() {
+		KFNekko.bumpWC(0.1f, 0.1f, 0.1f);
+		float zoomAmount = 0.0f;
+		stepForward(12.0f);
+		switch (nekko.combatState) {
+		case SPIN:
+			zoomAmount = 0.07f;
+			break;
+		case FASTSHOT:
+		case ONETWOCOMBO:
+			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+			if (nekko.faceState == FaceState.LEFT)
+				effectImages[effectImgIndex].activate(attackEffect1,
+						nekko.location.rect.x + 10.0f, nekko.location.y - 3.0f,
+						0.08f, -0.3f, false, 0.0f, Color.WHITE);
+			else
+				effectImages[effectImgIndex].activate(attackEffect1,
+						nekko.location.rect.x + nekko.location.rect.width
+								- 10.0f, nekko.location.y - 3.0f, 0.08f, 0.3f,
+						true, 0.0f, Color.WHITE);
+			zoomAmount = 0.035f;
+			break;
+		case POWERSHOT:
+			zoomAmount = 0.07f;
+			break;
+		case FLYINGKICK:
+			zoomAmount = 0.05f;
+			break;
+		case SUPERUPPERCUT:
+			zoomAmount = 0.09f;
+			break;
+		case LOWMIDDLEKICK:
+			zoomAmount = 0.035f;
+			stepForward(12.0f);
+			break;
+		case HIGHKICK:
+			zoomAmount = 0.035f;
+			stepForward(12.0f);
+			break;
+		case DOWNWARDKICK:
+			zoomAmount = 0.05f;
+			stepForward(12.0f);
+			break;
+		case TWOSIDEDATTACK:
+			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+			effectImages[effectImgIndex].activate(currentTexture,
+					nekko.location.x, nekko.location.y, 0.08f, -12.0f, true,
+					2.0f, color);
+			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+			effectImages[effectImgIndex].activate(currentTexture,
+					nekko.location.x, nekko.location.y, 0.08f, 12.0f, false,
+					2.0f, color);
+			zoomAmount = 0.08f;
+			break;
+		case ROUNDKICK:
+			zoomAmount = 0.06f;
+			break;
+		case UPPERCUT:
+			zoomAmount = 0.065f;
+			break;
+		}
+		KFNekko.camera.setEffect(Camera.EFFECT_ZOOM, zoomAmount, 0.0063f, 0L);
+	}
+
+	private void switchCombatImages() {
+		if (nekko.combatState != CombatState.IDLE
+				&& TimeUtils.nanoTime() - lastCombatImage > 60000000L) {
+			lastCombatImage = TimeUtils.nanoTime();
+			combatImgIndex = incrementIndex(combatImgIndex, combatImages.length);
+			combatImages[combatImgIndex].activate(currentTexture,
+					nekko.location.x, nekko.location.y, 0.04f, 0.0f,
+					(nekko.faceState == FaceState.LEFT) ? true : false, 0.0f,
+					color);
+		}
+		switch (nekko.combatState) {
+		case SPIN:
+			break;
+		case SUPERUPPERCUT:
+			break;
+		case FLYINGKICK:
+			break;
+		case ONETWOCOMBO:
+			break;
+		case FASTSHOT:
+
+			break;
+		case POWERSHOT:
+
+			break;
+		case LOWMIDDLEKICK:
+
+			break;
+		case HIGHKICK:
+
+			break;
+		case DOWNWARDKICK:
+
+			break;
+		case TWOSIDEDATTACK:
+
+			break;
+		case ROUNDKICK:
+
+			break;
+		case UPPERCUT:
+
+			break;
+		}
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		// draw after images
+		for (int i = 0; i < combatImages.length; i++)
+			combatImages[i].draw(batch);
+		super.draw(batch);
+		// draw after images
+		for (int i = 0; i < effectImages.length; i++)
+			effectImages[i].draw(batch);
+		batch.setColor(KFNekko.worldColor);
+	}
+
 	private boolean switchHorizontalMotionState() {
-		if (actor.location.onPlatform || actor.location.onSlope)
-			switch (actor.horizontalMotionState) {
+		if (nekko.location.onPlatform || nekko.location.onSlope)
+			switch (nekko.horizontalMotionState) {
 			case IDLE:
 				if (++idleIndex == idle.length)
 					idleIndex = 0;
@@ -109,7 +290,7 @@ public class NekkoSprite extends Sprite {
 				if (++walkIndex == walk.length)
 					walkIndex = 0;
 				currentTexture = walk[walkIndex];
-				if (actor.location.onSlope)
+				if (nekko.location.onSlope)
 					animationDelay = 40000000L;
 				else
 					animationDelay = 20000000L;
@@ -122,7 +303,15 @@ public class NekkoSprite extends Sprite {
 	}
 
 	private boolean switchVerticalMotionState() {
-		switch (actor.verticalMotionState) {
+		if (nekko.location.doubleJumped) {
+			if (++doubleJumpIndex >= doubleJump.length)
+				doubleJumpIndex = 0;
+			currentTexture = doubleJump[doubleJumpIndex];
+			animationDelay = 50000000L;
+			return true;
+		}
+
+		switch (nekko.verticalMotionState) {
 		case JUMPING:
 			if (++jumpIndex >= jump.length)
 				return false;
@@ -135,14 +324,14 @@ public class NekkoSprite extends Sprite {
 	}
 
 	private boolean switchCombatState() {
-		switch (actor.combatState) {
+		switch (nekko.combatState) {
 		case SPIN:
 			if (++combatIndex == spinKick.length) {
 				combatIndex = 0;
-				actor.onDeactivateCombat();
+				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 7) {
-				actor.attack(KFNekko.enemies, 1, false);
+				nekko.attack(2 * damageMultiplier, true, 10.0f, nekko);
 				activateEffect();
 			}
 			currentTexture = spinKick[combatIndex];
@@ -151,179 +340,148 @@ public class NekkoSprite extends Sprite {
 		case FASTSHOT:
 			if (++combatIndex == fastShot.length) {
 				combatIndex = 0;
-				actor.onDeactivateCombat();
+				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 4) {
-				actor.attack(KFNekko.enemies, 1, false);
+				nekko.attack(1 * damageMultiplier, true, 20.0f, nekko);
 				activateEffect();
 			}
 			currentTexture = fastShot[combatIndex];
-			animationDelay = 30000000L;
+			animationDelay = 30000000 - speedUp;
 			return true;
 		case POWERSHOT:
 			if (++combatIndex == powerShot.length) {
 				combatIndex = 0;
-				actor.onDeactivateCombat();
+				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 5) {
-				actor.attack(KFNekko.enemies, 2, false);
+				// nekko.attack(3 * damageMultiplier, false);
+				// TODO launch projectile
 				activateEffect();
 			}
 			currentTexture = powerShot[combatIndex];
-			animationDelay = 60000000L;
+			animationDelay = 60000000 - speedUp;
 			return true;
 		case FLYINGKICK:
 			if (++combatIndex == flyingKick.length) {
 				combatIndex = 0;
-				actor.onDeactivateCombat();
+				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 5) {
-				actor.attack(KFNekko.enemies, 1, true);
+				nekko.attack(1 * damageMultiplier, true, 150.0f, nekko);
 				activateEffect();
 			}
 			currentTexture = flyingKick[combatIndex];
-			animationDelay = 30000000L;
+			animationDelay = 30000000 - speedUp;
 			return true;
 		case SUPERUPPERCUT:
 			if (++combatIndex == superUppercut.length) {
 				combatIndex = 0;
-				actor.onDeactivateCombat();
+				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 5) {
-				actor.attack(KFNekko.enemies, 3, true);
+				nekko.attack(3 * damageMultiplier, true, 40.0f, nekko);
 				activateEffect();
 			}
 			currentTexture = superUppercut[combatIndex];
-			animationDelay = 20000000L;
+			animationDelay = 20000000 - speedUp;
 			return true;
 		case ONETWOCOMBO:
 			if (++combatIndex == oneTwoCombo.length) {
 				combatIndex = 0;
-				actor.onDeactivateCombat();
+				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 4 || combatIndex == 7) {
-				actor.attack(KFNekko.enemies, 1, false);
+				nekko.attack(1 * damageMultiplier, true, 20.0f, nekko);
 				activateEffect();
 			}
 			currentTexture = oneTwoCombo[combatIndex];
-			animationDelay = 40000000L;
+			animationDelay = 40000000 - speedUp;
 			return true;
 		case LOWMIDDLEKICK:
 			if (++combatIndex == lowMiddleKick.length) {
 				combatIndex = 0;
-				actor.onDeactivateCombat();
+				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 2 || combatIndex == 8) {
-				actor.attack(KFNekko.enemies, 1, false);
+				nekko.attack(1 * damageMultiplier, true, 20.0f, nekko);
 				activateEffect();
 			}
 			currentTexture = lowMiddleKick[combatIndex];
-			animationDelay = 45000000L;
+			animationDelay = 45000000 - speedUp;
 			return true;
 		case HIGHKICK:
 			if (++combatIndex == highKick.length) {
 				combatIndex = 0;
-				actor.onDeactivateCombat();
+				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 2) {
-				actor.attack(KFNekko.enemies, 2, true);
+				nekko.attack(2 * damageMultiplier, true, 20.0f, nekko);
 				activateEffect();
 			}
 			currentTexture = highKick[combatIndex];
-			animationDelay = 60000000L;
+			animationDelay = 60000000 - speedUp;
 			return true;
 		case DOWNWARDKICK:
 			if (++combatIndex == downwardKick.length) {
 				combatIndex = 0;
-				actor.onDeactivateCombat();
+				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 7) {
-				actor.attack(KFNekko.enemies, 2, true);
+				nekko.attack(2 * damageMultiplier, true, 20.0f, nekko);
 				activateEffect();
 			}
 			currentTexture = downwardKick[combatIndex];
-			animationDelay = 50000000L;
+			animationDelay = 50000000 - speedUp;
 			return true;
 		case TWOSIDEDATTACK:
 			if (++combatIndex == twoSidedAttack.length) {
 				combatIndex = 0;
-				actor.onDeactivateCombat();
+				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 6) {
-				actor.attack(KFNekko.enemies, 1, true);
+				nekko.attack(1 * damageMultiplier, true, 100.0f, nekko);
 				activateEffect();
 			}
 			currentTexture = twoSidedAttack[combatIndex];
-			animationDelay = 50000000L;
+			animationDelay = 50000000 - speedUp;
 			return true;
 		case ROUNDKICK:
 			if (++combatIndex == roundKick.length) {
 				combatIndex = 0;
-				actor.onDeactivateCombat();
+				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 5) {
-				actor.attack(KFNekko.enemies, 2, true);
+				nekko.attack(2 * damageMultiplier, true, 100.0f, nekko);
 				activateEffect();
 			}
 			currentTexture = roundKick[combatIndex];
-			animationDelay = 50000000L;
+			animationDelay = 50000000 - speedUp;
 			return true;
 		case UPPERCUT:
 			if (++combatIndex == uppercut.length) {
 				combatIndex = 0;
-				actor.onDeactivateCombat();
+				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 4) {
-				actor.attack(KFNekko.enemies, 2, true);
+				nekko.attack(2 * damageMultiplier, true, 20.0f, nekko);
 				activateEffect();
 			}
 			currentTexture = uppercut[combatIndex];
-			animationDelay = 70000000L;
+			animationDelay = 70000000 - speedUp;
 			return true;
 		default:
 			return false;
 		}
 	}
 
-	private void activateEffect() {
-		switch (actor.combatState) {
-		case SPIN:
-
-			break;
-		case FASTSHOT:
-
-			break;
-		case POWERSHOT:
-
-			break;
-		case FLYINGKICK:
-
-			break;
-		case SUPERUPPERCUT:
-
-			break;
-		case ONETWOCOMBO:
-
-			break;
-		case LOWMIDDLEKICK:
-
-			break;
-		case HIGHKICK:
-
-			break;
-		case DOWNWARDKICK:
-
-			break;
-		case TWOSIDEDATTACK:
-
-			break;
-		case ROUNDKICK:
-
-			break;
-		case UPPERCUT:
-
-			break;
-		}
+	public void activateSmoke() {
+		effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+		effectImages[effectImgIndex].activate(smokeEffect, nekko.location.x,
+				nekko.location.rect.y, 0.08f, -12.0f, true, 2.0f, Color.WHITE);
+		effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+		effectImages[effectImgIndex].activate(smokeEffect, nekko.location.x,
+				nekko.location.rect.y, 0.08f, 12.0f, false, 2.0f, Color.WHITE);
 	}
 
 }

@@ -12,26 +12,29 @@ import com.vestrel00.nekko.interf.Updatable;
 public abstract class Sprite implements Updatable, Drawable {
 
 	protected Actor actor;
+	public Color color;
 	protected AtlasRegion currentTexture;
-	protected float xScale;
+	protected float xScale, rotation;
 	protected long animationDelay, lastAnimationTime;
+	public int combatIndex = 0;
 
-	public Sprite(Actor actor) {
+	public Sprite(Actor actor, Color color) {
 		this.actor = actor;
+		this.color = color;
 		lastAnimationTime = 0L;
+		rotation = 0;
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
 		if (actor.visibility == Visibility.VISIBLE) {
-			batch.setColor(Color.WHITE);
+			batch.setColor(color);
 			batch.draw(currentTexture, actor.location.rect.x,
 					actor.location.rect.y, actor.location.rect.width * 0.5f,
 					actor.location.rect.height * 0.5f,
 					actor.location.rect.width, actor.location.rect.height,
-					xScale, 1.0f, 0.0f);
+					xScale, 1.0f, rotation);
 			batch.setColor(KFNekko.worldColor);
 		}
 	}
-
 }

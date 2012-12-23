@@ -7,49 +7,55 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Disposable;
 import com.vestrel00.nekko.KFNekko;
-import com.vestrel00.nekko.actors.Nekko;
+import com.vestrel00.nekko.actors.Actor;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.HorizontalMotionState;
 import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.HUDUI;
 import com.vestrel00.nekko.interf.Touchable;
 import com.vestrel00.nekko.interf.Updatable;
 import com.vestrel00.nekko.ui.components.HUDInputProcessor;
-import com.vestrel00.nekko.ui.components.HUDPad;
+import com.vestrel00.nekko.ui.components.HUDSimple;
 
 public class HUD implements Updatable, Drawable, Disposable, Touchable {
 
 	private ShapeRenderer shape;
-	private HUDPad pad;
-	private Nekko player;
+	private HUDUI ui;
+	private Actor player;
 
-	public HUD(Nekko player, HUDInputProcessor processor) {
+	public HUD(Actor player, HUDInputProcessor processor) {
 		this.player = player;
 		shape = new ShapeRenderer();
-		pad = new HUDPad(player, processor);
+		// ui = new HUDPad(player, processor);
+		ui = new HUDSimple(player, processor);
 		Gdx.input.setInputProcessor(processor);
 	}
 
 	@Override
 	public void update() {
-		pad.update();
+		ui.update();
 
 		// -y(-10) <-------------landscape---------------> +y
 		float accel = Gdx.input.getAccelerometerY();
 		if (accel < -0.6f) {
 			player.faceState = FaceState.LEFT;
-			player.horizontalMotionState = HorizontalMotionState.MOVING;
+			player.setHorizontalMotionState(HorizontalMotionState.MOVING);
 			if (accel < -1.5f)
 				accel = -1.5f;
-			player.location.speed.maxXSpeed = -accel * 5.0f;
+			if (player.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK)
+				player.location.speed.maxXSpeed = -accel * 5.0f;
 		} else if (accel > 0.6f) {
 			player.faceState = FaceState.RIGHT;
-			player.horizontalMotionState = HorizontalMotionState.MOVING;
+			player.setHorizontalMotionState(HorizontalMotionState.MOVING);
 			if (accel > 1.5f)
 				accel = 1.5f;
-			player.location.speed.maxXSpeed = accel * 5.0f;
+			if (player.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK)
+				player.location.speed.maxXSpeed = accel * 5.0f;
 		} else {
-			//player.horizontalMotionState = HorizontalMotionState.IDLE;
-			//player.location.speed.maxXSpeed = 0.0f;
+			if (player.horizontalMotionState != HorizontalMotionState.FORCED_MOVING) {
+				// player.setHorizontalMotionState(HorizontalMotionState.IDLE);
+				// player.location.speed.maxXSpeed = 0.0f;
+			}
 		}
 
 	}
@@ -75,12 +81,12 @@ public class HUD implements Updatable, Drawable, Disposable, Touchable {
 		shape.filledCircle(KFNekko.camera.rect.x + 430.0f,
 				KFNekko.camera.rect.y + 350.0f, 100.0f);
 		// bottom left circle
-		shape.filledCircle(KFNekko.camera.rect.x + 90.0f,
-				KFNekko.camera.rect.y, 100.0f);
+		// shape.filledCircle(KFNekko.camera.rect.x + 90.0f,
+		// KFNekko.camera.rect.y, 100.0f);
 		shape.end();
 
 		batch.begin();
-		pad.draw(batch);
+		ui.draw(batch);
 		batch.end();
 	}
 
@@ -91,7 +97,7 @@ public class HUD implements Updatable, Drawable, Disposable, Touchable {
 
 	@Override
 	public boolean onTouchDown(float x, float y) {
-		return pad.onTouchDown(x, y);
+		return ui.onTouchDown(x, y);
 	}
 
 }

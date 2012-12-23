@@ -87,1011 +87,1263 @@ piece5
   orig: 32, 112
   offset: 0, 0
   index: -1
-piece12
+cuteMonsterAttack0
   rotate: false
-  xy: 849, 919
-  size: 32, 104
-  orig: 32, 104
+  xy: 603, 781
+  size: 64, 72
+  orig: 64, 72
   offset: 0, 0
   index: -1
-piece13
+cuteMonsterAttack1
+  rotate: false
+  xy: 849, 951
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterAttack5
+  rotate: false
+  xy: 849, 951
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterAttack2
+  rotate: false
+  xy: 669, 795
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterAttack3
+  rotate: false
+  xy: 915, 951
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+piece12
   rotate: false
   xy: 127, 510
   size: 32, 104
   orig: 32, 104
   offset: 0, 0
   index: -1
+cuteMonsterAttack4
+  rotate: false
+  xy: 67, 436
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+piece13
+  rotate: false
+  xy: 1, 205
+  size: 32, 104
+  orig: 32, 104
+  offset: 0, 0
+  index: -1
+cuteMonsterHurt0
+  rotate: false
+  xy: 735, 795
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterMove0
+  rotate: false
+  xy: 735, 795
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+attack
+  rotate: false
+  xy: 782, 869
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+cuteMonsterHurt1
+  rotate: false
+  xy: 308, 693
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterHurt2
+  rotate: false
+  xy: 374, 693
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterHurt3
+  rotate: false
+  xy: 440, 693
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterHurt4
+  rotate: false
+  xy: 506, 693
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterHurt6
+  rotate: false
+  xy: 1, 131
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterHurt7
+  rotate: false
+  xy: 1, 57
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterIdle0
+  rotate: false
+  xy: 35, 351
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterJump0
+  rotate: false
+  xy: 35, 351
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterIdle1
+  rotate: false
+  xy: 35, 277
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
 piece0
   rotate: false
-  xy: 603, 789
+  xy: 35, 211
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-piece7
+cuteMonsterIdle2
   rotate: false
-  xy: 67, 444
-  size: 64, 64
-  orig: 64, 64
+  xy: 161, 542
+  size: 64, 72
+  orig: 64, 72
   offset: 0, 0
   index: -1
-piece8
+cuteMonsterIdle3
   rotate: false
-  xy: 669, 803
-  size: 64, 64
-  orig: 64, 64
+  xy: 801, 795
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterJump1
+  rotate: false
+  xy: 572, 693
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterJump2
+  rotate: false
+  xy: 133, 436
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterJump3
+  rotate: false
+  xy: 101, 362
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterJump4
+  rotate: false
+  xy: 101, 288
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterMove2
+  rotate: false
+  xy: 101, 288
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterJump5
+  rotate: false
+  xy: 101, 214
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterJump6
+  rotate: false
+  xy: 167, 362
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterJump7
+  rotate: false
+  xy: 167, 288
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterMove1
+  rotate: false
+  xy: 167, 214
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterMove3
+  rotate: false
+  xy: 67, 137
+  size: 64, 72
+  orig: 64, 72
+  offset: 0, 0
+  index: -1
+cuteMonsterMove4
+  rotate: false
+  xy: 67, 63
+  size: 64, 72
+  orig: 64, 72
   offset: 0, 0
   index: -1
 nekkoDead0
   rotate: false
-  xy: 883, 963
+  xy: 67, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoDownwardKick0
   rotate: false
-  xy: 883, 963
+  xy: 67, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoFastShot0
   rotate: false
-  xy: 883, 963
+  xy: 67, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoHighKick0
   rotate: false
-  xy: 883, 963
+  xy: 67, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoHighKick5
   rotate: false
-  xy: 883, 963
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoOneTwoCombo9
-  rotate: false
-  xy: 883, 963
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoPowerShot0
-  rotate: false
-  xy: 883, 963
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoRoundKick0
-  rotate: false
-  xy: 883, 963
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoSuperUppercut0
-  rotate: false
-  xy: 883, 963
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoTwoSidedAttack0
-  rotate: false
-  xy: 883, 963
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoUppercut0
-  rotate: false
-  xy: 883, 963
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDead1
-  rotate: false
-  xy: 945, 963
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDead2
-  rotate: false
-  xy: 308, 705
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDead3
-  rotate: false
-  xy: 370, 705
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDead4
-  rotate: false
-  xy: 432, 705
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDead6
-  rotate: false
-  xy: 432, 705
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDead5
-  rotate: false
-  xy: 494, 705
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDownwardKick1
-  rotate: false
-  xy: 782, 857
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDownwardKick3
-  rotate: false
-  xy: 782, 857
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDownwardKick8
-  rotate: false
-  xy: 782, 857
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoSuperUppercut1
-  rotate: false
-  xy: 782, 857
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoTwoSidedAttack1
-  rotate: false
-  xy: 782, 857
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDownwardKick2
-  rotate: false
-  xy: 556, 705
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoFlyingKick3
-  rotate: false
-  xy: 556, 705
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoRoundKick2
-  rotate: false
-  xy: 556, 705
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoTwoSidedAttack2
-  rotate: false
-  xy: 556, 705
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDownwardKick4
-  rotate: false
-  xy: 883, 901
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoHighKick1
-  rotate: false
-  xy: 883, 901
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoHighKick4
-  rotate: false
-  xy: 883, 901
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDownwardKick5
-  rotate: false
-  xy: 945, 901
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDownwardKick6
-  rotate: false
-  xy: 1, 249
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoDownwardKick7
-  rotate: false
-  xy: 1, 187
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoFastShot1
-  rotate: false
-  xy: 1, 125
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoFastShot3
-  rotate: false
-  xy: 1, 125
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoOneTwoCombo1
-  rotate: false
-  xy: 1, 125
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoFastShot2
-  rotate: false
-  xy: 1, 63
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoOneTwoCombo2
-  rotate: false
-  xy: 1, 63
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoFastShot4
-  rotate: false
-  xy: 1, 1
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-piece6
-  rotate: false
-  xy: 735, 808
-  size: 32, 59
-  orig: 32, 59
-  offset: 0, 0
-  index: -1
-nekkoFastShot5
-  rotate: false
-  xy: 769, 795
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoFlyingKick0
-  rotate: false
-  xy: 35, 363
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoOneTwoCombo0
-  rotate: false
-  xy: 35, 363
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-attack
-  rotate: false
-  xy: 35, 313
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: -1
-nekkoFlyingKick1
-  rotate: false
-  xy: 161, 554
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoFlyingKick2
-  rotate: false
-  xy: 161, 554
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoFlyingKick4
-  rotate: false
-  xy: 161, 554
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoRoundKick1
-  rotate: false
-  xy: 161, 554
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoUppercut1
-  rotate: false
-  xy: 161, 554
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoFlyingKick5
-  rotate: false
-  xy: 161, 492
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoFlyingKick8
-  rotate: false
-  xy: 161, 492
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoFlyingKick6
-  rotate: false
-  xy: 618, 727
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoFlyingKick7
-  rotate: false
-  xy: 680, 741
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoHighKick2
-  rotate: false
-  xy: 742, 733
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoHighKick3
-  rotate: false
-  xy: 804, 733
+  xy: 67, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoIdle0
   rotate: false
-  xy: 831, 795
-  size: 56, 60
-  orig: 56, 60
+  xy: 67, 1
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoIdle2
   rotate: false
-  xy: 831, 795
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoIdle1
-  rotate: false
-  xy: 866, 733
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoLowMiddleKick0
-  rotate: false
-  xy: 618, 665
+  xy: 67, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoLowMiddleKick5
+nekkoOneTwoCombo9
   rotate: false
-  xy: 618, 665
+  xy: 67, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoLowMiddleKick6
+nekkoPowerShot0
   rotate: false
-  xy: 618, 665
+  xy: 67, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoLowMiddleKick1
+nekkoRoundKick0
   rotate: false
-  xy: 680, 679
+  xy: 67, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoLowMiddleKick10
+nekkoSuperUppercut0
   rotate: false
-  xy: 680, 679
+  xy: 67, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoLowMiddleKick4
+nekkoTwoSidedAttack0
   rotate: false
-  xy: 680, 679
+  xy: 67, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoLowMiddleKick7
+nekkoUppercut0
   rotate: false
-  xy: 680, 679
+  xy: 67, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoLowMiddleKick11
+piece7
   rotate: false
-  xy: 742, 671
+  xy: 133, 148
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+piece8
+  rotate: false
+  xy: 133, 82
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+nekkoDead1
+  rotate: false
+  xy: 129, 1
   size: 60, 60
   orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoLowMiddleKick2
-  rotate: false
-  xy: 804, 671
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoIdle3
-  rotate: false
-  xy: 866, 671
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoLowMiddleKick3
-  rotate: false
-  xy: 680, 617
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoLowMiddleKick8
-  rotate: false
-  xy: 742, 609
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoLowMiddleKick9
-  rotate: false
-  xy: 804, 609
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoJump0
-  rotate: false
-  xy: 866, 609
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoSpin0
-  rotate: false
-  xy: 866, 609
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoJump1
-  rotate: false
-  xy: 63, 251
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoJump4
-  rotate: false
-  xy: 63, 251
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoJump2
-  rotate: false
-  xy: 63, 189
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoJump3
-  rotate: false
-  xy: 63, 127
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoJump5
-  rotate: false
-  xy: 63, 65
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoJump7
-  rotate: false
-  xy: 63, 65
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoSpin1
-  rotate: false
-  xy: 63, 65
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoSpin9
-  rotate: false
-  xy: 63, 65
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoJump6
-  rotate: false
-  xy: 63, 3
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoSpin2
-  rotate: false
-  xy: 63, 3
-  size: 56, 60
-  orig: 56, 60
   offset: 0, 0
   index: -1
 jump
   rotate: false
-  xy: 85, 313
+  xy: 832, 869
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-nekkoOneTwoCombo3
+nekkoDead2
   rotate: false
-  xy: 133, 430
+  xy: 199, 152
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoOneTwoCombo6
+nekkoDead3
   rotate: false
-  xy: 133, 430
+  xy: 199, 90
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoOneTwoCombo4
+piece6
   rotate: false
-  xy: 195, 430
+  xy: 981, 964
+  size: 32, 59
+  orig: 32, 59
+  offset: 0, 0
+  index: -1
+nekkoDead4
+  rotate: false
+  xy: 882, 889
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoOneTwoCombo5
+nekkoDead6
   rotate: false
-  xy: 97, 368
+  xy: 882, 889
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoOneTwoCombo7
+nekkoDead5
   rotate: false
-  xy: 159, 368
+  xy: 944, 889
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoOneTwoCombo8
+nekkoDoubleJump0
   rotate: false
-  xy: 135, 306
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoPowerShot1
-  rotate: false
-  xy: 121, 244
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoPowerShot2
-  rotate: false
-  xy: 121, 182
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoPowerShot3
-  rotate: false
-  xy: 121, 120
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoPowerShot4
-  rotate: false
-  xy: 121, 58
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoPowerShot5
-  rotate: false
-  xy: 221, 368
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoPowerShot6
-  rotate: false
-  xy: 197, 306
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoRoundKick3
-  rotate: false
-  xy: 183, 244
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoRoundKick4
-  rotate: false
-  xy: 183, 182
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoRoundKick5
-  rotate: false
-  xy: 183, 120
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoRoundKick6
-  rotate: false
-  xy: 183, 58
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoRoundKick7
-  rotate: false
-  xy: 259, 306
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoRoundKick8
-  rotate: false
-  xy: 245, 244
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoSuperUppercut11
-  rotate: false
-  xy: 245, 244
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoTwoSidedAttack8
-  rotate: false
-  xy: 245, 244
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoSuperUppercut10
-  rotate: false
-  xy: 245, 182
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoSuperUppercut12
-  rotate: false
-  xy: 245, 120
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoSuperUppercut2
-  rotate: false
-  xy: 245, 58
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoSuperUppercut3
-  rotate: false
-  xy: 889, 839
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-nekkoTwoSidedAttack3
-  rotate: false
-  xy: 889, 839
+  xy: 882, 827
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoSpin3
   rotate: false
-  xy: 951, 839
-  size: 56, 60
-  orig: 56, 60
-  offset: 0, 0
-  index: -1
-nekkoSuperUppercut4
-  rotate: false
-  xy: 924, 777
+  xy: 882, 827
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoTwoSidedAttack4
+nekkoDoubleJump1
   rotate: false
-  xy: 924, 777
+  xy: 944, 827
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoSuperUppercut5
+nekkoDoubleJump2
   rotate: false
-  xy: 924, 715
+  xy: 638, 719
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoSuperUppercut7
+nekkoDoubleJump3
   rotate: false
-  xy: 924, 715
+  xy: 700, 733
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoSuperUppercut6
+nekkoDownwardKick1
   rotate: false
-  xy: 924, 653
+  xy: 762, 733
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoSuperUppercut8
+nekkoDownwardKick3
   rotate: false
-  xy: 924, 591
+  xy: 762, 733
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoSuperUppercut9
+nekkoDownwardKick8
+  rotate: false
+  xy: 762, 733
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSuperUppercut1
+  rotate: false
+  xy: 762, 733
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoTwoSidedAttack1
+  rotate: false
+  xy: 762, 733
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoDownwardKick2
+  rotate: false
+  xy: 824, 733
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoFlyingKick3
+  rotate: false
+  xy: 824, 733
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoRoundKick2
+  rotate: false
+  xy: 824, 733
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoTwoSidedAttack2
+  rotate: false
+  xy: 824, 733
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoDownwardKick4
+  rotate: false
+  xy: 886, 765
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoHighKick1
+  rotate: false
+  xy: 886, 765
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoHighKick4
+  rotate: false
+  xy: 886, 765
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoDownwardKick5
+  rotate: false
+  xy: 948, 765
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoDownwardKick6
+  rotate: false
+  xy: 886, 703
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoDownwardKick7
+  rotate: false
+  xy: 948, 703
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoFastShot1
+  rotate: false
+  xy: 638, 657
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoFastShot3
+  rotate: false
+  xy: 638, 657
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoFastShot2
+  rotate: false
+  xy: 700, 671
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoFastShot4
+  rotate: false
+  xy: 762, 671
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoFastShot5
+  rotate: false
+  xy: 824, 671
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoFlyingKick0
+  rotate: false
+  xy: 886, 641
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoOneTwoCombo0
+  rotate: false
+  xy: 886, 641
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoFlyingKick1
+  rotate: false
+  xy: 948, 641
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoFlyingKick2
+  rotate: false
+  xy: 948, 641
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoFlyingKick4
+  rotate: false
+  xy: 948, 641
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoRoundKick1
+  rotate: false
+  xy: 948, 641
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoUppercut1
+  rotate: false
+  xy: 948, 641
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoFlyingKick5
   rotate: false
   xy: 195, 655
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoSpin4
+nekkoFlyingKick8
   rotate: false
-  xy: 307, 244
-  size: 56, 60
-  orig: 56, 60
+  xy: 195, 655
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoSpin5
+nekkoFlyingKick6
   rotate: false
-  xy: 307, 182
-  size: 56, 60
-  orig: 56, 60
+  xy: 700, 609
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoSpin6
+nekkoFlyingKick7
   rotate: false
-  xy: 307, 120
-  size: 56, 60
-  orig: 56, 60
+  xy: 762, 609
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
-nekkoSpin7
+nekkoHighKick2
   rotate: false
-  xy: 307, 58
-  size: 58, 60
-  orig: 58, 60
+  xy: 824, 609
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoHighKick3
+  rotate: false
+  xy: 886, 579
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoIdle1
+  rotate: false
+  xy: 948, 579
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+smokeEffect
+  rotate: false
+  xy: 1, 24
+  size: 41, 31
+  orig: 41, 31
+  offset: 0, 0
+  index: -1
+attackEffect1
+  rotate: false
+  xy: 257, 683
+  size: 34, 32
+  orig: 34, 32
+  offset: 0, 0
+  index: -1
+nekkoIdle3
+  rotate: false
+  xy: 199, 28
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
 options
   rotate: false
-  xy: 121, 38
+  xy: 161, 522
   size: 48, 18
   orig: 48, 18
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 257, 697
+  xy: 192, 635
   size: 48, 18
   orig: 48, 18
   offset: 0, 0
   index: -1
+nekkoJump0
+  rotate: false
+  xy: 257, 621
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSpin0
+  rotate: false
+  xy: 257, 621
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoJump1
+  rotate: false
+  xy: 319, 631
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoJump4
+  rotate: false
+  xy: 319, 631
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoJump2
+  rotate: false
+  xy: 381, 631
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoJump3
+  rotate: false
+  xy: 443, 631
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoJump5
+  rotate: false
+  xy: 505, 631
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoJump7
+  rotate: false
+  xy: 505, 631
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSpin1
+  rotate: false
+  xy: 505, 631
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSpin9
+  rotate: false
+  xy: 505, 631
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoJump6
+  rotate: false
+  xy: 567, 631
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSpin2
+  rotate: false
+  xy: 567, 631
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoLowMiddleKick0
+  rotate: false
+  xy: 227, 559
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoLowMiddleKick11
+  rotate: false
+  xy: 227, 559
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoLowMiddleKick5
+  rotate: false
+  xy: 227, 559
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoLowMiddleKick6
+  rotate: false
+  xy: 227, 559
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoLowMiddleKick1
+  rotate: false
+  xy: 289, 559
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoLowMiddleKick10
+  rotate: false
+  xy: 289, 559
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoLowMiddleKick4
+  rotate: false
+  xy: 289, 559
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoLowMiddleKick7
+  rotate: false
+  xy: 289, 559
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoLowMiddleKick2
+  rotate: false
+  xy: 351, 569
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoLowMiddleKick3
+  rotate: false
+  xy: 413, 569
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoLowMiddleKick8
+  rotate: false
+  xy: 475, 569
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoLowMiddleKick9
+  rotate: false
+  xy: 537, 569
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoOneTwoCombo1
+  rotate: false
+  xy: 599, 569
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoOneTwoCombo2
+  rotate: false
+  xy: 227, 497
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoOneTwoCombo3
+  rotate: false
+  xy: 289, 497
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoOneTwoCombo6
+  rotate: false
+  xy: 289, 497
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoOneTwoCombo4
+  rotate: false
+  xy: 351, 507
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoOneTwoCombo5
+  rotate: false
+  xy: 413, 507
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoOneTwoCombo7
+  rotate: false
+  xy: 475, 507
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoOneTwoCombo8
+  rotate: false
+  xy: 537, 507
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoPowerShot1
+  rotate: false
+  xy: 599, 507
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoPowerShot2
+  rotate: false
+  xy: 661, 547
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoPowerShot3
+  rotate: false
+  xy: 723, 547
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoPowerShot4
+  rotate: false
+  xy: 785, 547
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoPowerShot5
+  rotate: false
+  xy: 661, 485
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoPowerShot6
+  rotate: false
+  xy: 723, 485
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoRoundKick3
+  rotate: false
+  xy: 785, 485
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoRoundKick4
+  rotate: false
+  xy: 847, 517
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoRoundKick5
+  rotate: false
+  xy: 909, 517
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoRoundKick6
+  rotate: false
+  xy: 847, 455
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoRoundKick7
+  rotate: false
+  xy: 909, 455
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoRoundKick8
+  rotate: false
+  xy: 351, 445
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSuperUppercut11
+  rotate: false
+  xy: 351, 445
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoTwoSidedAttack8
+  rotate: false
+  xy: 351, 445
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSpin4
+  rotate: false
+  xy: 413, 445
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSpin5
+  rotate: false
+  xy: 475, 445
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSpin6
+  rotate: false
+  xy: 537, 445
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSpin7
+  rotate: false
+  xy: 599, 445
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
 nekkoSpin8
   rotate: false
-  xy: 257, 635
-  size: 56, 60
-  orig: 56, 60
+  xy: 661, 423
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSuperUppercut10
+  rotate: false
+  xy: 723, 423
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSuperUppercut12
+  rotate: false
+  xy: 785, 423
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSuperUppercut2
+  rotate: false
+  xy: 847, 393
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSuperUppercut3
+  rotate: false
+  xy: 909, 393
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoTwoSidedAttack3
+  rotate: false
+  xy: 909, 393
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSuperUppercut4
+  rotate: false
+  xy: 233, 435
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoTwoSidedAttack4
+  rotate: false
+  xy: 233, 435
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSuperUppercut5
+  rotate: false
+  xy: 233, 373
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSuperUppercut7
+  rotate: false
+  xy: 233, 373
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSuperUppercut6
+  rotate: false
+  xy: 233, 311
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSuperUppercut8
+  rotate: false
+  xy: 233, 249
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+nekkoSuperUppercut9
+  rotate: false
+  xy: 295, 383
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoTwoSidedAttack5
   rotate: false
-  xy: 315, 643
+  xy: 357, 383
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoTwoSidedAttack6
   rotate: false
-  xy: 377, 643
+  xy: 295, 321
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoTwoSidedAttack7
   rotate: false
-  xy: 439, 643
+  xy: 419, 383
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoUppercut2
   rotate: false
-  xy: 501, 643
+  xy: 295, 259
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoUppercut3
   rotate: false
-  xy: 223, 573
+  xy: 357, 321
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoUppercut4
   rotate: false
-  xy: 223, 511
+  xy: 481, 383
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoUppercut5
   rotate: false
-  xy: 285, 573
+  xy: 357, 259
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoUppercut6
   rotate: false
-  xy: 285, 511
+  xy: 419, 321
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoWalk0
   rotate: false
-  xy: 347, 581
-  size: 56, 60
-  orig: 56, 60
+  xy: 543, 383
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoWalk1
   rotate: false
-  xy: 405, 581
-  size: 56, 60
-  orig: 56, 60
+  xy: 419, 259
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoWalk7
   rotate: false
-  xy: 405, 581
-  size: 56, 60
-  orig: 56, 60
+  xy: 419, 259
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoWalk2
   rotate: false
-  xy: 347, 519
-  size: 56, 60
-  orig: 56, 60
+  xy: 481, 321
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoWalk6
   rotate: false
-  xy: 347, 519
-  size: 56, 60
-  orig: 56, 60
+  xy: 481, 321
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoWalk3
   rotate: false
-  xy: 463, 581
-  size: 56, 60
-  orig: 56, 60
+  xy: 481, 259
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoWalk4
   rotate: false
-  xy: 405, 519
-  size: 56, 60
-  orig: 56, 60
+  xy: 543, 321
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
 nekkoWalk5
   rotate: false
-  xy: 463, 519
-  size: 56, 60
-  orig: 56, 60
+  xy: 543, 259
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1

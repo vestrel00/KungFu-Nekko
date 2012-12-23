@@ -1,0 +1,5 @@
+package com.vestrel00.nekko.interf;
+
+public class CombatStateManager {
+
+}

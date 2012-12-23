@@ -7,17 +7,19 @@ import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.Actor;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.HorizontalMotionState;
+import com.vestrel00.nekko.interf.CombatStateManager;
 
 public class HUDInputProcessor implements InputProcessor {
 
-	public ComboAttackManager attackManager;
+	public CombatStateManager attackManager;
 	private Vector3 touchPos;
 	private Actor player;
 
 	public HUDInputProcessor(Actor player) {
 		this.player = player;
 		touchPos = new Vector3();
-		attackManager = new ComboAttackManager();
+		// attackManager = new ComboAttackManager();
+		attackManager = new SimpleAttackManager(player);
 	}
 
 	@Override
@@ -49,24 +51,33 @@ public class HUDInputProcessor implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		switch (keycode) {
-		case Keys.DOWN:
-			attackManager.input(ComboAttackManager.INPUT_DOWN);
+		case Keys.A:
+			player.setCombatState(attackManager
+					.input(ComboAttackManager.INPUT_DOWN));
+			return true;
+		case Keys.S:
+			player.setCombatState(attackManager
+					.input(ComboAttackManager.INPUT_LEFT));
+			return true;
+		case Keys.D:
+			player.setCombatState(attackManager
+					.input(ComboAttackManager.INPUT_RIGHT));
+			return true;
+		case Keys.F:
+			player.setCombatState(attackManager
+					.input(ComboAttackManager.INPUT_UP));
 			return true;
 		case Keys.LEFT:
-			attackManager.input(ComboAttackManager.INPUT_LEFT);
-			player.horizontalMotionState = HorizontalMotionState.MOVING;
+			player.setHorizontalMotionState(HorizontalMotionState.MOVING);
 			player.faceState = FaceState.LEFT;
 			return true;
 		case Keys.RIGHT:
-			attackManager.input(ComboAttackManager.INPUT_RIGHT);
-			player.horizontalMotionState = HorizontalMotionState.MOVING;
+			player.setHorizontalMotionState(HorizontalMotionState.MOVING);
 			player.faceState = FaceState.RIGHT;
 			return true;
-		case Keys.UP:
-			attackManager.input(ComboAttackManager.INPUT_UP);
-			return true;
 		case Keys.SPACE: // JUMP
-			attackManager.input(ComboAttackManager.INPUT_JUMP);
+			player.setCombatState(attackManager
+					.input(ComboAttackManager.INPUT_JUMP));
 			player.jump();
 			return true;
 		default: // any other key is attack
@@ -81,7 +92,7 @@ public class HUDInputProcessor implements InputProcessor {
 		switch (keycode) {
 		case Keys.LEFT:
 		case Keys.RIGHT:
-			player.horizontalMotionState = HorizontalMotionState.IDLE;
+			player.setHorizontalMotionState(HorizontalMotionState.IDLE);
 			return true;
 		}
 		return false;

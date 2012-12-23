@@ -7,11 +7,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.Nekko;
-import com.vestrel00.nekko.interf.Drawable;
-import com.vestrel00.nekko.interf.Touchable;
-import com.vestrel00.nekko.interf.Updatable;
+import com.vestrel00.nekko.interf.HUDUI;
 
-public class HUDPad implements Updatable, Drawable, Touchable {
+public class HUDPad implements HUDUI {
 
 	private Array<Rectangle> baseRects, rects;
 	private Array<AtlasRegion> regions;

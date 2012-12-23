@@ -1,0 +1,47 @@
+package com.vestrel00.nekko.actors;
+
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
+import com.vestrel00.nekko.actors.components.CuteMonsterSprite;
+import com.vestrel00.nekko.actors.components.Location;
+import com.vestrel00.nekko.actors.states.CombatState;
+
+public class CuteMonster extends Monster {
+
+	private CuteMonsterSprite cuteSprite;
+
+	public CuteMonster(TextureAtlas atlas, Location location,
+			Array<Actor> targets, int maxHealth, float aggroRange,
+			float motionRange) {
+		super(targets, location, maxHealth, aggroRange, motionRange);
+		cuteSprite = new CuteMonsterSprite(this, atlas);
+		sprite = cuteSprite;
+	}
+	
+	
+
+	@Override
+	protected void updateCombatState() {
+		if (target != null && sprite.combatIndex == 0
+				&& location.rect.overlaps(target.location.rect)) {
+			setCombatState(CombatState.ATTACK);
+			// TODO SOUND
+		} else
+			jump();
+	}
+
+
+
+	@Override
+	public void onLanding() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onDeath() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

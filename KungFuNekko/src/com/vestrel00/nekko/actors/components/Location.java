@@ -3,7 +3,8 @@ package com.vestrel00.nekko.actors.components;
 import com.badlogic.gdx.math.Rectangle;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.Actor;
-import com.vestrel00.nekko.actors.states.CombatState;
+import com.vestrel00.nekko.actors.states.FaceState;
+import com.vestrel00.nekko.actors.states.HorizontalMotionState;
 import com.vestrel00.nekko.actors.states.StatusState;
 import com.vestrel00.nekko.actors.states.VerticalMotionState;
 import com.vestrel00.nekko.actors.states.Visibility;
@@ -11,11 +12,14 @@ import com.vestrel00.nekko.interf.Updatable;
 
 public class Location implements Updatable {
 
+	private static final float KNOCKBACK_SPEED = 10.0f;
+
 	public Actor actor;
 	public Rectangle rect;
 	public Speed speed;
-	public float x, y, jumpHeight, jumpSpeed, startJumpY, finalJumpY;
-	public boolean onPlatform, onSlope;
+	public float x, y, jumpHeight, jumpSpeed, startJumpY, finalJumpY,
+			knockBackDirection, knockBackFinal;
+	public boolean onPlatform, onSlope, doubleJumped;
 
 	public Location(float x, float y, float maxXSpeed, float maxYSpeed,
 			float jumpHeight, float jumpSpeed) {
@@ -57,12 +61,24 @@ public class Location implements Updatable {
 					break;
 				}
 				break;
+			case KNOCKED_BACK:
+				if (!onSlope) {
+					speed.xSpeed = KNOCKBACK_SPEED;
+					if (knockBackDirection < 0.0f) {
+						speed.xDirection = Speed.DIRECTION_LEFT;
+						actor.faceState = FaceState.RIGHT;
+						if (x <= knockBackFinal)
+							actor.horizontalMotionState = HorizontalMotionState.IDLE;
+					} else if (knockBackDirection > 0.0f) {
+						speed.xDirection = Speed.DIRECTION_RIGHT;
+						actor.faceState = FaceState.LEFT;
+						if (x >= knockBackFinal)
+							actor.horizontalMotionState = HorizontalMotionState.IDLE;
+					}
+				} else
+					actor.horizontalMotionState = HorizontalMotionState.IDLE;
+				break;
 			}
-
-			// cannot attack and walk/move/run at the same time while on
-			// platform
-			if (actor.combatState != CombatState.IDLE && onPlatform)
-				speed.xSpeed = 0.0f;
 
 			switch (actor.verticalMotionState) {
 			case JUMPING:
@@ -108,10 +124,13 @@ public class Location implements Updatable {
 			else {
 				if (speed.yDirection == Speed.DIRECTION_DOWN)
 					speed.ySpeed = 0.0f;
-				else
-					actor.verticalMotionState = VerticalMotionState.FALLING;
+
+				actor.onLanding();
+				doubleJumped = false;
+				actor.verticalMotionState = VerticalMotionState.FALLING;
 			}
 
+			// All sprites must have same dimensions!
 			rect.set(x - (float) actor.sprite.currentTexture.originalWidth
 					* 0.5f,
 					y - (float) actor.sprite.currentTexture.originalHeight
@@ -135,4 +154,12 @@ public class Location implements Updatable {
 		return false;
 	}
 
+	public void knockBack(float knockBackDistance, float knockBackDirection) {
+		if (!onSlope
+				&& actor.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK) {
+			actor.horizontalMotionState = HorizontalMotionState.KNOCKED_BACK;
+			this.knockBackDirection = knockBackDirection;
+			knockBackFinal = x + knockBackDistance * knockBackDirection;
+		}
+	}
 }

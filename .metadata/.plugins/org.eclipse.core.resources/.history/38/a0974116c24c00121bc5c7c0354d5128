@@ -1,0 +1,32 @@
+package com.vestrel00.nekko.actors;
+
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
+import com.vestrel00.nekko.actors.components.CuteMonsterSprite;
+import com.vestrel00.nekko.actors.components.Location;
+
+public class CuteMonster extends Monster {
+
+	private CuteMonsterSprite cuteSprite;
+
+	public CuteMonster(TextureAtlas atlas, Location location,
+			Array<Actor> targets, int maxHealth, float aggroRange,
+			float motionRange) {
+		super(targets, location, maxHealth, aggroRange, motionRange);
+		cuteSprite = new CuteMonsterSprite(this, atlas);
+		sprite = cuteSprite;
+	}
+
+	@Override
+	public void onLanding() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onDeath() {
+		// TODO Auto-generated method stub
+
+	}
+
+}
