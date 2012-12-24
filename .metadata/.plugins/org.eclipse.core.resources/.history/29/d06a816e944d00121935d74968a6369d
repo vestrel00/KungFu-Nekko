@@ -1,0 +1,26 @@
+package com.vestrel00.nekko.extras;
+
+import com.vestrel00.nekko.interf.Updatable;
+
+public class StringTyper implements Updatable {
+
+	private StringBuilder builder;
+	private CharSequence str;
+	private long typeDelay;
+
+	public StringTyper(CharSequence str, long typeDelay) {
+		this.str = str;
+		this.typeDelay = typeDelay;
+		builder = new StringBuilder();
+	}
+	
+	public CharSequence getTypedStr(){
+		return builder;
+	}
+
+	@Override
+	public void update() {
+		
+	}
+
+}

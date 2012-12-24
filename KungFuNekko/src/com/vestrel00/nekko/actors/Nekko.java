@@ -3,7 +3,6 @@ package com.vestrel00.nekko.actors;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
-import com.vestrel00.nekko.Camera;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.components.Location;
 import com.vestrel00.nekko.actors.components.NekkoSprite;
@@ -11,21 +10,33 @@ import com.vestrel00.nekko.actors.components.Speed;
 import com.vestrel00.nekko.actors.states.CombatState;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.HorizontalMotionState;
+import com.vestrel00.nekko.actors.states.StatusState;
 
 public class Nekko extends Actor {
 
 	private NekkoSprite nekkoSprite;
+	public int stamina, maxStamina;
 
 	public Nekko(TextureAtlas atlas, Location location, Array<Actor> targets,
-			int maxHealth, Color color) {
+			int maxHealth, Color color, int maxStamina) {
 		super(targets, location, maxHealth);
 		nekkoSprite = new NekkoSprite(this, atlas, color);
 		sprite = nekkoSprite;
+		this.maxStamina = maxStamina;
+		stamina = maxStamina;
 	}
 
-	@Override
-	protected void receiveDamage(int damage) {
-		super.receiveDamage(damage);
+	private void hit(Actor target) {
+		switch (combatState) {
+		case SUPERUPPERCUT:
+		case UPPERCUT:
+		case SPIN:
+		case FLYINGKICK:
+		case ROUNDKICK:
+			target.location.onPlatform = true;
+			target.jump();
+			break;
+		}
 	}
 
 	@Override
@@ -61,7 +72,7 @@ public class Nekko extends Actor {
 			horizontalMotionState = HorizontalMotionState.FORCED_MOVING;
 			location.speed.xDirection = (faceState == FaceState.LEFT) ? Speed.DIRECTION_LEFT
 					: Speed.DIRECTION_RIGHT;
-			location.speed.xSpeed = 8.0f;
+			location.speed.xSpeed = 20.0f;
 			break;
 		case ONETWOCOMBO:
 
@@ -132,11 +143,46 @@ public class Nekko extends Actor {
 	public void setCombatState(CombatState combatState) {
 		// wait for the combat move in execution to finish
 		if (nekkoSprite.combatIndex == 0 && combatState != CombatState.IDLE) {
-			this.combatState = combatState;
-			executeCombatMove();
+			if (enoughStamina(combatState)) {
+				this.combatState = combatState;
+				executeCombatMove();
+			}
 		} else if (nekkoSprite.combatIndex == 0
 				&& combatState == CombatState.IDLE)
 			this.combatState = combatState;
+	}
+
+	private boolean enoughStamina(CombatState combat) {
+		int staminaCost = 0;
+		switch (combat) {
+		case FASTSHOT:
+		case LOWMIDDLEKICK:
+		case ONETWOCOMBO:
+			staminaCost = 1;
+			break;
+		case SPIN:
+		case UPPERCUT:
+		case ROUNDKICK:
+			staminaCost = 3;
+			break;
+		case FLYINGKICK:
+			staminaCost = 4;
+			break;
+		case POWERSHOT:
+		case HIGHKICK:
+		case DOWNWARDKICK:
+			staminaCost = 2;
+			break;
+		case TWOSIDEDATTACK:
+		case SUPERUPPERCUT:
+			staminaCost = 6;
+			break;
+		}
+		if (stamina >= staminaCost) {
+			stamina -= staminaCost;
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -156,20 +202,34 @@ public class Nekko extends Actor {
 	}
 
 	@Override
-	public void onLanding() {
-		switch (combatState) {
-		case SPIN:
-			KFNekko.camera.setEffect(Camera.EFFECT_SHAKE, 1.0f, 3.0f,
-					200000000L);
-			nekkoSprite.activateSmoke();
-			break;
-		}
-	}
-
-	@Override
 	public void onDeath() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void attack(int damage, boolean aoe, float knockBackDistance,
+			Actor actor) {
+		boolean hit = false;
+		for (int i = 0; i < targets.size; i++)
+			if (targets.get(i).statusState == StatusState.ALIVE
+					&& location.rect.overlaps(targets.get(i).location.rect)) {
+				targets.get(i).receiveDamage(damage);
+				hit(targets.get(i));
+				targets.get(i).location.knockBack(knockBackDistance,
+						(actor.faceState == FaceState.LEFT) ? -1.0f : 1.0f);
+				hit = true;
+				if (!aoe)
+					break;
+			}
+		KFNekko.audio.punch(location.x);
+		if (hit) {
+			if (combatState == CombatState.SUPERUPPERCUT
+					|| combatState == CombatState.FLYINGKICK)
+				KFNekko.audio.superSmack(location.x);
+			else
+				KFNekko.audio.smack(location.x);
+		}
 	}
 
 }

@@ -4,7 +4,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector3;
 import com.vestrel00.nekko.KFNekko;
-import com.vestrel00.nekko.actors.Actor;
+import com.vestrel00.nekko.actors.Nekko;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.HorizontalMotionState;
 import com.vestrel00.nekko.interf.CombatStateManager;
@@ -13,9 +13,9 @@ public class HUDInputProcessor implements InputProcessor {
 
 	public CombatStateManager attackManager;
 	private Vector3 touchPos;
-	private Actor player;
+	private Nekko player;
 
-	public HUDInputProcessor(Actor player) {
+	public HUDInputProcessor(Nekko player) {
 		this.player = player;
 		touchPos = new Vector3();
 		// attackManager = new ComboAttackManager();
@@ -26,7 +26,15 @@ public class HUDInputProcessor implements InputProcessor {
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		touchPos.set(x, y, 0);
 		KFNekko.camera.camera.unproject(touchPos);
-		return (KFNekko.hud.onTouchDown(touchPos.x, touchPos.y)) ? true : false;
+		switch (KFNekko.view) {
+		case KFNekko.VIEW_INTRO:
+			return (KFNekko.intro.onTouchDown(touchPos.x, touchPos.y)) ? true
+					: false;
+		case KFNekko.VIEW_GAME:
+			return (KFNekko.hud.onTouchDown(touchPos.x, touchPos.y)) ? true
+					: false;
+		}
+		return false;
 	}
 
 	@Override
@@ -54,6 +62,14 @@ public class HUDInputProcessor implements InputProcessor {
 		case Keys.A:
 			player.setCombatState(attackManager
 					.input(ComboAttackManager.INPUT_DOWN));
+			return true;
+		case Keys.Z:
+			if (++player.health >= player.maxHealth)
+				player.health = player.maxHealth;
+			return true;
+		case Keys.X:
+			if (++player.stamina >= player.maxStamina)
+				player.stamina = player.maxStamina;
 			return true;
 		case Keys.S:
 			player.setCombatState(attackManager

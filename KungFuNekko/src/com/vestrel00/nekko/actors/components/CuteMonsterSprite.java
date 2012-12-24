@@ -4,15 +4,19 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.CuteMonster;
 import com.vestrel00.nekko.actors.states.FaceState;
+import com.vestrel00.nekko.actors.states.HorizontalMotionState;
+import com.vestrel00.nekko.actors.states.StatusState;
 
 public class CuteMonsterSprite extends Sprite {
 
 	// animation frames
-	private AtlasRegion[] idle, move, attack, hurt, jump;
+	private AtlasRegion[] idle, move, attack, hurt, jump, dying;
 
-	public int idleIndex = 0, walkIndex = 0, jumpIndex = 0;
+	public int idleIndex = 0, walkIndex = 0, jumpIndex = 0, hurtIndex = 0,
+			dyingIndex = 0;
 
 	private CuteMonster monster;
 
@@ -28,6 +32,7 @@ public class CuteMonsterSprite extends Sprite {
 		idle = new AtlasRegion[4];
 		move = new AtlasRegion[5];
 		attack = new AtlasRegion[6];
+		dying = new AtlasRegion[7];
 		jump = new AtlasRegion[8];
 
 		hurt[0] = atlas.findRegion("cuteMonsterHurt1");
@@ -40,6 +45,8 @@ public class CuteMonsterSprite extends Sprite {
 		for (i = 0; i < attack.length; i++)
 			attack[i] = atlas.findRegion("cuteMonsterAttack"
 					+ String.valueOf(i));
+		for (i = 0; i < dying.length; i++)
+			dying[i] = atlas.findRegion("cuteMonsterHurt" + String.valueOf(i));
 		for (i = 0; i < jump.length; i++)
 			jump[i] = atlas.findRegion("cuteMonsterJump" + String.valueOf(i));
 
@@ -54,13 +61,33 @@ public class CuteMonsterSprite extends Sprite {
 
 		xScale = (monster.faceState == FaceState.LEFT) ? -1.0f : 1.0f;
 
-		// animate
-		if (switchCombatState())
+		if (switchStatusState())
 			return;
-		if (switchVerticalMotionState())
+
+		// animate
+		if (monster.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK
+				&& switchCombatState())
+			return;
+		if (monster.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK
+				&& switchVerticalMotionState())
 			return;
 
 		switchHorizontalMotionState();
+	}
+
+	private boolean switchStatusState() {
+		switch (monster.statusState) {
+		case DYING:
+			if (++dyingIndex == dying.length) {
+				dyingIndex = 0;
+				monster.statusState = StatusState.DEAD;
+			}
+			currentTexture = dying[dyingIndex];
+			animationDelay = 80000000L;
+			return true;
+		default:
+			return false;
+		}
 	}
 
 	private boolean switchCombatState() {
@@ -104,9 +131,19 @@ public class CuteMonsterSprite extends Sprite {
 				currentTexture = idle[idleIndex];
 				animationDelay = 100000000L;
 				return true;
+			case KNOCKED_BACK:
+				if (++hurtIndex == hurt.length)
+					hurtIndex = 0;
+				currentTexture = hurt[hurtIndex];
+				animationDelay = 100000000L;
+				return true;
 			case MOVING:
 				if (++walkIndex == move.length)
 					walkIndex = 0;
+
+				if (walkIndex == 1)
+					KFNekko.audio.footStep(monster.location.x);
+
 				currentTexture = move[walkIndex];
 				if (monster.location.onSlope)
 					animationDelay = 100000000L;
@@ -118,6 +155,12 @@ public class CuteMonsterSprite extends Sprite {
 			}
 		else
 			return false;
+
+	}
+
+	@Override
+	public void onDeath() {
+		// TODO Auto-generated method stub
 
 	}
 

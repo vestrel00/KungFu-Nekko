@@ -6,7 +6,7 @@ import com.vestrel00.nekko.actors.components.Speed;
 
 public class Platform {
 
-	private static final float SLOPE_DETECTION_OFFSET = 50.0f;
+	private static final float DETECTION_OFFSET = 23.0f;
 
 	private Array<MapSection> sections;
 	private MapSection section;
@@ -55,8 +55,7 @@ public class Platform {
 							// determine if we hit a slope
 							switch (actor.location.speed.yDirection) {
 							case Speed.DIRECTION_DOWN:
-								if (actor.location.rect.y
-										+ SLOPE_DETECTION_OFFSET >= yVal
+								if (actor.location.rect.y + DETECTION_OFFSET >= yVal
 										&& actor.location.rect.y + dy <= yVal) {
 									actor.location.y = yVal
 											+ actor.location.rect.height * 0.5f;
@@ -90,7 +89,7 @@ public class Platform {
 									+ dx >= horizontal[j]))
 						switch (actor.location.speed.yDirection) {
 						case Speed.DIRECTION_DOWN:
-							if (actor.location.rect.y >= horizontal[j + 1]
+							if (actor.location.rect.y + DETECTION_OFFSET >= horizontal[j + 1]
 									&& actor.location.rect.y + dy <= horizontal[j + 1]) {
 								actor.location.onPlatform = true;
 								actor.location.y = horizontal[j + 1]

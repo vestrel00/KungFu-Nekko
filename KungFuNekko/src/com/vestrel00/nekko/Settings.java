@@ -9,13 +9,17 @@ public class Settings {
 
 	public float viewWidth, viewHeight, viewWidthHalf, viewHeightHalf,
 			viewWidthQuarter, viewHeightQuarter;
+	public boolean soundOn, musicOn;
 
 	public Settings() {
 		Gdx.input.setCatchBackKey(false);
 		Gdx.input.setCatchMenuKey(false);
+		
+		soundOn = prefs.getBoolean("soundOn", true);
+		musicOn = prefs.getBoolean("musicOn", true);
 
-		viewWidth = prefs.getFloat("width", 480.0f);
-		viewHeight = prefs.getFloat("height", 320.0f);
+		viewWidth = 480.0f;
+		viewHeight = 320.0f;
 		viewWidthHalf = viewWidth * 0.5f;
 		viewHeightHalf = viewHeight * 0.5f;
 		viewWidthQuarter = viewWidth * 0.25f;

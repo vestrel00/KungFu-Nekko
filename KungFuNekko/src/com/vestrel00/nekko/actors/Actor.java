@@ -1,6 +1,5 @@
 package com.vestrel00.nekko.actors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.vestrel00.nekko.actors.components.Location;
@@ -33,6 +32,7 @@ public abstract class Actor implements Updatable, Drawable {
 		this.location = location;
 		this.targets = targets;
 		this.maxHealth = maxHealth;
+		health = maxHealth;
 	}
 
 	public void setState(FaceState faceState, StatusState statusState,
@@ -48,16 +48,14 @@ public abstract class Actor implements Updatable, Drawable {
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		if (statusState == StatusState.ALIVE
-				&& visibility == Visibility.VISIBLE)
+		if (statusState != StatusState.DEAD && visibility == Visibility.VISIBLE)
 			sprite.draw(batch);
 	}
 
 	@Override
 	public void update() {
 		location.update();
-		if (statusState == StatusState.ALIVE
-				&& visibility == Visibility.VISIBLE)
+		if (statusState != StatusState.DEAD && visibility == Visibility.VISIBLE)
 			sprite.update();
 	}
 
@@ -68,20 +66,8 @@ public abstract class Actor implements Updatable, Drawable {
 	/**
 	 * Attack the list of targets.
 	 */
-	public void attack(int damage, boolean aoe, float knockBackDistance,
-			Actor actor) {
-		boolean hit = false;
-		for (int i = 0; i < targets.size; i++)
-			if (location.rect.overlaps(targets.get(i).location.rect)) {
-				targets.get(i).receiveDamage(damage);
-				targets.get(i).location.knockBack(knockBackDistance,
-						(actor.faceState == FaceState.LEFT) ? -1.0f : 1.0f);
-				hit = true;
-				if (!aoe)
-					break;
-			}
-		// TODO add hit sound if hit!
-	}
+	public abstract void attack(int damage, boolean aoe,
+			float knockBackDistance, Actor actor);
 
 	public void setHorizontalMotionState(
 			HorizontalMotionState horizontalMotionState) {
@@ -90,9 +76,13 @@ public abstract class Actor implements Updatable, Drawable {
 	}
 
 	protected void receiveDamage(int damage) {
-		health -= damage;
-		if (health <= 0)
-			onDeath();
+		if (health > 0) {
+			health -= damage;
+			if (health <= 0) {
+				onDeath();
+				sprite.onDeath();
+			}
+		}
 	}
 
 	public void onDeactivateCombat() {
@@ -103,8 +93,8 @@ public abstract class Actor implements Updatable, Drawable {
 		this.combatState = combatState;
 	}
 
-	public abstract void onDeath();
-
-	public abstract void onLanding();
+	public void onDeath() {
+		statusState = StatusState.DYING;
+	}
 
 }

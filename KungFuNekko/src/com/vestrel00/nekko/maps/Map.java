@@ -47,7 +47,7 @@ public class Map implements Updatable, Drawable {
 				+ sections.get(sections.size - 1).rect.height;
 
 		rand = new Random();
-		spawnMonsters(5);
+		spawnMonsters(50);
 	}
 
 	private void spawnMonsters(int amount) {
@@ -65,9 +65,20 @@ public class Map implements Updatable, Drawable {
 	}
 
 	private static Color genColor() {
-		return new Color((float) rand.nextInt(255) / 255.0f,
-				(float) rand.nextInt(255) / 255.0f,
-				(float) rand.nextInt(255) / 255.0f, 1.0f);
+		switch(rand.nextInt(3)){
+		case 0: // no red
+			return new Color(0.0f,
+					(float) rand.nextInt(255) / 255.0f,
+					(float) rand.nextInt(255) / 255.0f, 1.0f);
+		case 1: // no green
+			return new Color((float) rand.nextInt(255) / 255.0f,
+					0.0f,
+					(float) rand.nextInt(255) / 255.0f, 1.0f);
+		default: // no blue
+			return new Color((float) rand.nextInt(255) / 255.0f,
+					(float) rand.nextInt(255) / 255.0f,
+					0.0f, 1.0f);
+		}
 	}
 
 	@Override

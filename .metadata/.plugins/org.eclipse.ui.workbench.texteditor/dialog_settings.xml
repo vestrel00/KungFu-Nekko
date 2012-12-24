@@ -2,8 +2,8 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="330" key="DIALOG_WIDTH"/>
-		<item value="465" key="DIALOG_Y_ORIGIN"/>
-		<item value="146" key="DIALOG_X_ORIGIN"/>
+		<item value="490" key="DIALOG_Y_ORIGIN"/>
+		<item value="43" key="DIALOG_X_ORIGIN"/>
 		<item value="378" key="DIALOG_HEIGHT"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
@@ -13,26 +13,26 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="" key="selection"/>
+		<item value="credits" key="selection"/>
 		<list key="findhistory">
-			<item value="draw"/>
-			<item value=" targets.get(i)"/>
-			<item value="KFNekko.enemies, "/>
-			<item value=","/>
-			<item value="onLanding"/>
-			<item value="attackEffect"/>
-			<item value="combatImages[combatImgIndex]"/>
-			<item value="L;"/>
+			<item value="play"/>
+			<item value="settings"/>
+			<item value="public BitmapFont"/>
+			<item value="BitmapFont"/>
+			<item value="stepForward"/>
+			<item value="hurt"/>
+			<item value="Left"/>
+			<item value="growl"/>
 		</list>
 		<list key="replacehistory">
+			<item value="credits"/>
+			<item value="dying"/>
+			<item value="Right"/>
+			<item value=" = Gdx.audio.newSound(Gdx.files"/>
+			<item value=" Gdx.audio.newSound(Gdx.files"/>
 			<item value=""/>
 			<item value="= new AtlasRegion[];"/>
 			<item value="attackEffect1"/>
-			<item value="-speedUp;"/>
-			<item value="nekko"/>
-			<item value="Region"/>
-			<item value="ui"/>
-			<item value="return true;"/>
 		</list>
 	</section>
 </section>

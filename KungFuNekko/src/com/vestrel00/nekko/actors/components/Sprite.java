@@ -37,4 +37,6 @@ public abstract class Sprite implements Updatable, Drawable {
 			batch.setColor(KFNekko.worldColor);
 		}
 	}
+
+	public abstract void onDeath();
 }

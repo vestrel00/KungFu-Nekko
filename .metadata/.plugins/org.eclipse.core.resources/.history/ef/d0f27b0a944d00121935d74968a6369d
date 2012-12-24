@@ -1,0 +1,7 @@
+package com.vestrel00.nekko.extras;
+
+import com.vestrel00.nekko.interf.Updatable;
+
+public class StringTyper implements Updatable {
+
+}

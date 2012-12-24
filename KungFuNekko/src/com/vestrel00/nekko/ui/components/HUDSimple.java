@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.vestrel00.nekko.KFNekko;
-import com.vestrel00.nekko.actors.Actor;
+import com.vestrel00.nekko.actors.Nekko;
 import com.vestrel00.nekko.interf.HUDUI;
 
 public class HUDSimple implements HUDUI {
@@ -23,10 +23,10 @@ public class HUDSimple implements HUDUI {
 			attack2Region, attack3Region, attack4Region, pauseRegion,
 			optionsRegion;
 
-	private Actor player;
+	private Nekko player;
 	private HUDInputProcessor processor;
 
-	public HUDSimple(Actor player, HUDInputProcessor processor) {
+	public HUDSimple(Nekko player, HUDInputProcessor processor) {
 		this.player = player;
 		this.processor = processor;
 		initRegions();
@@ -44,8 +44,6 @@ public class HUDSimple implements HUDUI {
 		optionsRegion = KFNekko.resource.atlas.findRegion("options");
 
 		regions = new Array<AtlasRegion>();
-		regions.add(topLeftRegion);
-		regions.add(topRightRegion);
 		regions.add(attack1Region);
 		regions.add(attack2Region);
 		regions.add(attack3Region);
@@ -83,8 +81,6 @@ public class HUDSimple implements HUDUI {
 				(float) optionsRegion.originalHeight);
 
 		baseRects = new Array<Rectangle>();
-		baseRects.add(topLeftBase);
-		baseRects.add(topRightBase);
 		baseRects.add(attack1Base);
 		baseRects.add(attack2Base);
 		baseRects.add(attack3Base);
@@ -104,8 +100,6 @@ public class HUDSimple implements HUDUI {
 		options = new Rectangle(optionsBase);
 
 		rects = new Array<Rectangle>();
-		rects.add(topLeft);
-		rects.add(topRight);
 		rects.add(attack1);
 		rects.add(attack2);
 		rects.add(attack3);
@@ -121,6 +115,18 @@ public class HUDSimple implements HUDUI {
 		for (int i = 0; i < rects.size; i++)
 			batch.draw(regions.get(i), rects.get(i).x, rects.get(i).y,
 					rects.get(i).width, rects.get(i).height);
+
+		// health
+		float c = 1.0f - (float) player.health / (float) player.maxHealth;
+		batch.setColor(1.0f, c, c, 1.0f);
+		batch.draw(topLeftRegion, topLeft.x, topLeft.y, topLeft.width,
+				topLeft.height);
+		// stamina
+		c = 1.0f - (float) player.stamina / (float) player.maxStamina;
+		batch.setColor(1.0f, 1.0f, c, 1.0f);
+		batch.draw(topRightRegion, topRight.x, topRight.y, topRight.width,
+				topRight.height);
+
 		batch.setColor(KFNekko.worldColor);
 	}
 
@@ -131,6 +137,10 @@ public class HUDSimple implements HUDUI {
 			rects.get(i).x = baseRects.get(i).x + KFNekko.camera.rect.x;
 			rects.get(i).y = baseRects.get(i).y + KFNekko.camera.rect.y;
 		}
+		topRight.x = topRightBase.x + KFNekko.camera.rect.x;
+		topRight.y = topRightBase.y + KFNekko.camera.rect.y;
+		topLeft.x = topLeftBase.x + KFNekko.camera.rect.x;
+		topLeft.y = topLeftBase.y + KFNekko.camera.rect.y;
 	}
 
 	/**
@@ -156,7 +166,13 @@ public class HUDSimple implements HUDUI {
 		else if (attack4.contains(x, y))
 			player.setCombatState(processor.attackManager
 					.input(ComboAttackManager.INPUT_DOWN));
-		else
+		else if (topLeft.contains(x, y)) {
+			if (++player.health >= player.maxHealth)
+				player.health = player.maxHealth;
+		} else if (topRight.contains(x, y)) {
+			if (++player.stamina >= player.maxStamina)
+				player.stamina = player.maxStamina;
+		} else
 			player.jump();
 
 		return true;
