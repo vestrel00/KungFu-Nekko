@@ -76,7 +76,7 @@ public class KFNekko implements ApplicationListener {
 		Location location = new Location(240.0f, 500.0f, 7.0f, 22.0f, 100.0f,
 				18.0f);
 		player = new Nekko(resource.atlas, location, enemies, 100,
-				Color.WHITE, 100);
+				Color.WHITE, 200); // TODO CHANGE
 		player.setState(FaceState.RIGHT, StatusState.ALIVE, CombatState.IDLE,
 				HorizontalMotionState.IDLE, VerticalMotionState.FALLING);
 		location.setActor(player);
@@ -199,6 +199,7 @@ public class KFNekko implements ApplicationListener {
 
 	@Override
 	public void pause() {
+		settings.commit();
 	}
 
 	@Override

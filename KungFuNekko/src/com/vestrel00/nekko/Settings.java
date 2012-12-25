@@ -14,7 +14,7 @@ public class Settings {
 	public Settings() {
 		Gdx.input.setCatchBackKey(false);
 		Gdx.input.setCatchMenuKey(false);
-		
+
 		soundOn = prefs.getBoolean("soundOn", true);
 		musicOn = prefs.getBoolean("musicOn", true);
 
@@ -24,6 +24,12 @@ public class Settings {
 		viewHeightHalf = viewHeight * 0.5f;
 		viewWidthQuarter = viewWidth * 0.25f;
 		viewHeightQuarter = viewHeight * 0.25f;
+	}
+
+	public void commit() {
+		prefs.putBoolean("soundOn", soundOn);
+		prefs.putBoolean("musicOn", musicOn);
+		prefs.flush();
 	}
 
 }

@@ -32,12 +32,17 @@ public class Map implements Updatable, Drawable {
 		sections = new Array<MapSection>();
 
 		sections.add(new MapSection(0.0f, 0.0f, 1024.0f, 232.0f));
+		sections.add(new MapSection(1024.0f, 0.0f, 1024.0f, 232.0f));
 
 		// section 1
 		sections.get(0).pieces.add(MapPieceGenerator.getPiece(
 				MapPieceGenerator.BRIDGE_1, 0.0f, 0.0f));
 		sections.get(0).pieces.add(MapPieceGenerator.getPiece(
 				MapPieceGenerator.BRIDGE_1, 512.0f, 0.0f));
+		sections.get(1).pieces.add(MapPieceGenerator.getPiece(
+				MapPieceGenerator.BRIDGE_1, 1024.0f, 0.0f));
+		sections.get(1).pieces.add(MapPieceGenerator.getPiece(
+				MapPieceGenerator.BRIDGE_1, 1536.0f, 0.0f));
 
 		platform = new Platform(sections);
 
@@ -47,7 +52,7 @@ public class Map implements Updatable, Drawable {
 				+ sections.get(sections.size - 1).rect.height;
 
 		rand = new Random();
-		spawnMonsters(50);
+		spawnMonsters(100);
 	}
 
 	private void spawnMonsters(int amount) {
@@ -65,19 +70,16 @@ public class Map implements Updatable, Drawable {
 	}
 
 	private static Color genColor() {
-		switch(rand.nextInt(3)){
+		switch (rand.nextInt(3)) {
 		case 0: // no red
-			return new Color(0.0f,
-					(float) rand.nextInt(255) / 255.0f,
+			return new Color(0.0f, (float) rand.nextInt(255) / 255.0f,
 					(float) rand.nextInt(255) / 255.0f, 1.0f);
 		case 1: // no green
-			return new Color((float) rand.nextInt(255) / 255.0f,
-					0.0f,
+			return new Color((float) rand.nextInt(255) / 255.0f, 0.0f,
 					(float) rand.nextInt(255) / 255.0f, 1.0f);
 		default: // no blue
 			return new Color((float) rand.nextInt(255) / 255.0f,
-					(float) rand.nextInt(255) / 255.0f,
-					0.0f, 1.0f);
+					(float) rand.nextInt(255) / 255.0f, 0.0f, 1.0f);
 		}
 	}
 

@@ -11,7 +11,7 @@ public class Resource implements Disposable {
 	public BitmapFont chunkFive, arial;
 
 	public Resource() {
-		atlas = new TextureAtlas(Gdx.files.internal("texture/KungFuNekko.pack"));
+		atlas = new TextureAtlas(Gdx.files.internal("texture/main.pack"));
 		arial = new BitmapFont();
 		chunkFive = new BitmapFont(Gdx.files.internal("fonts/chunkFive.fnt"),
 				Gdx.files.internal("fonts/chunkFive.png"), false);

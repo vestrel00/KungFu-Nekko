@@ -179,6 +179,7 @@ public class NekkoSprite extends Sprite {
 		nekko.location.speed.xDirection = (nekko.faceState == FaceState.LEFT) ? Speed.DIRECTION_LEFT
 				: Speed.DIRECTION_RIGHT;
 		nekko.location.update();
+		nekko.location.speed.xSpeed = nekko.location.speed.maxXSpeed;
 
 		if (nekko.location.onSlope || nekko.location.onPlatform)
 			KFNekko.audio.footStep(nekko.location.x);
@@ -191,6 +192,16 @@ public class NekkoSprite extends Sprite {
 		switch (nekko.combatState) {
 		case SPIN:
 			zoomAmount = 0.07f;
+			if (combatIndex == 7)
+				if (nekko.faceState == FaceState.LEFT)
+					effectImages[effectImgIndex].activate(attackEffect1,
+							nekko.location.x - 25.0f,
+							nekko.location.y - 8.0f, 0.08f, -0.3f, false, 0.0f,
+							Color.WHITE);
+				else
+					effectImages[effectImgIndex].activate(attackEffect1,
+							nekko.location.x + 25.0f, nekko.location.y - 8.0f, 0.08f,
+							0.3f, true, 0.0f, Color.WHITE);
 			if (nekko.location.onPlatform || nekko.location.onSlope) {
 				KFNekko.camera.setEffect(Camera.EFFECT_SHAKE, 1.0f, 3.0f,
 						200000000L);
@@ -203,12 +214,12 @@ public class NekkoSprite extends Sprite {
 			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
 			if (nekko.faceState == FaceState.LEFT)
 				effectImages[effectImgIndex].activate(attackEffect1,
-						nekko.location.rect.x + 10.0f, nekko.location.y - 3.0f,
+						nekko.location.rect.x + 10.0f, nekko.location.y - 5.0f,
 						0.08f, -0.3f, false, 0.0f, Color.WHITE);
 			else
 				effectImages[effectImgIndex].activate(attackEffect1,
 						nekko.location.rect.x + nekko.location.rect.width
-								- 10.0f, nekko.location.y - 3.0f, 0.08f, 0.3f,
+								- 10.0f, nekko.location.y - 5.0f, 0.08f, 0.3f,
 						true, 0.0f, Color.WHITE);
 			zoomAmount = 0.035f;
 			break;
@@ -216,24 +227,89 @@ public class NekkoSprite extends Sprite {
 			zoomAmount = 0.07f;
 			break;
 		case FLYINGKICK:
+			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+			if (combatIndex == 6)
+				if (nekko.faceState == FaceState.LEFT)
+					effectImages[effectImgIndex].activate(attackEffect1,
+							nekko.location.x - 19.0f,
+							nekko.location.y - 19.0f, 0.08f, -0.3f, false, 0.0f,
+							Color.WHITE);
+				else
+					effectImages[effectImgIndex].activate(attackEffect1,
+							nekko.location.x + 19.0f, nekko.location.y - 19.0f, 0.08f,
+							0.3f, true, 0.0f, Color.WHITE);
 			zoomAmount = 0.05f;
 			break;
 		case SUPERUPPERCUT:
+			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+			if (combatIndex == 5)
+				if (nekko.faceState == FaceState.LEFT)
+					effectImages[effectImgIndex].activate(attackEffect1,
+							nekko.location.x - 13.0f, nekko.location.y + 16.0f,
+							0.08f, 0.0f, false, 0.0f, Color.WHITE);
+				else
+					effectImages[effectImgIndex].activate(attackEffect1,
+							nekko.location.x + 13.0f, nekko.location.y + 16.0f,
+							0.08f, 0.0f, true, 0.0f, Color.WHITE);
 			zoomAmount = 0.09f;
 			break;
 		case LOWMIDDLEKICK:
+			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+			if (nekko.faceState == FaceState.LEFT)
+				effectImages[effectImgIndex]
+						.activate(attackEffect1, nekko.location.x
+								- ((combatIndex == 2) ? 18.0f : 20.0f),
+								nekko.location.y
+										- ((combatIndex == 2) ? 25.0f : 14.0f),
+								0.08f, -0.3f, false, 0.0f, Color.WHITE);
+			else
+				effectImages[effectImgIndex]
+						.activate(attackEffect1, nekko.location.x
+								+ ((combatIndex == 2) ? 18.0f : 20.0f),
+								nekko.location.y
+										- ((combatIndex == 2) ? 25.0f : 14.0f),
+								0.08f, 0.3f, true, 0.0f, Color.WHITE);
 			zoomAmount = 0.035f;
 			stepForward(12.0f);
 			break;
 		case HIGHKICK:
+			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+			if (nekko.faceState == FaceState.LEFT)
+				effectImages[effectImgIndex].activate(attackEffect1,
+						nekko.location.x - 27.0f, nekko.location.y, 0.08f,
+						0.0f, false, 0.0f, Color.WHITE);
+			else
+				effectImages[effectImgIndex].activate(attackEffect1,
+						nekko.location.x + 27.0f, nekko.location.y, 0.08f,
+						0.0f, true, 0.0f, Color.WHITE);
 			zoomAmount = 0.035f;
 			stepForward(12.0f);
 			break;
 		case DOWNWARDKICK:
+			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+			if (nekko.faceState == FaceState.LEFT)
+				effectImages[effectImgIndex].activate(attackEffect1,
+						nekko.location.x - 21.0f, nekko.location.y - 17.0f,
+						0.08f, 0.0f, false, 0.0f, Color.WHITE);
+			else
+				effectImages[effectImgIndex].activate(attackEffect1,
+						nekko.location.x + 21.0f, nekko.location.y - 17.0f,
+						0.08f, 0.0f, true, 0.0f, Color.WHITE);
 			zoomAmount = 0.05f;
 			stepForward(12.0f);
 			break;
 		case TWOSIDEDATTACK:
+			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+			effectImages[effectImgIndex].activate(
+					attackEffect1, // left
+					nekko.location.x - 22.0f, nekko.location.y - 7.0f, 0.08f,
+					-12.0f, false, 2.0f, Color.WHITE);
+			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+			effectImages[effectImgIndex].activate(
+					attackEffect1,// right
+					nekko.location.x + 22.0f, nekko.location.y - 7.0f, 0.08f,
+					12.0f, true, 2.0f, Color.WHITE);
+
 			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
 			effectImages[effectImgIndex].activate(currentTexture,
 					nekko.location.x, nekko.location.y, 0.08f, -12.0f, true,
@@ -245,9 +321,29 @@ public class NekkoSprite extends Sprite {
 			zoomAmount = 0.08f;
 			break;
 		case ROUNDKICK:
+			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+			if (nekko.faceState == FaceState.LEFT)
+				effectImages[effectImgIndex].activate(attackEffect1,
+						nekko.location.rect.x + 4.0f, nekko.location.y + 14.0f,
+						0.08f, 0.0f, false, 0.0f, Color.WHITE);
+			else
+				effectImages[effectImgIndex].activate(attackEffect1,
+						nekko.location.rect.x + nekko.location.rect.width
+								- 4.0f, nekko.location.y + 14.0f, 0.08f, 0.0f,
+						true, 0.0f, Color.WHITE);
 			zoomAmount = 0.06f;
 			break;
 		case UPPERCUT:
+			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
+			if (nekko.faceState == FaceState.LEFT)
+				effectImages[effectImgIndex].activate(attackEffect1,
+						nekko.location.rect.x + 4.0f, nekko.location.y + 20.0f,
+						0.08f, 0.0f, false, 0.0f, Color.WHITE);
+			else
+				effectImages[effectImgIndex].activate(attackEffect1,
+						nekko.location.rect.x + nekko.location.rect.width
+								- 4.0f, nekko.location.y + 21.0f, 0.08f, 0.0f,
+						true, 0.0f, Color.WHITE);
 			zoomAmount = 0.065f;
 			break;
 		}
@@ -413,7 +509,7 @@ public class NekkoSprite extends Sprite {
 				combatIndex = 0;
 				nekko.onDeactivateCombat();
 			}
-			if (combatIndex == 0 || combatIndex == 2 || combatIndex == 5) {
+			if (combatIndex == 0 || combatIndex == 3 || combatIndex == 6) {
 				nekko.attack(2 * damageMultiplier, true, 150.0f, nekko);
 				activateEffect();
 			}

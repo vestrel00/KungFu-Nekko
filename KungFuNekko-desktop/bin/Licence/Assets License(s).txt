@@ -6,19 +6,17 @@ Assets taken from Dogchicken Under CC-BY 3.0 License:
 "Flying Tongue Monster Sprite Sheet"
 "Cute Monster Sprite Sheet"
 "Skull Monster Sprite Sheet"
+"digital drawing images 1"
+"dance music 1"
 http://opengameart.org/users/dogchicken
 
 ------------------------------------------------------------------------------------------------
 Assets taken from Buch Under CC-BY 3.0 License:
 -----------------------------------------------------------------------------------------------
 "Minimal sidescroller tileset"
+"Dwarf Portrait"
+"Pixel art user interface elements"
 http://opengameart.org/content/minimal-sidescroller-tileset
-
-------------------------------------------------------------------------------------------------
-Assets taken from RedShrike Under CC-BY 3.0 License:
------------------------------------------------------------------------------------------------
-Electric from the USF's Surge sprite sheet
-http://opengameart.org/users/redshrike
 
 ----------------------------------------------------------------------------
 Assets taken from "Pow Studios" under CC-BY 3.0  License:
@@ -50,6 +48,19 @@ Assets taken from movingplaid under CC-BY-3.0 License:
 "concrete_step_2.wav"
 http://www.freesound.org/people/movingplaid/sounds/76188/
 
+----------------------------------------------------------------------------
+Assets taken from vestrel00 under CC-BY-3.0 License:
+----------------------------------------------------------------------------
+"gruff.mp3"
+"wrathOfMagic.mp3"
+vestrel00.wix.com/hoalw
+
+----------------------------------------------------------------------------
+Assets taken from NoiseCollector under CC-BY-3.0 License:
+----------------------------------------------------------------------------
+"cat1.wav"
+http://www.freesound.org/people/NoiseCollector/sounds/4913/
+
 ------------------------------------------------------------------------------------------------
 Assets taken from soundscalpel.com Under CC-BY 3.0 License:
 -----------------------------------------------------------------------------------------------
@@ -78,6 +89,7 @@ http://www.fontsquirrel.com/fonts/ChunkFive
 Assets taken under CC0 License:
 -----------------------------------------------------------------------------------------------
 http://opengameart.org/content/on-screen-controller-kit
+http://opengameart.org/content/flare-effect-blender
 http://opengameart.org/content/gui-sound-effects
 http://www.freesound.org/people/cosmician/sounds/159574/
 http://www.freesound.org/people/Ekokubza123/sounds/104183/

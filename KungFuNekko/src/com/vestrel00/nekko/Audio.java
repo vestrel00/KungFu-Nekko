@@ -10,8 +10,9 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class Audio implements Disposable {
 
+	private Array<Disposable> disposables;
 	private Array<Sound> punch, smack;
-	private Sound superSmack, footStep, growl, groundBoom;
+	private Sound superSmack, footStep, growl, groundBoom, meow, touch;
 	public Music music;
 	private Random rand;
 
@@ -30,11 +31,38 @@ public class Audio implements Disposable {
 		growl = Gdx.audio.newSound(Gdx.files.internal("sound/growl.mp3"));
 		groundBoom = Gdx.audio.newSound(Gdx.files
 				.internal("sound/groundBoom.mp3"));
+		meow = Gdx.audio.newSound(Gdx.files.internal("sound/meow.mp3"));
+		touch = Gdx.audio.newSound(Gdx.files.internal("sound/touch.mp3"));
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("music/main.mp3"));
 		music.setLooping(true);
 
 		rand = new Random();
+
+		addToDisposables();
+	}
+
+	private void addToDisposables() {
+		disposables = new Array<Disposable>();
+		disposables.addAll(punch);
+		disposables.addAll(smack);
+		disposables.add(superSmack);
+		disposables.add(footStep);
+		disposables.add(growl);
+		disposables.add(groundBoom);
+		disposables.add(meow);
+		disposables.add(touch);
+		disposables.add(music);
+	}
+
+	public void touch() {
+		if (KFNekko.settings.soundOn)
+			touch.play();
+	}
+
+	public void meow(float x) {
+		if (KFNekko.settings.soundOn)
+			meow.play(1.0f, 1.0f, getSoundPan(x));
 	}
 
 	public void groundBoom(float x) {
@@ -72,7 +100,7 @@ public class Audio implements Disposable {
 	/**
 	 * -1.0f <-----------camera.position.x------------> 1.0f
 	 */
-	private static float getSoundPan(float x) {
+	public static float getSoundPan(float x) {
 		if (x == KFNekko.camera.camera.position.x)
 			return 0.0f;
 		else
@@ -82,15 +110,7 @@ public class Audio implements Disposable {
 
 	@Override
 	public void dispose() {
-		for (int i = 0; i < punch.size; i++)
-			punch.get(i).dispose();
-		for (int i = 0; i < smack.size; i++)
-			smack.get(i).dispose();
-		superSmack.dispose();
-		footStep.dispose();
-		growl.dispose();
-		groundBoom.dispose();
-		music.dispose();
+		for (int i = 0; i < disposables.size; i++)
+			disposables.get(i).dispose();
 	}
-
 }
