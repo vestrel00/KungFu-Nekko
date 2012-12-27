@@ -1,0 +1,266 @@
+package com.vestrel00.nekko.maps;
+
+import java.util.Random;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.vestrel00.nekko.KFNekko;
+import com.vestrel00.nekko.actors.CuteMonster;
+import com.vestrel00.nekko.actors.Monster;
+import com.vestrel00.nekko.actors.components.Location;
+import com.vestrel00.nekko.actors.states.CombatState;
+import com.vestrel00.nekko.actors.states.FaceState;
+import com.vestrel00.nekko.actors.states.HorizontalMotionState;
+import com.vestrel00.nekko.actors.states.StatusState;
+import com.vestrel00.nekko.actors.states.VerticalMotionState;
+import com.vestrel00.nekko.interf.LevelManager;
+import com.vestrel00.nekko.maps.components.MapPieceGenerator;
+import com.vestrel00.nekko.maps.components.MapSection;
+
+public class LastStand implements LevelManager {
+
+	private static final long WAVE_DURATION = 60000000000L,
+			SPAWN_DURATION = 30000000000L;
+
+	private final CharSequence scoreStr = "Score : ", waveStr = "Wave : ";
+	private float scoreWidth, waveWidth;
+	private int score = 0, wave = 1;
+	private StringBuilder builder;
+	private Vector2 monsterLoc1, monsterLoc2, monsterLoc3, monsterLoc4,
+			defenseLoc1, defenseLoc2, defenseLoc3;
+	private long waveStartTime;
+	private Random rand;
+
+	public LastStand(Array<MapSection> sections) {
+
+		// all map sections will start at (0, 0)
+		MapSection section1 = new MapSection(0.0f, 0.0f, 1504.0f, 832.0f);
+		MapSection section2 = new MapSection(0.0f, 0.0f, 1504.0f, 768.0f);
+		MapSection section3 = new MapSection(0.0f, 0.0f, 448.0f, 320.0f);
+		sections.add(section1);
+		sections.add(section2);
+		sections.add(section3);
+
+		// SECTION 1
+		// Columns
+		section1.pieces.add(MapPieceGenerator.genQuads(true, 0, 1, 12, 64, 64));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 1, 11, 128, 128));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 1, 10, 192, 192));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 1, 9, 256, 256));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 1, 8, 320, 320));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 1, 5, 512, 512));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 1, 4, 704, 576));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 1, 4, 896, 576));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 1, 4, 1088, 576));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 1, 6, 1280, 448));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 1, 1, 6, 1472, 448));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 1, 1, 3, 1472, 192));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 1, 4, 1216, 448));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 2, 4, 960, 576));
+		// inner filler quads
+		for (int i = 0, x = 64, y = 0; i < 8; i++, x += 64, y += 64)
+			section1.pieces
+					.add(MapPieceGenerator.genQuads(true, 0, 4, 1, x, y));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 7, 1, 768, 448));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 7, 1, 768, 448));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 9, 1, 704, 384));
+		section1.pieces.add(MapPieceGenerator.genQuads(true, 0, 3, 3, 320, 0));
+		section1.pieces.add(MapPieceGenerator.genQuads(true, 0, 4, 2, 64.0f,
+				-64.0f));
+		// stairs
+		section1.pieces.add(MapPieceGenerator.genStairs(1, 1, 8, 64, 64));
+		section1.pieces.add(MapPieceGenerator.genStairs(1, 0, 2, 1152, 448));
+		section1.pieces.add(MapPieceGenerator.genStairs(0, 1, 1, 1216, 704));
+		// platform
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(false, 0, 9, 1, 576, 512));
+		section1.pieces.add(MapPieceGenerator.genQuads(false, 0, 1, 1, 0, 0));
+		// railing
+		section1.pieces.add(MapPieceGenerator.genRailing(9, 574, 576));
+		// special
+		section1.pieces.add(MapPieceGenerator.genQuads(false, 0, 1, 1, 1280,
+				384));
+		section1.pieces.add(MapPieceGenerator.genSingle(11, 1280, 448));
+		// bridges
+		section1.pieces.add(MapPieceGenerator.genBridge(false, false, 1, 1280,
+				384));
+		section1.pieces.add(MapPieceGenerator.genBridge(true, false, 1, 1280,
+				704));
+		// ornaments
+		for (int i = 0, y1 = 448, y2 = 768, x = 1344; i < 2; i++, x += 96) {
+			section1.pieces.add(MapPieceGenerator.genSingle(5, x, y1));
+			section1.pieces.add(MapPieceGenerator.genSingle(6, x, y2));
+		}
+		section1.pieces.add(MapPieceGenerator.genSingle(10, 6, 64));
+
+		// translate section1
+		section1.translate(448.0f, 64.0f);
+
+		// SECTION 2
+		// Columns
+		for (int i = 0, x = 128; i < 7; i++, x += 192)
+			section2.pieces
+					.add(MapPieceGenerator.genQuads(true, 0, 1, 8, x, 0));
+		section2.pieces.add(MapPieceGenerator.genQuads(true, 1, 1, 8, 1472, 0));
+		section2.pieces.add(MapPieceGenerator.genQuads(true, 0, 1, 1, 960, 0));
+		section2.pieces.add(MapPieceGenerator.genQuads(true, 0, 1, 7, 64, 0));
+		section2.pieces.add(MapPieceGenerator.genQuads(true, 0, 1, 6, 192, 0));
+		section2.pieces.add(MapPieceGenerator.genQuads(true, 0, 1, 6, 256, 0));
+		// bridges
+		section2.pieces.add(MapPieceGenerator.genBridge(true, false, 7, 128,
+				512));
+		section2.pieces
+				.add(MapPieceGenerator.genBridge(true, true, 3, 320, 64));
+		section2.pieces.add(MapPieceGenerator.genBridge(true, false, 5, 512,
+				258));
+		// stairs
+		section2.pieces.add(MapPieceGenerator.genStairs(0, 0, 2, 64, 192));
+		section2.pieces.add(MapPieceGenerator.genStairs(0, 0, 1, 64, 448));
+		section2.pieces.add(MapPieceGenerator.genStairs(0, 1, 1, 192, 384));
+		section2.pieces.add(MapPieceGenerator.genStairs(0, 0, 2, 960, 0));
+		section2.pieces.add(MapPieceGenerator.genStairs(0, 0, 2, 256, 320));
+		// ornaments
+		for (int i = 0, x = 576; i < 4; i++, x += 96)
+			section2.pieces.add(MapPieceGenerator.genSingle(5, x, 128));
+		for (int i = 0, x = 576; i < 10; i++, x += 96)
+			section2.pieces.add(MapPieceGenerator.genSingle(5, x, 320));
+		for (int i = 0, x = 320; i < 7; i++, x += 192)
+			section2.pieces.add(MapPieceGenerator.genSingle(6, x, 576));
+		// translate section2
+		section2.translate(448.0f, 896.0f);
+
+		// SECTION 3
+		section3.pieces.add(MapPieceGenerator.genQuads(false, 0, 7, 2, 0, 0));
+		// ornaments
+		for (int i = 0, x = 64; i < 3; i++, x += 128)
+			section3.pieces.add(MapPieceGenerator.genSingle(6, x, 128.0f));
+
+		// set the map width and height
+		KFNekko.map.width = 1952.0f;
+		KFNekko.map.height = 1664.0f;
+
+		// set player spawn location
+		KFNekko.player.location.x = 1234.0f;
+		KFNekko.player.location.y = 892.0f;
+
+		// other
+		rand = new Random();
+		scoreWidth = KFNekko.resource.arial.getBounds(scoreStr).width - 2.0f;
+		waveWidth = KFNekko.resource.arial.getBounds(waveStr).width - 2.0f;
+		builder = new StringBuilder();
+
+		// initialize monster spawn locations
+		monsterLoc1 = new Vector2(140.0f, 244.0f);
+		monsterLoc2 = new Vector2(1851.0f, 572.0f);
+		monsterLoc3 = new Vector2(1851.0f, 1308.0f);
+		monsterLoc4 = new Vector2(1851.0f, 1576.0f);
+
+		// init defense points
+		defenseLoc1 = new Vector2(1194.0f, 704.0f);
+		defenseLoc2 = new Vector2(1077.0f, 1277.0f);
+		defenseLoc3 = new Vector2(666.0f, 1514.0f);
+	}
+
+	@Override
+	public void update() {
+		if (TimeUtils.nanoTime() - waveStartTime > WAVE_DURATION) {
+			waveStartTime = TimeUtils.nanoTime();
+			// TODO spawn some supplies and power ups
+			// Delete references to old monsters and gc
+			
+
+		}
+
+		if (TimeUtils.nanoTime() - waveStartTime > SPAWN_DURATION) {
+			// spawn monsters 1 by 1 in each spawn location
+		}
+		updateScore();
+	}
+
+	private void updateScore() {
+		
+	}
+
+	private void spawnMonster(int type, int level, Vector2 spawnLoc,
+			Vector2 targetLoc) {
+		Location location = new Location(spawnLoc.x, spawnLoc.y, 4.0f, 22.0f,
+				80.0f, 18.0f);
+		Monster monster = null;
+		switch (type) {
+		case Monster.MONSTER_CUTE:
+			monster = new CuteMonster(KFNekko.resource.atlas, location,
+					KFNekko.allies, 0, 100.0f, KFNekko.map.width, genColor(),
+					level);
+			break;
+		case Monster.MONSTER_SKULL:
+			break;
+		case Monster.MONSTER_TOUNGE:
+			break;
+		}
+		monster.setState(FaceState.RIGHT, StatusState.ALIVE, CombatState.IDLE,
+				HorizontalMotionState.IDLE, VerticalMotionState.FALLING);
+		monster.setAbsoluteTargetLoc(targetLoc);
+		location.setActor(monster);
+		KFNekko.enemies.add(monster);
+	}
+
+	private Color genColor() {
+		switch (rand.nextInt(3)) {
+		case 0: // no red
+			return new Color(0.0f, (float) rand.nextInt(255) / 255.0f,
+					(float) rand.nextInt(255) / 255.0f, 1.0f);
+		case 1: // no green
+			return new Color((float) rand.nextInt(255) / 255.0f, 0.0f,
+					(float) rand.nextInt(255) / 255.0f, 1.0f);
+		default: // no blue
+			return new Color((float) rand.nextInt(255) / 255.0f,
+					(float) rand.nextInt(255) / 255.0f, 0.0f, 1.0f);
+		}
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		batch.begin();
+		// DRAW SCORE
+		KFNekko.resource.arial.draw(batch, scoreStr,
+				KFNekko.camera.camera.position.x - scoreWidth,
+				KFNekko.camera.camera.position.y + 308.0f);
+		// to avoid heap allocation - no String.valueOf()
+		builder.delete(0, builder.length());
+		builder.append(score);
+		KFNekko.resource.arial.draw(batch, builder,
+				KFNekko.camera.camera.position.x,
+				KFNekko.camera.camera.position.y + 308.0f);
+
+		// DRAW WAVE BELOW SCORE
+		KFNekko.resource.arial.draw(batch, waveStr,
+				KFNekko.camera.camera.position.x - waveWidth,
+				KFNekko.camera.camera.position.y + 280.0f);
+		// to avoid heap allocation - no String.valueOf()
+		builder.delete(0, builder.length());
+		builder.append(wave);
+		KFNekko.resource.arial.draw(batch, builder,
+				KFNekko.camera.camera.position.x,
+				KFNekko.camera.camera.position.y + 280.0f);
+		batch.end();
+	}
+}

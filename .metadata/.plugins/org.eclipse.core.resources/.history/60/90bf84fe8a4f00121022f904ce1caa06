@@ -1,0 +1,8 @@
+package com.vestrel00.nekko.interf;
+
+import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.Updatable;
+
+public interface LevelManager extends Updatable, Drawable {
+
+}

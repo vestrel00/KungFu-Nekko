@@ -1,0 +1,150 @@
+package com.vestrel00.nekko.maps;
+
+import java.util.Random;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
+import com.vestrel00.nekko.KFNekko;
+import com.vestrel00.nekko.actors.CuteMonster;
+import com.vestrel00.nekko.actors.Monster;
+import com.vestrel00.nekko.actors.components.Location;
+import com.vestrel00.nekko.actors.states.CombatState;
+import com.vestrel00.nekko.actors.states.FaceState;
+import com.vestrel00.nekko.actors.states.HorizontalMotionState;
+import com.vestrel00.nekko.actors.states.StatusState;
+import com.vestrel00.nekko.actors.states.VerticalMotionState;
+import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.Updatable;
+import com.vestrel00.nekko.maps.components.MapPieceGenerator;
+import com.vestrel00.nekko.maps.components.MapSection;
+import com.vestrel00.nekko.maps.components.Platform;
+
+public class Map implements Updatable, Drawable {
+
+	public static final int LAST_STAND = 0;
+
+	private Array<MapSection> sections;
+	public Platform platform;
+	public float width, height;
+	private static Random rand;
+
+	public Map() {
+		MapPieceGenerator.init();
+		rand = new Random();
+	}
+
+	public void setLevel(int mode) {
+		sections = new Array<MapSection>();
+		switch (mode) {
+		case LAST_STAND:
+			initLastStand();
+			break;
+		}
+		platform = new Platform(sections);
+		width = sections.get(sections.size - 1).rect.x
+				+ sections.get(sections.size - 1).rect.width;
+		height = sections.get(sections.size - 1).rect.y
+				+ sections.get(sections.size - 1).rect.height;
+
+		spawnMonsters(100);
+	}
+
+	private void initLastStand() {
+		// all map sections will start at (0, 0)
+		MapSection section1 = new MapSection(0.0f, 0.0f, 1504.0f, 1600.0f);
+		sections.add(section1);
+
+		// SECTION 1
+		// Columns
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 1, 10, 128, 128));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 1, 9, 128, 768));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 1, 8, 320, 320));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 1, 8, 320, 832));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 1, 6, 512, 512));
+		section1.pieces
+				.add(MapPieceGenerator.genQuads(true, 0, 1, 7, 512, 896));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 1, 12, 704, 576));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 1, 12, 896, 576));
+		section1.pieces.add(MapPieceGenerator.genQuads(true, 0, 1, 12, 1088,
+				576));
+		section1.pieces.add(MapPieceGenerator.genQuads(true, 0, 1, 14, 1280,
+				448));
+		// stairs
+		section1.pieces.add(MapPieceGenerator.genStairs(1, 1, 9, 0, 0));
+		section1.pieces.add(MapPieceGenerator.genStairs(1, 0, 2, 1152, 448));
+		// inner filler quads
+		for (int i = 0, x = 64, y = 0; i < 8; i++, x += 64, y += 64)
+			section1.pieces.add(MapPieceGenerator
+					.genQuads(true, 0, 4, 1, x, y));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 7, 1, 768, 448));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 7, 1, 768, 448));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 9, 1, 704, 384));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 3, 3, 1152, 192));
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(true, 0, 2, 2, 1024, 256));
+		// platform
+		section1.pieces.add(MapPieceGenerator
+				.genQuads(false, 0, 9, 1, 576, 512));
+		// railing
+		section1.pieces.add(MapPieceGenerator
+				.genRailing(9, 574, offsetY)(false, 0, 9, 1, 576, 512));
+		
+		// FINALLY offset the map section to world/scene coordinates
+		section1.translate(0.0f, 0.0f);
+	}
+
+	private void spawnMonsters(int amount) {
+		for (int i = 0; i < amount; i++) {
+			Location location = new Location((float) rand.nextInt((int) width),
+					1600.0f, 4.0f, 22.0f, 80.0f, 18.0f);
+			Monster monster = new CuteMonster(KFNekko.resource.atlas, location,
+					KFNekko.allies, 20, 100.0f, 240.0f, genColor(), 1);
+			monster.setState(FaceState.RIGHT, StatusState.ALIVE,
+					CombatState.IDLE, HorizontalMotionState.IDLE,
+					VerticalMotionState.FALLING);
+			location.setActor(monster);
+			KFNekko.enemies.add(monster);
+		}
+	}
+
+	private static Color genColor() {
+		switch (rand.nextInt(3)) {
+		case 0: // no red
+			return new Color(0.0f, (float) rand.nextInt(255) / 255.0f,
+					(float) rand.nextInt(255) / 255.0f, 1.0f);
+		case 1: // no green
+			return new Color((float) rand.nextInt(255) / 255.0f, 0.0f,
+					(float) rand.nextInt(255) / 255.0f, 1.0f);
+		default: // no blue
+			return new Color((float) rand.nextInt(255) / 255.0f,
+					(float) rand.nextInt(255) / 255.0f, 0.0f, 1.0f);
+		}
+	}
+
+	@Override
+	public void update() {
+		for (int i = 0; i < KFNekko.enemies.size; i++)
+			KFNekko.enemies.get(i).update();
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		for (int i = 0; i < sections.size; i++)
+			sections.get(i).draw(batch);
+		for (int i = 0; i < KFNekko.enemies.size; i++)
+			KFNekko.enemies.get(i).draw(batch);
+	}
+
+}

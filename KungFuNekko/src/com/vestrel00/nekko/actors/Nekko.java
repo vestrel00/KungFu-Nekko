@@ -1,11 +1,29 @@
+/*******************************************************************************
+ * Copyright 2012 Vandolf Estrellado
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
 package com.vestrel00.nekko.actors;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.components.Location;
 import com.vestrel00.nekko.actors.components.NekkoSprite;
+import com.vestrel00.nekko.actors.components.PowerUp;
 import com.vestrel00.nekko.actors.components.Speed;
 import com.vestrel00.nekko.actors.states.CombatState;
 import com.vestrel00.nekko.actors.states.FaceState;
@@ -14,8 +32,13 @@ import com.vestrel00.nekko.actors.states.StatusState;
 
 public class Nekko extends Actor {
 
+	private final long POWERUP_DURATION = 20000000000L;
+
 	private NekkoSprite nekkoSprite;
-	public int stamina, maxStamina;
+	private long powerUpTime;
+	private boolean poweredUp;
+	private float speedTmp;
+	public int stamina, maxStamina, powerUp;
 
 	public Nekko(TextureAtlas atlas, Location location, Array<Actor> targets,
 			int maxHealth, Color color, int maxStamina) {
@@ -43,11 +66,16 @@ public class Nekko extends Actor {
 	public void update() {
 		// cannot attack and walk/move/run at the same time while on
 		// platform
-		if (combatState != CombatState.IDLE && location.onPlatform) {
+		if (combatState != CombatState.IDLE
+				&& (location.onPlatform || location.onSlope)) {
 			location.speed.xSpeed = 0.0f;
 			horizontalMotionState = HorizontalMotionState.IDLE;
 		}
 		super.update();
+		if (poweredUp && TimeUtils.nanoTime() - powerUpTime > POWERUP_DURATION) {
+			poweredUp = false;
+			onDeactivatePowerUp();
+		}
 	}
 
 	private void executeCombatMove() {
@@ -229,6 +257,75 @@ public class Nekko extends Actor {
 				KFNekko.audio.superSmack(location.x);
 			else
 				KFNekko.audio.smack(location.x);
+		}
+	}
+
+	private void onDeactivatePowerUp() {
+		// undo changes 
+		// TODO SOUND
+		nekkoSprite.color.set(Color.WHITE);
+		switch (powerUp) {
+		// TODO SOUND
+		// cannot be hit
+		case PowerUp.INVISIBILITY:
+
+			break;
+		// do twice damage
+		case PowerUp.RAGE:
+			nekkoSprite.damageMultiplier = 1;
+			break;
+		// move 1.5 x speed
+		case PowerUp.QUICKFEET:
+			location.speed.maxXSpeed = speedTmp;
+			location.speed.xSpeed = speedTmp;
+			break;
+		// animation speedup
+		case PowerUp.KUNGFU_MASTER:
+			nekkoSprite.speedUp = 0;
+			break;
+		// do not subtract stamina
+		case PowerUp.ENDURANCE:
+
+			break;
+		}
+	}
+
+	public void powerUp(int type) {
+		if (poweredUp)
+			onDeactivatePowerUp();
+		powerUp = type;
+		poweredUp = true;
+		powerUpTime = TimeUtils.nanoTime();
+		switch (type) {
+		// cannot be hit
+		case PowerUp.INVISIBILITY:
+			// TODO SOUND
+			nekkoSprite.color.set(1.0f, 1.0f, 1.0f, 0.4f);
+			break;
+		// do twice damage
+		case PowerUp.RAGE:
+			nekkoSprite.damageMultiplier = 2;
+			nekkoSprite.color.set(1.0f, 0.0f, 0.0f, 1.0f);
+			// TODO SOUND
+			break;
+		// move 1.5 x speed
+		case PowerUp.QUICKFEET:
+			nekkoSprite.color.set(Color.BLUE);
+			speedTmp = location.speed.maxXSpeed;
+			location.speed.maxXSpeed = speedTmp * 1.5f;
+			// TODO SOUND
+			break;
+		// animation speedup
+		case PowerUp.KUNGFU_MASTER:
+			nekkoSprite.color.set(0.1f, 0.1f, 0.1f, 1.0f);
+			nekkoSprite.speedUp = 20000000L;
+			// TODO SOUND
+			break;
+		// do not subtract stamina
+		case PowerUp.ENDURANCE:
+			nekkoSprite.color.set(Color.YELLOW);
+			// TODO SOUND
+			break;
 		}
 	}
 

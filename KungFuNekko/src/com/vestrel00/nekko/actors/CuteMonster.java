@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright 2012 Vandolf Estrellado
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
 package com.vestrel00.nekko.actors;
 
 import com.badlogic.gdx.graphics.Color;
@@ -9,6 +25,7 @@ import com.vestrel00.nekko.actors.components.CuteMonsterSprite;
 import com.vestrel00.nekko.actors.components.Location;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.StatusState;
+import com.vestrel00.nekko.actors.states.Visibility;
 
 public class CuteMonster extends Monster {
 
@@ -19,12 +36,22 @@ public class CuteMonster extends Monster {
 	public float knockBackDistance;
 
 	public CuteMonster(TextureAtlas atlas, Location location,
-			Array<Actor> targets, int maxHealth, float aggroRange,
-			float motionRange, Color color, int level) {
-		super(targets, location, maxHealth, aggroRange, motionRange);
+			Array<Actor> targets, float aggroRange, float motionRange,
+			Color color, int level) {
+		super(targets, location, 0, aggroRange, motionRange);
 		cuteSprite = new CuteMonsterSprite(this, atlas, color);
 		sprite = cuteSprite;
 
+		knockBackDistance = 20.0f + (float) level;
+		damage = 1 + level / 2;
+		this.maxHealth = 4 + level * 2;
+		health = this.maxHealth;
+		this.level = level;
+	}
+
+
+	@Override
+	public void reset(int level) {
 		knockBackDistance = 20.0f + (float) level;
 		damage = 1 + level / 2;
 		maxHealth = 4 + level * 2;
@@ -54,7 +81,8 @@ public class CuteMonster extends Monster {
 					if (!aoe)
 						break;
 				}
-			if (TimeUtils.nanoTime() - lastGrowlTime > 500000000L) {
+			if (visibility == Visibility.VISIBLE
+					&& TimeUtils.nanoTime() - lastGrowlTime > 500000000L) {
 				lastGrowlTime = TimeUtils.nanoTime();
 				KFNekko.audio.growl(location.x);
 			}

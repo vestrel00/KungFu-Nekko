@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright 2012 Vandolf Estrellado
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
 package com.vestrel00.nekko.actors.components;
 
 import com.badlogic.gdx.math.Rectangle;
@@ -68,12 +84,13 @@ public class Location implements Updatable {
 				if (knockBackDirection < 0.0f) {
 					speed.xDirection = Speed.DIRECTION_LEFT;
 					actor.faceState = FaceState.RIGHT;
-					if (x <= knockBackFinal)
+					if (x <= knockBackFinal || rect.x < 10.0f)
 						actor.horizontalMotionState = HorizontalMotionState.IDLE;
 				} else if (knockBackDirection > 0.0f) {
 					speed.xDirection = Speed.DIRECTION_RIGHT;
 					actor.faceState = FaceState.LEFT;
-					if (x >= knockBackFinal)
+					if (x >= knockBackFinal
+							|| rect.x + rect.width > KFNekko.map.width - 10.0f)
 						actor.horizontalMotionState = HorizontalMotionState.IDLE;
 				}
 				break;
@@ -105,7 +122,7 @@ public class Location implements Updatable {
 			// decrease dx while on slope to patch up our flawed slope detection
 			// algorithm
 			if (onSlope)
-				dx *= 0.4f;
+				dx *= 0.6f;
 
 			boolean addDx = false, addDy = false;
 
@@ -116,7 +133,6 @@ public class Location implements Updatable {
 			else {
 				if (speed.yDirection == Speed.DIRECTION_DOWN)
 					speed.ySpeed = 0.0f;
-				doubleJumped = false;
 				actor.verticalMotionState = VerticalMotionState.FALLING;
 			}
 
@@ -134,7 +150,7 @@ public class Location implements Updatable {
 			if (addDy)
 				y += dy;
 
-			// rough patch
+			// rough patch should never happen now though
 			if (y < 0.0f)
 				y = spawnY;
 
@@ -151,7 +167,8 @@ public class Location implements Updatable {
 
 	public boolean jump() {
 		if (onPlatform || onSlope) {
-			KFNekko.audio.footStep(x);
+			if (actor.visibility == Visibility.VISIBLE)
+				KFNekko.audio.footStep(x);
 			onPlatform = false;
 			onSlope = false;
 			actor.verticalMotionState = VerticalMotionState.JUMPING;

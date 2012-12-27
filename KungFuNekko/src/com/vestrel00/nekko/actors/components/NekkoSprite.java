@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright 2012 Vandolf Estrellado
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
 package com.vestrel00.nekko.actors.components;
 
 import com.badlogic.gdx.graphics.Color;
@@ -13,6 +29,7 @@ import com.vestrel00.nekko.actors.states.CombatState;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.HorizontalMotionState;
 import com.vestrel00.nekko.actors.states.StatusState;
+import com.vestrel00.nekko.actors.states.Visibility;
 
 public class NekkoSprite extends Sprite {
 
@@ -192,16 +209,16 @@ public class NekkoSprite extends Sprite {
 		switch (nekko.combatState) {
 		case SPIN:
 			zoomAmount = 0.07f;
-			if (combatIndex == 7)
+			if (combatIndex == 7) {
 				if (nekko.faceState == FaceState.LEFT)
 					effectImages[effectImgIndex].activate(attackEffect1,
-							nekko.location.x - 25.0f,
-							nekko.location.y - 8.0f, 0.08f, -0.3f, false, 0.0f,
-							Color.WHITE);
+							nekko.location.x - 25.0f, nekko.location.y - 8.0f,
+							0.08f, -0.3f, false, 0.0f, color);
 				else
 					effectImages[effectImgIndex].activate(attackEffect1,
-							nekko.location.x + 25.0f, nekko.location.y - 8.0f, 0.08f,
-							0.3f, true, 0.0f, Color.WHITE);
+							nekko.location.x + 25.0f, nekko.location.y - 8.0f,
+							0.08f, 0.3f, true, 0.0f, color);
+			}
 			if (nekko.location.onPlatform || nekko.location.onSlope) {
 				KFNekko.camera.setEffect(Camera.EFFECT_SHAKE, 1.0f, 3.0f,
 						200000000L);
@@ -215,12 +232,12 @@ public class NekkoSprite extends Sprite {
 			if (nekko.faceState == FaceState.LEFT)
 				effectImages[effectImgIndex].activate(attackEffect1,
 						nekko.location.rect.x + 10.0f, nekko.location.y - 5.0f,
-						0.08f, -0.3f, false, 0.0f, Color.WHITE);
+						0.08f, -0.3f, false, 0.0f, color);
 			else
 				effectImages[effectImgIndex].activate(attackEffect1,
 						nekko.location.rect.x + nekko.location.rect.width
 								- 10.0f, nekko.location.y - 5.0f, 0.08f, 0.3f,
-						true, 0.0f, Color.WHITE);
+						true, 0.0f, color);
 			zoomAmount = 0.035f;
 			break;
 		case POWERSHOT:
@@ -228,29 +245,30 @@ public class NekkoSprite extends Sprite {
 			break;
 		case FLYINGKICK:
 			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
-			if (combatIndex == 6)
+			if (combatIndex == 6) {
 				if (nekko.faceState == FaceState.LEFT)
 					effectImages[effectImgIndex].activate(attackEffect1,
-							nekko.location.x - 19.0f,
-							nekko.location.y - 19.0f, 0.08f, -0.3f, false, 0.0f,
-							Color.WHITE);
+							nekko.location.x - 19.0f, nekko.location.y - 19.0f,
+							0.08f, -0.3f, false, 0.0f, color);
 				else
 					effectImages[effectImgIndex].activate(attackEffect1,
-							nekko.location.x + 19.0f, nekko.location.y - 19.0f, 0.08f,
-							0.3f, true, 0.0f, Color.WHITE);
+							nekko.location.x + 19.0f, nekko.location.y - 19.0f,
+							0.08f, 0.3f, true, 0.0f, color);
+			}
 			zoomAmount = 0.05f;
 			break;
 		case SUPERUPPERCUT:
 			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
-			if (combatIndex == 5)
+			if (combatIndex == 5) {
 				if (nekko.faceState == FaceState.LEFT)
 					effectImages[effectImgIndex].activate(attackEffect1,
 							nekko.location.x - 13.0f, nekko.location.y + 16.0f,
-							0.08f, 0.0f, false, 0.0f, Color.WHITE);
+							0.08f, 0.0f, false, 0.0f, color);
 				else
 					effectImages[effectImgIndex].activate(attackEffect1,
 							nekko.location.x + 13.0f, nekko.location.y + 16.0f,
-							0.08f, 0.0f, true, 0.0f, Color.WHITE);
+							0.08f, 0.0f, true, 0.0f, color);
+			}
 			zoomAmount = 0.09f;
 			break;
 		case LOWMIDDLEKICK:
@@ -261,14 +279,14 @@ public class NekkoSprite extends Sprite {
 								- ((combatIndex == 2) ? 18.0f : 20.0f),
 								nekko.location.y
 										- ((combatIndex == 2) ? 25.0f : 14.0f),
-								0.08f, -0.3f, false, 0.0f, Color.WHITE);
+								0.08f, -0.3f, false, 0.0f, color);
 			else
 				effectImages[effectImgIndex]
 						.activate(attackEffect1, nekko.location.x
 								+ ((combatIndex == 2) ? 18.0f : 20.0f),
 								nekko.location.y
 										- ((combatIndex == 2) ? 25.0f : 14.0f),
-								0.08f, 0.3f, true, 0.0f, Color.WHITE);
+								0.08f, 0.3f, true, 0.0f, color);
 			zoomAmount = 0.035f;
 			stepForward(12.0f);
 			break;
@@ -277,11 +295,11 @@ public class NekkoSprite extends Sprite {
 			if (nekko.faceState == FaceState.LEFT)
 				effectImages[effectImgIndex].activate(attackEffect1,
 						nekko.location.x - 27.0f, nekko.location.y, 0.08f,
-						0.0f, false, 0.0f, Color.WHITE);
+						0.0f, false, 0.0f, color);
 			else
 				effectImages[effectImgIndex].activate(attackEffect1,
 						nekko.location.x + 27.0f, nekko.location.y, 0.08f,
-						0.0f, true, 0.0f, Color.WHITE);
+						0.0f, true, 0.0f, color);
 			zoomAmount = 0.035f;
 			stepForward(12.0f);
 			break;
@@ -290,11 +308,11 @@ public class NekkoSprite extends Sprite {
 			if (nekko.faceState == FaceState.LEFT)
 				effectImages[effectImgIndex].activate(attackEffect1,
 						nekko.location.x - 21.0f, nekko.location.y - 17.0f,
-						0.08f, 0.0f, false, 0.0f, Color.WHITE);
+						0.08f, 0.0f, false, 0.0f, color);
 			else
 				effectImages[effectImgIndex].activate(attackEffect1,
 						nekko.location.x + 21.0f, nekko.location.y - 17.0f,
-						0.08f, 0.0f, true, 0.0f, Color.WHITE);
+						0.08f, 0.0f, true, 0.0f, color);
 			zoomAmount = 0.05f;
 			stepForward(12.0f);
 			break;
@@ -303,12 +321,12 @@ public class NekkoSprite extends Sprite {
 			effectImages[effectImgIndex].activate(
 					attackEffect1, // left
 					nekko.location.x - 22.0f, nekko.location.y - 7.0f, 0.08f,
-					-12.0f, false, 2.0f, Color.WHITE);
+					-12.0f, false, 2.0f, color);
 			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
 			effectImages[effectImgIndex].activate(
 					attackEffect1,// right
 					nekko.location.x + 22.0f, nekko.location.y - 7.0f, 0.08f,
-					12.0f, true, 2.0f, Color.WHITE);
+					12.0f, true, 2.0f, color);
 
 			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
 			effectImages[effectImgIndex].activate(currentTexture,
@@ -325,25 +343,25 @@ public class NekkoSprite extends Sprite {
 			if (nekko.faceState == FaceState.LEFT)
 				effectImages[effectImgIndex].activate(attackEffect1,
 						nekko.location.rect.x + 4.0f, nekko.location.y + 14.0f,
-						0.08f, 0.0f, false, 0.0f, Color.WHITE);
+						0.08f, 0.0f, false, 0.0f, color);
 			else
 				effectImages[effectImgIndex].activate(attackEffect1,
 						nekko.location.rect.x + nekko.location.rect.width
 								- 4.0f, nekko.location.y + 14.0f, 0.08f, 0.0f,
-						true, 0.0f, Color.WHITE);
+						true, 0.0f, color);
 			zoomAmount = 0.06f;
 			break;
 		case UPPERCUT:
 			effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
 			if (nekko.faceState == FaceState.LEFT)
 				effectImages[effectImgIndex].activate(attackEffect1,
-						nekko.location.rect.x + 4.0f, nekko.location.y + 20.0f,
-						0.08f, 0.0f, false, 0.0f, Color.WHITE);
+						nekko.location.rect.x, nekko.location.y + 20.0f, 0.08f,
+						0.0f, false, 0.0f, color);
 			else
 				effectImages[effectImgIndex].activate(attackEffect1,
-						nekko.location.rect.x + nekko.location.rect.width
-								- 4.0f, nekko.location.y + 21.0f, 0.08f, 0.0f,
-						true, 0.0f, Color.WHITE);
+						nekko.location.rect.x + nekko.location.rect.width,
+						nekko.location.y + 21.0f, 0.08f, 0.0f, true, 0.0f,
+						color);
 			zoomAmount = 0.065f;
 			break;
 		}
@@ -398,14 +416,22 @@ public class NekkoSprite extends Sprite {
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		// draw after images
-		for (int i = 0; i < combatImages.length; i++)
-			combatImages[i].draw(batch);
-		super.draw(batch);
-		// draw after images
-		for (int i = 0; i < effectImages.length; i++)
-			effectImages[i].draw(batch);
-		batch.setColor(KFNekko.worldColor);
+		if (actor.visibility == Visibility.VISIBLE) {
+			// draw after images
+			for (int i = 0; i < combatImages.length; i++)
+				combatImages[i].draw(batch);
+			batch.setColor(color);
+			// draw currentTexture
+			batch.draw(currentTexture, actor.location.rect.x,
+					actor.location.rect.y, actor.location.rect.width * 0.5f,
+					actor.location.rect.height * 0.5f,
+					actor.location.rect.width, actor.location.rect.height,
+					xScale, 1.0f, rotation);
+			// draw after images
+			for (int i = 0; i < effectImages.length; i++)
+				effectImages[i].draw(batch);
+			batch.setColor(KFNekko.worldColor);
+		}
 	}
 
 	private boolean switchHorizontalMotionState() {
@@ -418,8 +444,10 @@ public class NekkoSprite extends Sprite {
 				animationDelay = 120000000L;
 				return true;
 			case KNOCKED_BACK:
-				if (++hurtIndex == hurt.length)
+				if (++hurtIndex == hurt.length) {
+					KFNekko.audio.meow(nekko.location.x);
 					hurtIndex = 0;
+				}
 				currentTexture = hurt[hurtIndex];
 				animationDelay = 100000000L;
 				return true;

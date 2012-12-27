@@ -1,0 +1,25 @@
+package com.vestrel00.nekko.extras;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.Updatable;
+
+public class TextRectangle implements Updatable, Drawable {
+
+	public TextRectangle(float width, float height) {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

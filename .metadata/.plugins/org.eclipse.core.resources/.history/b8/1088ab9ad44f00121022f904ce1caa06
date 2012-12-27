@@ -1,0 +1,5 @@
+package com.vestrel00.nekko.extras;
+
+public class TextRectangle implements Updatable, Drawable {
+
+}

@@ -1,0 +1,38 @@
+package com.vestrel00.nekko;
+
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.Touchable;
+import com.vestrel00.nekko.interf.Updatable;
+
+public class PauseManager implements Touchable, Drawable, Updatable {
+
+	private final CharSequence PAUSED = "PAUSED", RESUME = "RESUME";
+	private Rectangle resumeRect;
+	private ShapeRenderer
+
+	public PauseManager() {
+		TextBounds bound = KFNekko.resource.chunkFive.getBounds(RESUME);
+		resumeRect = new Rectangle(0, 0, bound.width, bound.height);
+	}
+
+	@Override
+	public void update() {
+		resumeRect.x = KFNekko.camera.rect.x + 360.0f;
+		resumeRect.y = KFNekko.camera.rect.y + 210.0f;
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		batch.draw(texture, x, y, width, height)
+	}
+
+	@Override
+	public boolean onTouchDown(float x, float y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

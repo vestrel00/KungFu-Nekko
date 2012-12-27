@@ -1,5 +1,22 @@
+/*******************************************************************************
+ * Copyright 2012 Vandolf Estrellado
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
 package com.vestrel00.nekko.actors;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.components.Location;
@@ -11,15 +28,24 @@ import com.vestrel00.nekko.actors.states.StatusState;
 public abstract class Monster extends Actor {
 
 	protected Actor target;
-	protected float aggroRange, motionRange, originX;
+	protected float aggroRange, motionRange;
+	protected Vector2 targetLoc;
+	public int level;
 
 	public Monster(Array<Actor> targets, Location location, int maxHealth,
 			float aggroRange, float motionRange) {
 		super(targets, location, maxHealth);
 		this.aggroRange = aggroRange;
 		this.motionRange = motionRange;
-		originX = location.x;
 	}
+
+	@Override
+	public void onDeath() {
+		super.onDeath();
+		KFNekko.map.manager.monsterDown(this);
+	}
+
+	public abstract void reset(int level);
 
 	@Override
 	protected void receiveDamage(int damage) {
@@ -61,7 +87,6 @@ public abstract class Monster extends Actor {
 		if (target != null && sprite.combatIndex == 0
 				&& location.rect.overlaps(target.location.rect)) {
 			setCombatState(CombatState.ATTACK);
-			// TODO SOUND
 		}
 	}
 
@@ -70,12 +95,16 @@ public abstract class Monster extends Actor {
 			faceState = (target.location.x >= location.x) ? FaceState.RIGHT
 					: FaceState.LEFT;
 			setHorizontalMotionState(HorizontalMotionState.MOVING);
+		} else if (targetLoc != null) {
+			faceState = (targetLoc.x >= location.x) ? FaceState.RIGHT
+					: FaceState.LEFT;
+			setHorizontalMotionState(HorizontalMotionState.MOVING);
 		}
 
-		if (location.x < 30.0f || location.x < originX - motionRange)
+		if (location.x < 30.0f || location.x < location.spawnX - motionRange)
 			faceState = FaceState.RIGHT;
 		else if (location.x > KFNekko.map.width - 30.0f
-				|| location.x > originX + motionRange)
+				|| location.x > location.spawnX + motionRange)
 			faceState = FaceState.LEFT;
 
 	}
@@ -85,6 +114,10 @@ public abstract class Monster extends Actor {
 				&& targ.location.x <= location.x + aggroRange
 				&& targ.location.y >= location.y - aggroRange
 				&& targ.location.y <= location.y + aggroRange;
+	}
+
+	public void setAbsoluteTargetLoc(Vector2 targetLoc) {
+		this.targetLoc = targetLoc;
 	}
 
 }

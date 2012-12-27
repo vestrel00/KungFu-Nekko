@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright 2012 Vandolf Estrellado
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
 package com.vestrel00.nekko.maps.components;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,7 +26,7 @@ public class MapPiece implements Drawable {
 
 	public Rectangle rect;
 	public AtlasRegion[] regions;
-	public float[] regionXCoords, regionYCoords;
+	public Rectangle[] regionRects;
 	public float[] horizontal, vertical, slope;
 
 	public MapPiece(float width, float height) {
@@ -27,8 +43,8 @@ public class MapPiece implements Drawable {
 		rect.y += offsetY;
 		int i = 0;
 		for (i = 0; i < regions.length; i++) {
-			regionXCoords[i] += offsetX;
-			regionYCoords[i] += offsetY;
+			regionRects[i].x += offsetX;
+			regionRects[i].y += offsetY;
 		}
 		if (horizontal != null)
 			for (i = 0; i < horizontal.length; i += 3) {
@@ -55,7 +71,9 @@ public class MapPiece implements Drawable {
 	public void draw(SpriteBatch batch) {
 		if (KFNekko.camera.rect.overlaps(rect))
 			for (int i = 0; i < regions.length; i++)
-				batch.draw(regions[i], regionXCoords[i], regionYCoords[i]);
+				if (regionRects[i].overlaps(KFNekko.camera.rect))
+					batch.draw(regions[i], regionRects[i].x, regionRects[i].y,
+							regionRects[i].width, regionRects[i].height);
 	}
 
 }

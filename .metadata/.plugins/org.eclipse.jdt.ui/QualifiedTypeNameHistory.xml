@@ -4,7 +4,6 @@
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.OrthographicCamera"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.Preferences"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.maps.components.Background"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.maps.Map"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.glutils.ShapeRenderer"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.ui.HUD"/>
@@ -14,7 +13,6 @@
 <fullyQualifiedTypeName name="com.vestrel00.nekko.ui.components.HUDInputProcessor"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.Sprite"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.NekkoSprite"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.states.Visibility"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.Location"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.Input.Keys"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.maps.components.MapSection"/>
@@ -43,16 +41,18 @@
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.utils.TimeUtils"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.KFNekko"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.audio.Music"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.audio.Sound"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Color"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Touchable"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Updatable"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Drawable"/>
 <fullyQualifiedTypeName name="java.util.Random"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.extras.StringTyper"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.math.Rectangle"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.maps.Map"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.states.Visibility"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.KFNekko"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Updatable"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Drawable"/>
 </qualifiedTypeNameHistroy>

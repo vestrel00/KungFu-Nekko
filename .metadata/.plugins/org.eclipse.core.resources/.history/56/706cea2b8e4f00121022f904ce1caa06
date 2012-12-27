@@ -1,0 +1,94 @@
+package com.vestrel00.nekko.maps;
+
+import java.util.Random;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
+import com.vestrel00.nekko.KFNekko;
+import com.vestrel00.nekko.actors.CuteMonster;
+import com.vestrel00.nekko.actors.Monster;
+import com.vestrel00.nekko.actors.components.Location;
+import com.vestrel00.nekko.actors.states.CombatState;
+import com.vestrel00.nekko.actors.states.FaceState;
+import com.vestrel00.nekko.actors.states.HorizontalMotionState;
+import com.vestrel00.nekko.actors.states.StatusState;
+import com.vestrel00.nekko.actors.states.VerticalMotionState;
+import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.LevelManager;
+import com.vestrel00.nekko.interf.Updatable;
+import com.vestrel00.nekko.maps.components.MapPieceGenerator;
+import com.vestrel00.nekko.maps.components.MapSection;
+import com.vestrel00.nekko.maps.components.Platform;
+
+public class Map implements Updatable, Drawable {
+
+	public static final int LAST_STAND = 0;
+
+	private Array<MapSection> sections;
+	public LevelManager manager;
+	public Platform platform;
+	public float width, height;
+	private static Random rand;
+
+	public Map() {
+		MapPieceGenerator.init();
+		rand = new Random();
+	}
+
+	public void setLevel(int mode) {
+		sections = new Array<MapSection>();
+		switch (mode) {
+		case LAST_STAND:
+			manager = new LastStand(sections);
+			break;
+		}
+		platform = new Platform(sections);
+
+		spawnMonsters(100);
+	}
+
+	private void spawnMonsters(int amount) {
+		for (int i = 0; i < amount; i++) {
+			Location location = new Location((float) rand.nextInt((int) width),
+					1600.0f, 4.0f, 22.0f, 80.0f, 18.0f);
+			Monster monster = new CuteMonster(KFNekko.resource.atlas, location,
+					KFNekko.allies, 20, 100.0f, 240.0f, genColor(), 1);
+			monster.setState(FaceState.RIGHT, StatusState.ALIVE,
+					CombatState.IDLE, HorizontalMotionState.IDLE,
+					VerticalMotionState.FALLING);
+			location.setActor(monster);
+			KFNekko.enemies.add(monster);
+		}
+	}
+
+	private static Color genColor() {
+		switch (rand.nextInt(3)) {
+		case 0: // no red
+			return new Color(0.0f, (float) rand.nextInt(255) / 255.0f,
+					(float) rand.nextInt(255) / 255.0f, 1.0f);
+		case 1: // no green
+			return new Color((float) rand.nextInt(255) / 255.0f, 0.0f,
+					(float) rand.nextInt(255) / 255.0f, 1.0f);
+		default: // no blue
+			return new Color((float) rand.nextInt(255) / 255.0f,
+					(float) rand.nextInt(255) / 255.0f, 0.0f, 1.0f);
+		}
+	}
+
+	@Override
+	public void update() {
+		manager.update();
+		for (int i = 0; i < KFNekko.enemies.size; i++)
+			KFNekko.enemies.get(i).update();
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		for (int i = 0; i < sections.size; i++)
+			sections.get(i).draw(batch);
+		for (int i = 0; i < KFNekko.enemies.size; i++)
+			KFNekko.enemies.get(i).draw(batch);
+	}
+
+}

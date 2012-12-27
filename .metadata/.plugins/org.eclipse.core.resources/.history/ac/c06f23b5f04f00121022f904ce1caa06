@@ -1,0 +1,85 @@
+package com.vestrel00.nekko.maps.components;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.vestrel00.nekko.KFNekko;
+import com.vestrel00.nekko.actors.Nekko;
+import com.vestrel00.nekko.actors.components.Location;
+import com.vestrel00.nekko.actors.states.FaceState;
+import com.vestrel00.nekko.interf.PickUp;
+
+public class PowerUp implements PickUp {
+
+	public static final int INVISIBILITY = 0, RAGE = 1, QUICKFEET = 2;
+
+	private Rectangle rect;
+	private AtlasRegion region;
+	private int type;
+	private float xDirection, xSpeed;
+	private boolean isActive = false;
+
+	public PowerUp(int type) {
+		this.type = type;
+		switch (type) {
+		case INVISIBILITY:
+			region = KFNekko.resource.atlas.findRegion("invisibility");
+			break;
+		case RAGE:
+			region = KFNekko.resource.atlas.findRegion("rage");
+			break;
+		case QUICKFEET:
+			region = KFNekko.resource.atlas.findRegion("quickfeet");
+			break;
+		}
+		rect = new Rectangle();
+	}
+
+	@Override
+	public void update() {
+		if (isActive) {
+			rect.x += xSpeed * xDirection;
+			
+			if(rect.x < 2.0f)
+				rect.x = 2.0f;
+			else if(rect.x + rect.width > KFNekko.map.width - 2.0f)
+				rect.x = KFNekko.map.width - 2.0f - rect.width;
+		}
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		if (isActive)
+			batch.draw(region, rect.x, rect.y, rect.width, rect.height);
+	}
+
+	@Override
+	public void drop(Location location) {
+		if (!isActive) {
+			rect.set(location.rect);
+			isActive = true;
+			xDirection = (location.actor.faceState == FaceState.LEFT) ? -1.0f
+					: 1.0f;
+			xSpeed = 14.0f;
+		}
+	}
+
+	@Override
+	public void pickUp(Nekko nekko) {
+		if (isActive) {
+			isActive = false;
+			switch (type) {
+			case INVISIBILITY:
+				KFNekko.player.powerUp(INVISIBILITY);
+				break;
+			case RAGE:
+				KFNekko.player.powerUp(RAGE);
+				break;
+			case QUICKFEET:
+				KFNekko.player.powerUp(QUICKFEET);
+				break;
+			}
+		}
+	}
+
+}

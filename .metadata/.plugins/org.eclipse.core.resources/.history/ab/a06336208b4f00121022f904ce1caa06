@@ -1,0 +1,5 @@
+package com.vestrel00.nekko.maps;
+
+public class LastStandLevelManager implements LevelManager{
+
+}

@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright 2012 Vandolf Estrellado
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
 package com.vestrel00.nekko;
 
 import com.badlogic.gdx.graphics.Color;
@@ -11,11 +27,13 @@ public class Credits implements Updatable, Drawable {
 
 	private final CharSequence[] authors = { "Vandolf Estrellado",
 			"Dogchicken", "Buch", "PowStudios", "Lourme & Gabovitch",
-			"CGEffex", "Movingplaid", "NoiseCollector", "Soundscalpel.com",
-			"Shaynecantly", "Thebondman", "The League of Moveable Type" };
-	private final CharSequence[] links = { "@Indiedb.com/members/vestrel00",
+			"Qubodup", "CGEffex", "Movingplaid", "NoiseCollector",
+			"Soundscalpel.com", "Shaynecantly", "Thebondman",
+			"The League of Moveable Type" };
+	private final CharSequence[] links = { "@IndieDB.com/members/vestrel00",
 			"@Opengameart.org/users/dogchicken", "@Opengameart.org/users/buch",
 			"@PowStudios.com", "@Jamendo.com/en/artist/560/gregoire-lourme",
+			"@Opengameart.org/users/qubodup",
 			"@Freesound.org/people/CGEffex/sounds",
 			"@Freesound.org/people/movingplaid/sounds",
 			"@Freesound.org/people/NoiseCollector/sounds",
@@ -24,11 +42,13 @@ public class Credits implements Updatable, Drawable {
 			"@Freesound.org/people/thebondman/sounds",
 			"@Theleagueofmoveabletype.com" };
 	private final CharSequence[] works = {
-			"KungFu Nekko\nWrath of Magic\nGruff",
+			"KungFu Nekko Developer (The Creator XD)\nCheck out my other project Heroes of a Lost World\n" +
+			"at vestrel00.wix.com/hoalw\nSee all of my games at IndieDB.com/members/vestrel00\n" +
+			"and my artwork at Opengameart.org/users/vestrel00",
 			"Flying Tongue Monster\nCute Monster\nSkull Monster\nSpring Demon\nDance Music",
 			"Minimal sidescroller tileset\nDwarf Portrait\nPixel art user interface",
 			"Smoke animation pack 1", "Commando Team (Action)",
-			"Punches\nFist Punch", "Concrete Steps", "Cat 1",
+			"RPG Coins Set", "Punches\nFist Punch", "Concrete Steps", "Cat 1",
 			"Foley cable woosh air", "Miners Explosion",
 			"Indiana jones style punch", "Chunkfive Font" };
 
@@ -91,16 +111,17 @@ public class Credits implements Updatable, Drawable {
 	private boolean updateColor(float colorSpeed) {
 		switch (phase) {
 		case 0:
-			color.r += colorSpeed;
-			color.g += colorSpeed;
-			color.b += colorSpeed;
-			color.a += colorSpeed;
-			if (color.a > 1.0f) {
+			if((color.r += colorSpeed) > 1.0f)
+				color.r = 1.0f;
+			if((color.g += colorSpeed) > 1.0f)
+				color.g = 1.0f;
+			if((color.b += colorSpeed) > 1.0f)
+				color.b = 1.0f;
+			if((color.a += colorSpeed) > 1.0f)
+				color.a = 1.0f;
+			if (color.a > 0.9f && workTyper.finished) {
 				phaseEndTime = TimeUtils.nanoTime();
 				phase = 1;
-				color.r = 1.0f;
-				color.g = 1.0f;
-				color.b = 1.0f;
 				color.a = 1.0f;
 				return true;
 			}

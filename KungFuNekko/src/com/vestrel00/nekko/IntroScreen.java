@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright 2012 Vandolf Estrellado
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
 package com.vestrel00.nekko;
 
 import com.badlogic.gdx.Gdx;
@@ -23,7 +39,7 @@ public class IntroScreen implements Updatable, Drawable, Disposable, Touchable {
 			VIEW_SPLASH_BUCH = 2, VIEW_MENU = 3;
 
 	private final CharSequence[] strings = { "HoaLW", "Productions", "Skip",
-			"", "DogChiken", "Buch", "@OpenGameArt" };
+			"", "DogChicken", "Buch", "@OpenGameArt" };
 	private float[] widths;
 
 	// Sound in android may not be able to play onCreate or at least not right
@@ -37,7 +53,7 @@ public class IntroScreen implements Updatable, Drawable, Disposable, Touchable {
 	private Color color, skipColor;
 	private ShapeRenderer shape;
 	private Rectangle splashRect, skipRect;
-	private IntroMenuManager menu;
+	public IntroMenuManager menu;
 
 	public int view;
 	private int phase;

@@ -1,0 +1,136 @@
+package com.vestrel00.nekko;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.vestrel00.nekko.extras.StringTyper;
+import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.Touchable;
+import com.vestrel00.nekko.interf.Updatable;
+
+public class Instructions implements Updatable, Drawable, Touchable {
+
+	private final CharSequence[] instructionTitles = { "Health", "Stamina",
+			"Pause", "Options", "Attack Buttons", "Jump" };
+
+	private final CharSequence[] instructionTexts = { "This is your health.\nThe less red it is, the less health you have." };
+
+	private Color color;
+	private StringTyper textTyper, titleTyper;
+	private float[] titleWidths, titleHeights, textWidths, textHeights;
+	private Rectangle[] textRects;
+	private int phase = 0, index = 0;
+	private long phaseEndTime;
+
+	public Instructions() {
+		color = new Color(Color.CLEAR);
+		textTyper = new StringTyper(instructionTitles[index], 100000000L);
+		titleTyper = new StringTyper(instructionTitles[index], 10000000L);
+
+		textRects = new Rectangle[instructionTitles.length];
+		titleWidths = new float[instructionTitles.length];
+		titleHeights = new float[instructionTitles.length];
+		textWidths = new float[instructionTitles.length];
+		textHeights = new float[instructionTitles.length];
+		for (int i = 0; i < instructionTitles.length; i++) {
+			TextBounds bounds = KFNekko.resource.chunkFive
+					.getBounds(instructionTitles[i]);
+			titleWidths[i] = bounds.width;
+			titleHeights[i] = bounds.height;
+			bounds = KFNekko.resource.chunkFive.getBounds(instructionTexts[i]);
+			textWidths[i] = bounds.width;
+			textHeights[i] = bounds.height;
+		}
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		batch.end();
+		// draw rectangle
+		KFNekko.hud.shape.begin(ShapeType.FilledRectangle);
+		KFNekko.hud.shape.setColor(color);
+		KFNekko.hud.shape.filledRect(x, y, width, height)
+		KFNekko.hud.shape.end();
+		
+		
+		// draw instruction title
+		KFNekko.resource.chunkFive.setColor(1.0f, 1.0f, 1.0f, color.a);
+		KFNekko.resource.chunkFive.draw(batch, textTyper.getTypedStr(),
+				KFNekko.camera.camera.position.x - authorWidths[index] * 0.5f,
+				KFNekko.settings.viewHeight - 7.0f);
+		// draw instruction text
+		KFNekko.resource.arial.setColor(0.0f, 0.0f, 0.0f, color.a);
+		KFNekko.resource.arial.setScale(1.2f);
+		KFNekko.resource.arial.drawMultiLine(batch, workTyper.getTypedStr(),
+				20.0f, 260.0f);
+
+	}
+
+	@Override
+	public void update() {
+		authorTyper.update();
+		linkTyper.update();
+		workTyper.update();
+		switch (phase) {
+		case 0:
+		case 1:
+			updateColor(0.03f);
+			break;
+		case 2:
+			if (updateColor(0.04f)) {
+				phase = 0;
+				if (++index == authors.length)
+					index = 0;
+				authorTyper.reset(authors[index]);
+				linkTyper.reset(links[index]);
+				workTyper.reset(works[index]);
+			}
+			break;
+		}
+	}
+
+	private boolean updateColor(float colorSpeed) {
+		switch (phase) {
+		case 0:
+			color.r += colorSpeed;
+			color.g += colorSpeed;
+			color.b += colorSpeed;
+			color.a += colorSpeed;
+			if (color.a > 1.0f) {
+				phaseEndTime = TimeUtils.nanoTime();
+				phase = 1;
+				color.r = 1.0f;
+				color.g = 1.0f;
+				color.b = 1.0f;
+				color.a = 1.0f;
+				return true;
+			}
+			break;
+		case 1:
+			if (TimeUtils.nanoTime() - phaseEndTime > 2000000000L) {
+				phaseEndTime = TimeUtils.nanoTime();
+				phase = 2;
+				return true;
+			}
+			break;
+		case 2:
+			color.a -= 0.03f;
+			if (color.a < 0.0f) {
+				color.set(Color.CLEAR);
+				return true;
+			}
+			break;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean onTouchDown(float x, float y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

@@ -1,0 +1,8 @@
+package com.vestrel00.nekko.maps.components;
+
+import com.vestrel00.nekko.interf.Drawable;
+import com.vestrel00.nekko.interf.Updatable;
+
+public interface PickUp extends Updatable, Drawable {
+
+}

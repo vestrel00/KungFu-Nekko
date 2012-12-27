@@ -1,106 +1,181 @@
+/*******************************************************************************
+ * Copyright 2012 Vandolf Estrellado
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
 package com.vestrel00.nekko.maps.components;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.vestrel00.nekko.KFNekko;
 
 public class MapPieceGenerator {
 
-	public static final int BRIDGE_1 = 0;
-
 	private static AtlasRegion[] tiles;
 
 	public static void init() {
-		tiles = new AtlasRegion[14];
+		tiles = new AtlasRegion[15];
 		for (int i = 0; i < tiles.length; i++)
 			tiles[i] = KFNekko.resource.atlas.findRegion("piece"
 					+ String.valueOf(i));
 	}
 
-	public static MapPiece getPiece(int pieceId, float offsetX, float offsetY) {
-		MapPiece piece = new MapPiece(512.0f, 232.0f);
+	public static MapPiece genBridge(boolean padLeft, boolean padRight,
+			int size, float offsetX, float offsetY) {
+		// 32 corresponds to piece14
+		MapPiece piece = new MapPiece(tiles[1].originalWidth * size + 64,
+				tiles[1].originalHeight);
 
-		piece.horizontal = new float[9];
-		// horizontal platform 1
-		piece.horizontal[0] = -5.0f;
-		piece.horizontal[1] = 64.0f;
-		piece.horizontal[2] = 105.0f;
+		// platform info
+		piece.horizontal = new float[3];
+		piece.horizontal[0] = (padLeft) ? -1 : 31;
+		piece.horizontal[1] = piece.rect.height;
+		piece.horizontal[2] = piece.rect.width - ((padRight) ? -1 : 31);
 
-		// horizontal platform 2
-		piece.horizontal[3] = 150.0f;
-		piece.horizontal[4] = 128.0f;
-		piece.horizontal[5] = 361.0f;
+		piece.regions = new AtlasRegion[size + ((padLeft) ? 1 : 0)
+				+ ((padRight) ? 1 : 0)];
+		piece.regionRects = new Rectangle[piece.regions.length];
 
-		// horizontal platform 3
-		piece.horizontal[6] = 400.0f;
-		piece.horizontal[7] = 64.0f;
-		piece.horizontal[8] = 517.0f;
-
-		piece.slope = new float[8];
-		// slope platform 1
-		piece.slope[0] = 90.0f;
-		piece.slope[1] = 70.0f;
-		piece.slope[2] = 160.0f;
-		piece.slope[3] = 132.0f;
-
-		// slope platform 2
-		piece.slope[4] = 351.0f;
-		piece.slope[5] = 132.0f;
-		piece.slope[6] = 416.0f;
-		piece.slope[7] = 70.0f;
-
-		piece.regions = new AtlasRegion[16];
-		piece.regionXCoords = new float[piece.regions.length];
-		piece.regionYCoords = new float[piece.regions.length];
-
-		// piece 1s (6 count)
-		int i = 0, j = 0;
-		for (i = 0; i < 6; i++) {
-			piece.regions[i] = tiles[0];
-			piece.regionYCoords[i] = 0.0f;
+		// bridges
+		for (int i = 0, x = 32; i < size; i++, x += tiles[1].originalWidth) {
+			piece.regions[i] = tiles[1];
+			piece.regionRects[i] = new Rectangle(x, 0,
+					piece.regions[i].originalWidth,
+					piece.regions[i].originalHeight);
 		}
-
-		for (i = 0, j = 0; i < 3; i++, j += tiles[0].originalWidth)
-			piece.regionXCoords[i] = (float) j;
-
-		for (i = 3, j = 320; i < 6; i++, j += tiles[0].originalWidth)
-			piece.regionXCoords[i] = (float) j;
-
-		piece.regions[6] = tiles[10];
-		piece.regions[7] = tiles[11];
-		piece.regionXCoords[6] = 6.0f;
-		piece.regionYCoords[6] = 64.0f;
-		piece.regionXCoords[7] = 447.0f;
-		piece.regionYCoords[7] = 64.0f;
-
-		piece.regions[11] = tiles[13];
-		piece.regions[12] = tiles[12];
-		piece.regionXCoords[11] = 64.0f;
-		piece.regionYCoords[11] = 64.0f;
-		piece.regionXCoords[12] = 416.0f;
-		piece.regionYCoords[12] = 64.0f;
-
-		piece.regions[8] = tiles[4];
-		piece.regionXCoords[8] = 96.0f;
-		piece.regionYCoords[8] = 64.0f;
-		piece.regions[9] = tiles[3];
-		piece.regionXCoords[9] = 352.0f;
-		piece.regionYCoords[9] = 64.0f;
-
-		piece.regions[10] = tiles[1];
-		piece.regionXCoords[10] = 160.0f;
-		piece.regionYCoords[10] = 64.0f;
-
-		piece.regions[13] = tiles[9];
-		piece.regionXCoords[13] = 160.0f;
-		piece.regionYCoords[13] = 128.0f;
-		piece.regions[14] = tiles[9];
-		piece.regionXCoords[14] = 224.0f;
-		piece.regionYCoords[14] = 128.0f;
-		piece.regions[15] = tiles[9];
-		piece.regionXCoords[15] = 288.0f;
-		piece.regionYCoords[15] = 128.0f;
+		int c = size;
+		// paddings
+		if (padLeft) {
+			piece.regions[c] = tiles[14];
+			piece.regionRects[c] = new Rectangle(0, 0, 32, 64);
+			c++;
+		}
+		if (padRight) {
+			piece.regions[c] = tiles[14];
+			piece.regionRects[c] = new Rectangle(piece.rect.width - 32, 0,
+					32, 64);
+		}
 
 		piece.translate(offsetX, offsetY);
 		return piece;
 	}
+
+	public static MapPiece genSingle(int tileId, float offsetX, float offsetY) {
+		MapPiece piece = new MapPiece(tiles[tileId].originalWidth,
+				tiles[tileId].originalHeight);
+		piece.regions = new AtlasRegion[1];
+		piece.regions[0] = tiles[tileId];
+		piece.regionRects = new Rectangle[piece.regions.length];
+		piece.regionRects[0] = new Rectangle(0, 0, tiles[tileId].originalWidth,
+				tiles[tileId].originalHeight);
+		piece.translate(offsetX, offsetY);
+		return piece;
+	}
+
+	public static MapPiece genRailing(int size, float offsetX, float offsetY) {
+		MapPiece piece = new MapPiece(64 * size, tiles[9].originalHeight);
+
+		piece.regions = new AtlasRegion[size];
+		piece.regionRects = new Rectangle[piece.regions.length];
+
+		for (int i = 0, x = 0; i < size; i++, x += 64) {
+			piece.regions[i] = tiles[9];
+			piece.regionRects[i] = new Rectangle(x, 0, tiles[9].originalWidth,
+					tiles[9].originalHeight);
+		}
+
+		piece.translate(offsetX, offsetY);
+		return piece;
+	}
+
+	/**
+	 * 
+	 * @param type
+	 *            0 is piece 7||8, 1 is 3||4
+	 * @param orientation
+	 *            0 is negative slope, 1 is positive slope
+	 * 
+	 */
+	public static MapPiece genStairs(int type, int orientation, int size,
+			float offsetX, float offsetY) {
+		MapPiece piece = new MapPiece(64 * size, 64 * size
+				+ ((type == 0) ? 96 : 168));
+
+		// slope info
+		piece.slope = new float[4];
+		piece.slope[0] = 0.0f; // x1
+		piece.slope[1] = (orientation == 0) ? 64 * size : 0.0f; // y1
+		piece.slope[2] = piece.rect.width; // x2
+		piece.slope[3] = (orientation == 0) ? 0.0f : 64 * size; // y2
+
+		piece.regions = new AtlasRegion[size];
+		piece.regionRects = new Rectangle[piece.regions.length];
+
+		AtlasRegion region = null;
+		if (type == 0)
+			region = (orientation == 0) ? tiles[8] : tiles[7];
+		else
+			region = (orientation == 0) ? tiles[3] : tiles[4];
+
+		// from left to right
+		int startY = (orientation == 0) ? (64 * size - 64) : 0;
+		int incrementY = (orientation == 0) ? -64 : 64;
+		for (int i = 0, x = 0, y = startY; i < size; i++, x += 64, y += incrementY) {
+			piece.regions[i] = region;
+			piece.regionRects[i] = new Rectangle(x, y, region.originalWidth,
+					region.originalHeight);
+		}
+
+		piece.translate(offsetX, offsetY);
+		return piece;
+	}
+
+	/**
+	 * 
+	 * @param filler
+	 *            save platform info?
+	 * @param widthType
+	 *            0 is 64 (piece0), 1 is 32 (piece14)
+	 * 
+	 */
+	public static MapPiece genQuads(boolean filler, int widthType, int columns,
+			int rows, float offsetX, float offsetY) {
+		int width = (widthType == 0) ? 64 : 32;
+		MapPiece piece = new MapPiece(width * columns, 64 * rows);
+
+		// platform info
+		if (!filler) {
+			piece.horizontal = new float[3];
+			piece.horizontal[0] = -1.0f; // x
+			piece.horizontal[1] = piece.rect.height; // y2
+			piece.horizontal[2] = piece.rect.width + 1.0f; // x2
+		}
+
+		piece.regions = new AtlasRegion[columns * rows];
+		piece.regionRects = new Rectangle[piece.regions.length];
+
+		AtlasRegion region = (widthType == 0) ? tiles[0] : tiles[14];
+		for (int i = 0, x = 0; i < columns; i++, x += width)
+			for (int j = 0, y = 0; j < rows; j++, y += 64) {
+				int c = i * rows + j;
+				piece.regions[c] = region;
+				piece.regionRects[c] = new Rectangle(x, y,
+						region.originalWidth, region.originalHeight);
+			}
+
+		piece.translate(offsetX, offsetY);
+		return piece;
+	}
+
 }

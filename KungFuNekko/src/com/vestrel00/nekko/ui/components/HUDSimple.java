@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright 2012 Vandolf Estrellado
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
 package com.vestrel00.nekko.ui.components;
 
 import com.badlogic.gdx.graphics.Color;
@@ -170,11 +186,33 @@ public class HUDSimple implements HUDUI {
 			if (++player.health >= player.maxHealth)
 				player.health = player.maxHealth;
 		} else if (topRight.contains(x, y)) {
-			if (++player.stamina >= player.maxStamina)
+			if ((player.stamina += 2) >= player.maxStamina)
 				player.stamina = player.maxStamina;
+		} else if (pause.contains(x, y)) {
+			KFNekko.view = KFNekko.VIEW_PAUSED;
+			KFNekko.map.manager.pause();
+			KFNekko.audio.touch();
+		} else if (options.contains(x, y)) {
+			KFNekko.view = KFNekko.VIEW_OPTIONS;
+			KFNekko.map.manager.pause();
+			KFNekko.audio.touch();
 		} else
 			player.jump();
 
 		return true;
+	}
+
+	@Override
+	public Array<Rectangle> getScreenRects() {
+		Array<Rectangle> rects = new Array<Rectangle>();
+		rects.add(attack1);
+		rects.add(attack2);
+		rects.add(attack3);
+		rects.add(attack4);
+		rects.add(pause);
+		rects.add(options);
+		rects.add(topLeft);
+		rects.add(topRight);
+		return rects;
 	}
 }
