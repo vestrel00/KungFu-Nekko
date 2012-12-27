@@ -1,18 +1,21 @@
-/*******************************************************************************
- * Copyright 2012 Vandolf Estrellado
+/***************************************************************************
+ *  Copyright (C) 2012 by Vandolf Estrellado
+ *  All Rights Reserved
  * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
+ *  This file is part of KungFu Nekko.
+ *  KungFu Nekko is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  KungFu Nekko is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with KungFu Nekko.  If not, see <http://www.gnu.org/licenses/>.
+ *****************************************************************************/
 
 package com.vestrel00.nekko.maps;
 
@@ -41,17 +44,17 @@ import com.vestrel00.nekko.maps.components.MapSection;
 public class LastStand implements LevelManager {
 
 	private static final long WAVE_DURATION = 60000000000L,
-			INTER_SPAWN = 1000000000L;
+			INTER_SPAWN = 1000000000L, POWER_UP_DROP_DELAY = 5000000000L;
 
 	private final CharSequence scoreStr = "Score : ", waveStr = "Wave : ";
-	private final int maxMonsterCount = 150;
+	private final int MAX_MONSTER_COUNT = 150, POWER_UP_DROP_CHANCE = 10;
 	private int score = 0, wave = 0, batchCount = 0;
 	private StringBuilder builder;
 	private Vector2 monsterLoc1, monsterLoc2, monsterLoc3, defenseLoc1,
 			defenseLoc2, defenseLoc3, scoreStrVec, scoreVec, waveStrVec,
 			waveVec, chosenSpawnLoc, chosenTargetLoc;
 	private long waveStartTime, monsterSpawnDelay = 1000000000L,
-			lastMonsterSpawnTime, lastInterSpawn, pauseTime;
+			lastMonsterSpawnTime, lastInterSpawn, pauseTime, lastPowerUpDrop;
 	private Random rand;
 
 	// cache to prevent creating new monster object at run time
@@ -338,7 +341,7 @@ public class LastStand implements LevelManager {
 		genColor(monster.sprite.color);
 		monster.setAbsoluteTargetLoc(targetLoc);
 		// do not exceed maximum monster count (LIFO - Queue)
-		if (KFNekko.enemies.size >= maxMonsterCount)
+		if (KFNekko.enemies.size >= MAX_MONSTER_COUNT)
 			KFNekko.enemies.removeIndex(0);
 		KFNekko.enemies.add(monster); // add to size - 1 (end of list)
 	}
@@ -407,7 +410,8 @@ public class LastStand implements LevelManager {
 		// power up
 		if (pickUps.size == 20)
 			pickUps.removeIndex(0);
-		if (rand.nextInt(100) < 100) {
+		if (TimeUtils.nanoTime() - lastPowerUpDrop > POWER_UP_DROP_DELAY
+				&& rand.nextInt(100) < POWER_UP_DROP_CHANCE) {
 			PowerUp power = powerUps.get(rand.nextInt(powerUps.size));
 			power.drop(monster.location);
 			pickUps.add(power);

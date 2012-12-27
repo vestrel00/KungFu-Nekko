@@ -2,37 +2,41 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="330" key="DIALOG_WIDTH"/>
-		<item value="467" key="DIALOG_Y_ORIGIN"/>
+		<item value="213" key="DIALOG_Y_ORIGIN"/>
+		<item value="533" key="DIALOG_X_ORIGIN"/>
 		<item value="378" key="DIALOG_HEIGHT"/>
-		<item value="574" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="true" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wholeword"/>
-		<item value="UPPERCUT" key="selection"/>
+		<item value="MAX_MONSTER_COUNT" key="selection"/>
 		<list key="findhistory">
-			<item value="UPPERCUT"/>
-			<item value="music"/>
-			<item value="play"/>
-			<item value="TWOSIDEDATTACK"/>
-			<item value="HIGHKICK"/>
-			<item value="hurt"/>
-			<item value="meow"/>
-			<item value="SUPERUPPERCUT"/>
+			<item value="maxMonsterCount"/>
+			<item value="activate"/>
+			<item value="draw"/>
+			<item value="menu.draw"/>
+			<item value="KFNekko.audio.touch();"/>
+			<item value="return true;"/>
+			<item value="sound"/>
+			<item value="targetTitleColor"/>
 		</list>
 		<list key="replacehistory">
+			<item value="MAX_MONSTER_COUNT"/>
+			<item value=""/>
+			<item value="music"/>
+			<item value="targetResumeColor"/>
+			<item value="resumeColor"/>
+			<item value=" = new Vector2();"/>
 			<item value="piece.regionRects"/>
 			<item value="piece.regionRects[i].y"/>
-			<item value="piece.regionRects[i].x"/>
-			<item value=""/>
-			<item value="piece.regionRects = new Rectangle[piece.regions.length];"/>
-			<item value=" = new StringTyper();"/>
-			<item value="credits"/>
-			<item value="dying"/>
 		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="391" key="DIALOG_Y_ORIGIN"/>
+		<item value="303" key="DIALOG_X_ORIGIN"/>
 	</section>
 </section>

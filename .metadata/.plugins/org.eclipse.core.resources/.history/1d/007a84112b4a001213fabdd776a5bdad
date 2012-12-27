@@ -1,7 +1,0 @@
-package com.vestrel00.nekko.interf;
-
-public interface Drawable {
-
-	public void draw(SpriteBatch batch);
-
-}

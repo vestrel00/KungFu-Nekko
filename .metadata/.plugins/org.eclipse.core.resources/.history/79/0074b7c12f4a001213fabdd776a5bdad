@@ -1,7 +1,0 @@
-package com.vestrel00.nekko;
-
-import com.badlogic.gdx.utils.Disposable;
-
-public class Resource implements Disposable {
-
-}

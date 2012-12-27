@@ -1,9 +1,0 @@
-package com.vestrel00.nekko;
-
-import com.vestrel00.nekko.interf.Drawable;
-import com.vestrel00.nekko.interf.Touchable;
-import com.vestrel00.nekko.interf.Updatable;
-
-public class Instructions implements Updatable, Drawable, Touchable {
-
-}

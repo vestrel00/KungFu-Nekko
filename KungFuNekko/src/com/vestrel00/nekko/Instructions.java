@@ -1,18 +1,21 @@
-/*******************************************************************************
- * Copyright 2012 Vandolf Estrellado
+/***************************************************************************
+ *  Copyright (C) 2012 by Vandolf Estrellado
+ *  All Rights Reserved
  * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
+ *  This file is part of KungFu Nekko.
+ *  KungFu Nekko is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  KungFu Nekko is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with KungFu Nekko.  If not, see <http://www.gnu.org/licenses/>.
+ *****************************************************************************/
 
 package com.vestrel00.nekko;
 
@@ -48,6 +51,7 @@ public class Instructions implements Updatable, Drawable, Touchable {
 					+ "You can also regain health by eating food!",
 			"The more yellow this is, the more stamina you have.\n"
 					+ "Once it turns completely gray, you can no longer attack!\n"
+					+ "Your stamina decreses everytime you attack.\n"
 					+ "Some attacks cost more than the others.\n"
 					+ "You can keep tapping this to regain 2 stamina for each tap.\n"
 					+ "You can also regain health by eating food!",
@@ -61,8 +65,8 @@ public class Instructions implements Updatable, Drawable, Touchable {
 					+ "You can mix and match combos!\n"
 					+ "This is a button smahing game =)",
 			"Touch anywhere else on the screen to jump.\n"
-					+ "You can tap again while in air to perform another jump.\n" +
-					"You move by tilting the phone." };
+					+ "You can tap again while in air to perform another jump.\n"
+					+ "You move by tilting the phone." };
 
 	private Widgets currentWidget, nextWidget;
 	private Color color;
@@ -238,12 +242,12 @@ public class Instructions implements Updatable, Drawable, Touchable {
 			color.a -= 0.03f;
 			if (color.a < 0.0f) {
 				phase = 0;
-				if(nextWidget == null){
-				KFNekko.intro.menu.view = IntroMenuManager.VIEW_MENU;
-				currentWidget = Widgets.BEGIN;
-				} else 
+				if (nextWidget == null) {
+					KFNekko.intro.menu.view = IntroMenuManager.VIEW_MENU;
+					currentWidget = Widgets.BEGIN;
+				} else
 					currentWidget = nextWidget;
-				
+
 				setInstructionIndex();
 				titleTyper.reset(instructionTitles[instructionIndex]);
 				textTyper.reset(instructionTexts[instructionIndex]);
@@ -275,9 +279,9 @@ public class Instructions implements Updatable, Drawable, Touchable {
 			nextWidget = Widgets.HEALTH;
 		else if (widgetRects.get(7).contains(x, y))
 			nextWidget = Widgets.STAMINA;
-		else if(backRect.contains(x, y)){
+		else if (backRect.contains(x, y)) {
 			nextWidget = null;
-		}else
+		} else
 			nextWidget = Widgets.JUMP;
 
 		phase = 1; // fade out then in to next instruction
