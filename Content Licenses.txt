@@ -16,6 +16,7 @@ Assets taken from Buch Under CC-BY 3.0 License:
 "Minimal sidescroller tileset"
 "Dwarf Portrait"
 "Pixel art user interface elements"
+"Chess pieces set"
 http://opengameart.org/users/buch
 
 ----------------------------------------------------------------------------

@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wholeword"/>
-		<item value="MAX_MONSTER_COUNT" key="selection"/>
+		<item value="arial" key="selection"/>
 		<list key="findhistory">
-			<item value="maxMonsterCount"/>
-			<item value="activate"/>
+			<item value="arial"/>
+			<item value="gruff.play"/>
+			<item value=".play"/>
+			<item value="buch.play"/>
 			<item value="draw"/>
-			<item value="menu.draw"/>
-			<item value="KFNekko.audio.touch();"/>
-			<item value="return true;"/>
-			<item value="sound"/>
-			<item value="targetTitleColor"/>
+			<item value="onDeath"/>
+			<item value="chessPieces.get(i).update"/>
+			<item value="chessPieces"/>
 		</list>
 		<list key="replacehistory">
 			<item value="MAX_MONSTER_COUNT"/>

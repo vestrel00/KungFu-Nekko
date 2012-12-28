@@ -32,9 +32,10 @@ import com.vestrel00.nekko.interf.Updatable;
 public class PauseManager implements Touchable, Drawable, Updatable {
 
 	private final float COLOR_SPEED = 0.01f;
-	private final CharSequence PAUSED = "PAUSED", RESUME = "RESUME";
+	private final CharSequence PAUSED = "PAUSED", RESUME = "RESUME",
+			QUIT = "QUIT";
 
-	private Rectangle resumeRect;
+	private Rectangle resumeRect, quitRect;
 	private float halfWidth;
 	public Color resumeColor, targetResumeColor;
 	private Random rand;
@@ -43,6 +44,8 @@ public class PauseManager implements Touchable, Drawable, Updatable {
 		TextBounds bound = KFNekko.resource.chunkFive.getBounds(RESUME);
 		resumeRect = new Rectangle(0, 0, bound.width * 0.5f,
 				bound.height * 0.5f);
+		bound = KFNekko.resource.chunkFive.getBounds(QUIT);
+		quitRect = new Rectangle(0, 0, bound.width * 0.5f, bound.height * 0.5f);
 		bound = KFNekko.resource.chunkFive.getBounds(PAUSED);
 		halfWidth = bound.width * 0.5f;
 		resumeColor = new Color(Color.WHITE);
@@ -55,6 +58,8 @@ public class PauseManager implements Touchable, Drawable, Updatable {
 		updateResumeColor();
 		resumeRect.x = KFNekko.camera.rect.x + 380.0f;
 		resumeRect.y = KFNekko.camera.rect.y + 290.0f;
+		quitRect.x = KFNekko.camera.rect.x + 22.0f;
+		quitRect.y = KFNekko.camera.rect.y + 290.0f;
 	}
 
 	@Override
@@ -71,6 +76,8 @@ public class PauseManager implements Touchable, Drawable, Updatable {
 		KFNekko.resource.chunkFive.setScale(0.5f);
 		KFNekko.resource.chunkFive.draw(batch, RESUME, resumeRect.x,
 				resumeRect.y + resumeRect.height);
+		KFNekko.resource.chunkFive.draw(batch, QUIT, quitRect.x, quitRect.y
+				+ quitRect.height);
 		KFNekko.resource.chunkFive.setScale(1.0f);
 		batch.end();
 	}
@@ -84,8 +91,23 @@ public class PauseManager implements Touchable, Drawable, Updatable {
 			if (KFNekko.settings.musicOn)
 				KFNekko.audio.music.play();
 			return true;
-		} else
-			return false;
+		} else if (quitRect.contains(x, y)) {
+			// reset previous views
+			KFNekko.view = KFNekko.VIEW_INTRO;
+			KFNekko.intro.menu.view = IntroMenuManager.VIEW_MENU;
+			KFNekko.intro.menu.nextView = IntroMenuManager.VIEW_MENU;
+			KFNekko.audio.touch();
+			KFNekko.map.manager.resume();
+			// move camera back to origin
+			KFNekko.camera.manualOverride = true;
+			KFNekko.camera.reset();
+			if (KFNekko.audio.music.isPlaying())
+				KFNekko.audio.music.stop();
+			// reset the intro states!
+			KFNekko.intro.reset();
+			return true;
+		}
+		return false;
 	}
 
 	private void updateResumeColor() {

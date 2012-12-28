@@ -114,8 +114,6 @@ public class KFNekko implements ApplicationListener {
 	}
 
 	private void initArrays() {
-		allies.add(player);
-
 		updatables = new Array<Updatable>();
 		updatables.add(player);
 		updatables.add(camera);
@@ -202,7 +200,7 @@ public class KFNekko implements ApplicationListener {
 
 		// draw separately since this conflicts with the SpriteBatch in use
 		hud.draw(batch);
-		map.manager.draw(batch);
+		map.manager.drawText(batch);
 	}
 
 	private void updateWorldColor() {

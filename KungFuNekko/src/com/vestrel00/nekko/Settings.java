@@ -29,10 +29,14 @@ public class Settings {
 	public float viewWidth, viewHeight, viewWidthHalf, viewHeightHalf,
 			viewWidthQuarter, viewHeightQuarter;
 	public boolean soundOn, musicOn;
+	// high scores
+	public int lastStandHS;
 
 	public Settings() {
 		Gdx.input.setCatchBackKey(false);
 		Gdx.input.setCatchMenuKey(false);
+
+		lastStandHS = prefs.getInteger("lastStandHS", 0);
 
 		soundOn = prefs.getBoolean("soundOn", true);
 		musicOn = prefs.getBoolean("musicOn", true);
@@ -46,6 +50,7 @@ public class Settings {
 	}
 
 	public void commit() {
+		prefs.getInteger("lastStandHS", lastStandHS);
 		prefs.putBoolean("soundOn", soundOn);
 		prefs.putBoolean("musicOn", musicOn);
 		prefs.flush();

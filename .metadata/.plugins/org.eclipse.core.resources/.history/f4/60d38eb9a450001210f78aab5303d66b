@@ -1,0 +1,36 @@
+package com.vestrel00.nekko.actors.components;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.vestrel00.nekko.KFNekko;
+import com.vestrel00.nekko.actors.Actor;
+import com.vestrel00.nekko.actors.states.FaceState;
+import com.vestrel00.nekko.actors.states.Visibility;
+
+public class ChessPieceSprite extends Sprite {
+
+	public ChessPieceSprite(ChessPiece piece, Color color, AtlasRegion region) {
+		super(actor, color);
+		currentTexture = region;
+	}
+
+	@Override
+	public void update() {
+		xScale = (actor.faceState == FaceState.LEFT) ? -1.0f : 1.0f;
+	}
+	
+	@Override
+	public void draw(SpriteBatch batch) {
+		if (actor.visibility == Visibility.VISIBLE) {
+			batch.setColor(color);
+			batch.draw(currentTexture, actor.location.rect.x,
+					actor.location.rect.y, actor.location.rect.width * 0.5f,
+					actor.location.rect.height * 0.5f,
+					actor.location.rect.width, actor.location.rect.height,
+					xScale, 1.0f, rotation);
+			batch.setColor(KFNekko.worldColor);
+		}
+	}
+
+}

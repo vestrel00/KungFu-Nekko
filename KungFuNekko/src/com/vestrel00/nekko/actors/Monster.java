@@ -19,7 +19,6 @@
 
 package com.vestrel00.nekko.actors;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.components.Location;
@@ -30,9 +29,8 @@ import com.vestrel00.nekko.actors.states.StatusState;
 
 public abstract class Monster extends Actor {
 
-	protected Actor target;
+	protected Actor target, primeTarget;
 	protected float aggroRange, motionRange;
-	protected Vector2 targetLoc;
 	public int level;
 
 	public Monster(Array<Actor> targets, Location location, int maxHealth,
@@ -65,25 +63,27 @@ public abstract class Monster extends Actor {
 
 	@Override
 	public void update() {
-		// make sure that target is still alive and within the aggro range
-		if (target != null
-				&& (target.statusState == StatusState.DEAD || !withinAggroRange(target)))
-			target = null;
-		// target selection
-		if (target == null)
-			for (int i = 0; i < targets.size; i++)
-				if (withinAggroRange(targets.get(i))) {
-					target = targets.get(i);
-					break;
-				}
+		if (statusState != StatusState.DEAD) {
+			// make sure that target is still alive and within the aggro range
+			if (target != null
+					&& (target.statusState == StatusState.DEAD || !withinAggroRange(target)))
+				target = null;
+			// target selection
+			if (target == null)
+				for (int i = 0; i < targets.size; i++)
+					if (withinAggroRange(targets.get(i))) {
+						target = targets.get(i);
+						break;
+					}
 
-		// update combatState
-		updateCombatState();
+			// update combatState
+			updateCombatState();
 
-		// update motionState
-		updateMotionState();
+			// update motionState
+			updateMotionState();
 
-		super.update();
+			super.update();
+		}
 	}
 
 	protected void updateCombatState() {
@@ -98,8 +98,8 @@ public abstract class Monster extends Actor {
 			faceState = (target.location.x >= location.x) ? FaceState.RIGHT
 					: FaceState.LEFT;
 			setHorizontalMotionState(HorizontalMotionState.MOVING);
-		} else if (targetLoc != null) {
-			faceState = (targetLoc.x >= location.x) ? FaceState.RIGHT
+		} else if (primeTarget != null) {
+			faceState = (primeTarget.location.x >= location.x) ? FaceState.RIGHT
 					: FaceState.LEFT;
 			setHorizontalMotionState(HorizontalMotionState.MOVING);
 		}
@@ -119,8 +119,8 @@ public abstract class Monster extends Actor {
 				&& targ.location.y <= location.y + aggroRange;
 	}
 
-	public void setAbsoluteTargetLoc(Vector2 targetLoc) {
-		this.targetLoc = targetLoc;
+	public void setPrimeTarget(Actor primeTarget) {
+		this.primeTarget = primeTarget;
 	}
 
 }

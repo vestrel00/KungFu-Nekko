@@ -25,13 +25,15 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Resource implements Disposable {
-
+	
 	public TextureAtlas atlas;
 	public BitmapFont chunkFive, arial;
 
 	public Resource() {
 		atlas = new TextureAtlas(Gdx.files.internal("texture/main.pack"));
-		arial = new BitmapFont();
+		// arial = new BitmapFont(); GWT gives error if this is used
+		arial = new BitmapFont(Gdx.files.internal("fonts/arial.fnt"),
+				Gdx.files.internal("fonts/arial.png"), false);
 		chunkFive = new BitmapFont(Gdx.files.internal("fonts/chunkFive.fnt"),
 				Gdx.files.internal("fonts/chunkFive.png"), false);
 	}
@@ -42,5 +44,4 @@ public class Resource implements Disposable {
 		arial.dispose();
 		chunkFive.dispose();
 	}
-
 }

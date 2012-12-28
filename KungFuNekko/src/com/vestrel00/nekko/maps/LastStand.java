@@ -27,6 +27,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.vestrel00.nekko.KFNekko;
+import com.vestrel00.nekko.actors.Actor;
+import com.vestrel00.nekko.actors.ChessPiece;
 import com.vestrel00.nekko.actors.CuteMonster;
 import com.vestrel00.nekko.actors.Monster;
 import com.vestrel00.nekko.actors.components.Location;
@@ -50,12 +52,13 @@ public class LastStand implements LevelManager {
 	private final int MAX_MONSTER_COUNT = 150, POWER_UP_DROP_CHANCE = 10;
 	private int score = 0, wave = 0, batchCount = 0;
 	private StringBuilder builder;
-	private Vector2 monsterLoc1, monsterLoc2, monsterLoc3, defenseLoc1,
-			defenseLoc2, defenseLoc3, scoreStrVec, scoreVec, waveStrVec,
-			waveVec, chosenSpawnLoc, chosenTargetLoc;
+	private Vector2 monsterLoc1, monsterLoc2, monsterLoc3, scoreStrVec,
+			scoreVec, waveStrVec, waveVec, chosenSpawnLoc;
 	private long waveStartTime, monsterSpawnDelay = 1000000000L,
 			lastMonsterSpawnTime, lastInterSpawn, pauseTime, lastPowerUpDrop;
 	private Random rand;
+	private ChessPiece chosenPiece;
+	private Array<ChessPiece> chessPieces;
 
 	// cache to prevent creating new monster object at run time
 	private Array<PickUp> pickUps;
@@ -204,11 +207,19 @@ public class LastStand implements LevelManager {
 
 		// set the map width and height
 		KFNekko.map.width = 1952.0f;
-		KFNekko.map.height = 1664.0f;
+		KFNekko.map.height = 1700.0f;
+
+		// make sure that the camera is not following the player
+		KFNekko.camera.manualOverride = true;
+		// IMPORTANT! make sure that the camera is at the origin
+		// This is actually called twice
+		// here and at PauseManager touch quitRect but keep it here anyways
+		KFNekko.camera.reset();
+		// make sure that the camera is again following the player
+		KFNekko.camera.manualOverride = false;
 
 		// set player spawn location
-		KFNekko.player.location.x = 1234.0f;
-		KFNekko.player.location.y = 892.0f;
+		KFNekko.player.reset(1234.0f, 892.0f);
 
 		// other
 		rand = new Random();
@@ -219,23 +230,55 @@ public class LastStand implements LevelManager {
 		monsterLoc2 = new Vector2(1851.0f, 1308.0f);
 		monsterLoc3 = new Vector2(1851.0f, 1576.0f);
 
-		// init defense points
-		defenseLoc1 = new Vector2(1851.0f, 572.0f);
-		defenseLoc2 = new Vector2(1077.0f, 1277.0f);
-		defenseLoc3 = new Vector2(884.0f, 1514.0f);
-
 		// draw points
 		scoreStrVec = new Vector2();
 		scoreVec = new Vector2();
 		waveStrVec = new Vector2();
 		waveVec = new Vector2();
 
+		// init chess pieces
+		initChessPieces();
+
+		// clear the list of enemies
+		KFNekko.enemies.clear();
 		// initialize reusable monsters
 		initMonsters();
 		// init pickups
 		initPickUps();
 		// attempt to clean up first
 		System.gc();
+	}
+
+	private void initChessPieces() {
+		chessPieces = new Array<ChessPiece>();
+		// first level
+		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.PAWN,
+				new Location(403.0f, 128.0f, 0, 0, 0, 0)));
+		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.PAWN,
+				new Location(1087.0f, 640.0f, 0, 0, 0, 0)));
+		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.ROOK,
+				new Location(1282.0f, 640.0f, 0, 0, 0, 0)));
+		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.QUEEN,
+				new Location(1852.0f, 512.0f, 0, 0, 0, 0)));
+		// second level
+		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.PAWN,
+				new Location(1472.0f, 1216.0f, 0, 0, 0, 0)));
+		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.BISHOP,
+				new Location(1284.0f, 1216.0f, 0, 0, 0, 0)));
+		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.QUEEN,
+				new Location(1084.0f, 1216.0f, 0, 0, 0, 0)));
+		// third level
+		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.KNIGHT,
+				new Location(1467.0f, 1472.0f, 0, 0, 0, 0)));
+		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.BISHOP,
+				new Location(1282.0f, 1472.0f, 0, 0, 0, 0)));
+		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.ROOK,
+				new Location(1082.0f, 1472.0f, 0, 0, 0, 0)));
+		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.KING,
+				new Location(892.0f, 1472.0f, 0, 0, 0, 0)));
+		KFNekko.allies.clear();
+		KFNekko.allies.add(KFNekko.player);
+		KFNekko.allies.addAll(chessPieces);
 	}
 
 	private void initPickUps() {
@@ -255,11 +298,13 @@ public class LastStand implements LevelManager {
 	public void update() {
 		for (int i = 0; i < pickUps.size; i++)
 			pickUps.get(i).update();
+		for (int i = 0; i < chessPieces.size; i++)
+			chessPieces.get(i).update();
 
 		if (TimeUtils.nanoTime() - waveStartTime > WAVE_DURATION) {
 			waveStartTime = TimeUtils.nanoTime();
 			wave++;
-			if ((monsterSpawnDelay = 20000000000L - (long) (wave / 5) * 1000000000L) < 1000000000L)
+			if ((monsterSpawnDelay = 20000000000L - (long) (wave / 2) * 1000000000L) < 1000000000L)
 				monsterSpawnDelay = 1000000000L;
 			// TODO spawn some supplies and power ups
 		}
@@ -271,16 +316,16 @@ public class LastStand implements LevelManager {
 			// signal start spawn stream of monsters (3 per batch)
 			switch (rand.nextInt(3)) {
 			case 0:
-				chosenSpawnLoc = monsterLoc1;
-				chosenTargetLoc = defenseLoc1;
+				if (!spawnAtLoc(0) && !spawnAtLoc(1) && !spawnAtLoc(2))
+					break; // TODO GAME OVER
 				break;
 			case 1:
-				chosenSpawnLoc = monsterLoc2;
-				chosenTargetLoc = defenseLoc2;
+				if (!spawnAtLoc(1) && !spawnAtLoc(2) && !spawnAtLoc(0))
+					break;// TODO GAME OVER
 				break;
 			case 2:
-				chosenSpawnLoc = monsterLoc3;
-				chosenTargetLoc = defenseLoc3;
+				if (!spawnAtLoc(2) && !spawnAtLoc(0) && !spawnAtLoc(1))
+					break;// TODO GAME OVER
 				break;
 			}
 
@@ -289,7 +334,7 @@ public class LastStand implements LevelManager {
 		if (TimeUtils.nanoTime() - lastInterSpawn > INTER_SPAWN
 				&& batchCount < 3) {
 			lastInterSpawn = TimeUtils.nanoTime();
-			spawnMonster(rand.nextInt(3), wave, chosenSpawnLoc, chosenTargetLoc);
+			spawnMonster(rand.nextInt(3), wave, chosenSpawnLoc, chosenPiece);
 			batchCount++;
 		}
 
@@ -303,8 +348,35 @@ public class LastStand implements LevelManager {
 				KFNekko.camera.rect.y + 308.0f);
 	}
 
+	private boolean spawnAtLoc(int loc) {
+		int i = 0, j = 0;
+		switch (loc) {
+		case 0:
+			chosenSpawnLoc = monsterLoc1; // TODO SHOW ON VID
+			i = 0;
+			j = 4;
+			break;
+		case 1:
+			chosenSpawnLoc = monsterLoc2;
+			i = 4;
+			j = 7;
+			break;
+		case 2:
+			chosenSpawnLoc = monsterLoc3;
+			i = 7;
+			j = 11;
+			break;
+		}
+		while (i++ < j) {
+			if (chessPieces.get(i).statusState == StatusState.ALIVE)
+				chosenPiece = chessPieces.get(i);
+			return true;
+		}
+		return false;
+	}
+
 	private void spawnMonster(int type, int level, Vector2 spawnLoc,
-			Vector2 targetLoc) {
+			Actor primeTarget) {
 		Monster monster = null;
 		switch (type) {
 		case 0:
@@ -328,18 +400,14 @@ public class LastStand implements LevelManager {
 				cuteMonsterIndex = 0;
 			break;
 		}
-		monster.reset(level);
 		monster.setState(FaceState.RIGHT, StatusState.ALIVE, CombatState.IDLE,
 				HorizontalMotionState.IDLE, VerticalMotionState.FALLING);
-		// set spawn location
-		monster.location.spawnX = spawnLoc.x;
-		monster.location.spawnY = spawnLoc.y;
-		// set current location
-		monster.location.x = spawnLoc.x;
-		monster.location.y = spawnLoc.y;
+		// reset
+		monster.reset(level);
+		monster.reset(spawnLoc.x, spawnLoc.y);
 		// set speed
 		genColor(monster.sprite.color);
-		monster.setAbsoluteTargetLoc(targetLoc);
+		monster.setPrimeTarget(primeTarget);
 		// do not exceed maximum monster count (LIFO - Queue)
 		if (KFNekko.enemies.size >= MAX_MONSTER_COUNT)
 			KFNekko.enemies.removeIndex(0);
@@ -349,16 +417,14 @@ public class LastStand implements LevelManager {
 	private void initMonsters() {
 		cuteMonsters = new Array<CuteMonster>();
 		for (int i = 0; i < 150; i++) {
-			Location location = null;
 			// Monster.MONSTER_CUTE:
-			location = new Location(0, 0, 4.0f, 22.0f, 80.0f, 18.0f);
 			CuteMonster monster = new CuteMonster(KFNekko.resource.atlas,
-					location, KFNekko.allies, 100.0f, KFNekko.map.width,
-					new Color(Color.WHITE), 1);
+					new Location(0, 0, 4.0f, 22.0f, 80.0f, 18.0f),
+					KFNekko.allies, 100.0f, KFNekko.map.width, new Color(
+							Color.WHITE), 1);
 			monster.setState(FaceState.RIGHT, StatusState.DEAD,
 					CombatState.IDLE, HorizontalMotionState.IDLE,
 					VerticalMotionState.FALLING);
-			location.setActor(monster);
 			cuteMonsters.add(monster);
 			// TODO Monster.MONSTER_SKULL:
 			// TODO Monster.MONSTER_TOUNGE:
@@ -381,9 +447,21 @@ public class LastStand implements LevelManager {
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		// draw the chess pieces
+		for (int i = 0; i < chessPieces.size; i++)
+			chessPieces.get(i).draw(batch);
+
+		// draw pickups
+		for (int i = 0; i < pickUps.size; i++)
+			pickUps.get(i).draw(batch);
+	}
+
+	@Override
+	public void drawText(SpriteBatch batch) {
 		batch.begin();
 		// DRAW SCORE
 		KFNekko.resource.arial.setColor(Color.WHITE);
+		KFNekko.resource.arial.setScale(1.0f);
 		KFNekko.resource.arial.draw(batch, scoreStr, scoreStrVec.x,
 				scoreStrVec.y);
 		// to avoid heap allocation - no String.valueOf()
@@ -396,11 +474,6 @@ public class LastStand implements LevelManager {
 		builder.delete(0, builder.length());
 		builder.append(wave);
 		KFNekko.resource.arial.draw(batch, builder, waveVec.x, waveVec.y);
-		batch.end();
-		// draw pickups
-		batch.begin();
-		for (int i = 0; i < pickUps.size; i++)
-			pickUps.get(i).draw(batch);
 		batch.end();
 	}
 

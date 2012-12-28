@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vestrel00.nekko.Camera;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.components.Location;
 import com.vestrel00.nekko.actors.components.NekkoSprite;
@@ -39,7 +40,6 @@ public class Nekko extends Actor {
 
 	private NekkoSprite nekkoSprite;
 	private long powerUpTime;
-	private boolean poweredUp;
 	private float speedTmp;
 	public int stamina, maxStamina, powerUp;
 
@@ -67,17 +67,19 @@ public class Nekko extends Actor {
 
 	@Override
 	public void update() {
-		// cannot attack and walk/move/run at the same time while on
-		// platform
-		if (combatState != CombatState.IDLE
-				&& (location.onPlatform || location.onSlope)) {
-			location.speed.xSpeed = 0.0f;
-			horizontalMotionState = HorizontalMotionState.IDLE;
-		}
-		super.update();
-		if (poweredUp && TimeUtils.nanoTime() - powerUpTime > POWERUP_DURATION) {
-			poweredUp = false;
-			onDeactivatePowerUp();
+		if (statusState != StatusState.DEAD) {
+			// cannot attack and walk/move/run at the same time while on
+			// platform
+			if (combatState != CombatState.IDLE
+					&& (location.onPlatform || location.onSlope)) {
+				location.speed.xSpeed = 0.0f;
+				horizontalMotionState = HorizontalMotionState.IDLE;
+			}
+			super.update();
+			if (powerUp != PowerUp.NONE
+					&& TimeUtils.nanoTime() - powerUpTime > POWERUP_DURATION) {
+				onDeactivatePowerUp();
+			}
 		}
 	}
 
@@ -184,6 +186,9 @@ public class Nekko extends Actor {
 	}
 
 	private boolean enoughStamina(CombatState combat) {
+		if (powerUp == PowerUp.ENDURANCE)
+			return true;
+
 		int staminaCost = 0;
 		switch (combat) {
 		case FASTSHOT:
@@ -239,8 +244,7 @@ public class Nekko extends Actor {
 	}
 
 	@Override
-	public void attack(int damage, boolean aoe, float knockBackDistance,
-			Actor actor) {
+	public void attack(int damage, boolean aoe, float knockBackDistance) {
 		boolean hit = false;
 		for (int i = 0; i < targets.size; i++)
 			if (targets.get(i).statusState == StatusState.ALIVE
@@ -248,7 +252,7 @@ public class Nekko extends Actor {
 				targets.get(i).receiveDamage(damage);
 				hit(targets.get(i));
 				targets.get(i).location.knockBack(knockBackDistance,
-						(actor.faceState == FaceState.LEFT) ? -1.0f : 1.0f);
+						(faceState == FaceState.LEFT) ? -1.0f : 1.0f);
 				hit = true;
 				if (!aoe)
 					break;
@@ -264,14 +268,13 @@ public class Nekko extends Actor {
 	}
 
 	private void onDeactivatePowerUp() {
-		// undo changes 
+		// undo changes
 		// TODO SOUND
 		nekkoSprite.color.set(Color.WHITE);
 		switch (powerUp) {
-		// TODO SOUND
 		// cannot be hit
 		case PowerUp.INVISIBILITY:
-
+			// nothing
 			break;
 		// do twice damage
 		case PowerUp.RAGE:
@@ -288,16 +291,17 @@ public class Nekko extends Actor {
 			break;
 		// do not subtract stamina
 		case PowerUp.ENDURANCE:
-
+			// nothing
 			break;
 		}
+		powerUp = PowerUp.NONE;
 	}
 
-	public void powerUp(int type) {
-		if (poweredUp)
-			onDeactivatePowerUp();
+	public boolean powerUp(int type) {
+		if (powerUp != PowerUp.NONE)
+			return false;
+
 		powerUp = type;
-		poweredUp = true;
 		powerUpTime = TimeUtils.nanoTime();
 		switch (type) {
 		// cannot be hit
@@ -330,6 +334,23 @@ public class Nekko extends Actor {
 			// TODO SOUND
 			break;
 		}
+		return true;
+	}
+
+	@Override
+	protected void receiveDamage(int damage) {
+		if (powerUp == PowerUp.INVISIBILITY)
+			return;
+		super.receiveDamage(damage);
+		KFNekko.camera.setEffect(Camera.EFFECT_SHAKE, 1.0f, 3.0f, 200000000L);
+	}
+
+	@Override
+	public void reset(float locationX, float locationY) {
+		super.reset(locationX, locationY);
+		stamina = maxStamina;
+		health = maxHealth;
+		onDeactivatePowerUp();
 	}
 
 }

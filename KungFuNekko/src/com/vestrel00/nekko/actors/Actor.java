@@ -67,26 +67,23 @@ public abstract class Actor implements Updatable, Drawable {
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		if (statusState != StatusState.DEAD && visibility == Visibility.VISIBLE)
+		if (statusState != StatusState.DEAD)
 			sprite.draw(batch);
 	}
 
 	@Override
 	public void update() {
-		location.update();
-		if (statusState != StatusState.DEAD && visibility == Visibility.VISIBLE)
+		if (statusState != StatusState.DEAD) {
+			location.update();
 			sprite.update();
+		}
 	}
 
 	public boolean jump() {
 		return location.jump();
 	}
 
-	/**
-	 * Attack the list of targets.
-	 */
-	public abstract void attack(int damage, boolean aoe,
-			float knockBackDistance, Actor actor);
+	public abstract void attack(int damage, boolean aoe, float knockBackDistance);
 
 	public void setHorizontalMotionState(
 			HorizontalMotionState horizontalMotionState) {
@@ -97,10 +94,8 @@ public abstract class Actor implements Updatable, Drawable {
 	protected void receiveDamage(int damage) {
 		if (health > 0) {
 			health -= damage;
-			if (health <= 0) {
+			if (health <= 0)
 				onDeath();
-				sprite.onDeath();
-			}
 		}
 	}
 
@@ -114,6 +109,19 @@ public abstract class Actor implements Updatable, Drawable {
 
 	public void onDeath() {
 		statusState = StatusState.DYING;
+	}
+
+	public void reset(float locationX, float locationY) {
+		// All sprites must have same dimensions!
+		location.x = locationX;
+		location.y = locationY;
+		location.spawnX = locationX;
+		location.spawnY = locationY;
+		location.rect.set(location.x
+				- (float) sprite.currentTexture.originalWidth * 0.5f,
+				location.y - (float) sprite.currentTexture.originalHeight
+						* 0.5f, (float) sprite.currentTexture.originalWidth,
+				(float) sprite.currentTexture.originalHeight);
 	}
 
 }

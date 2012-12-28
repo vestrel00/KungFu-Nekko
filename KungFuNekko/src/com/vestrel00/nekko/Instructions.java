@@ -54,12 +54,15 @@ public class Instructions implements Updatable, Drawable, Touchable {
 					+ "Your stamina decreses everytime you attack.\n"
 					+ "Some attacks cost more than the others.\n"
 					+ "You can keep tapping this to regain 2 stamina for each tap.\n"
-					+ "You can also regain health by eating food!",
+					+ "You can also regain stamina by eating food!",
 			"Touch this if you need to go to the bathroom!\n"
-					+ "Or for some other reason...",
+					+ "Or for some other reason...\n"
+					+ "You may quit or resume the game by touching\n"
+					+ "the health and stamina button respectively.",
 			"Touch this to open the options menu.\n"
 					+ "The options menu will allow you to turn\n"
-					+ "the music and sound effects on or off.",
+					+ "the music and sound effects on or off.\n"
+					+ "This will also pause the game.",
 			"Tap anyone of these buttons to execute a combat move.\n"
 					+ "You can perform combos by tapping the buttons consecutively.\n"
 					+ "You can mix and match combos!\n"

@@ -22,7 +22,6 @@ package com.vestrel00.nekko.actors.components;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.Actor;
 import com.vestrel00.nekko.actors.states.Visibility;
 import com.vestrel00.nekko.interf.Drawable;
@@ -32,7 +31,7 @@ public abstract class Sprite implements Updatable, Drawable {
 
 	protected Actor actor;
 	public Color color;
-	protected AtlasRegion currentTexture;
+	public AtlasRegion currentTexture;
 	protected float xScale, rotation;
 	protected long animationDelay, lastAnimationTime;
 	public int combatIndex = 0;
@@ -53,9 +52,8 @@ public abstract class Sprite implements Updatable, Drawable {
 					actor.location.rect.height * 0.5f,
 					actor.location.rect.width, actor.location.rect.height,
 					xScale, 1.0f, rotation);
-			batch.setColor(KFNekko.worldColor);
+			// batch.setColor(KFNekko.worldColor);
+			// let the caller reset the batch color
 		}
 	}
-
-	public abstract void onDeath();
 }

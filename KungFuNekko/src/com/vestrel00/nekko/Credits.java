@@ -28,12 +28,13 @@ import com.vestrel00.nekko.interf.Updatable;
 
 public class Credits implements Updatable, Drawable {
 
-	private final CharSequence[] authors = { "Vandolf Estrellado",
-			"Dogchicken", "Buch", "PowStudios", "Lourme & Gabovitch",
-			"Qubodup", "CGEffex", "Movingplaid", "NoiseCollector",
-			"Soundscalpel.com", "Shaynecantly", "Thebondman",
-			"The League of Moveable Type" };
-	private final CharSequence[] links = { "@IndieDB.com/members/vestrel00",
+	private final CharSequence[] authors = { "KungFu Nekko",
+			"Vandolf Estrellado", "LibGDX", "Dogchicken", "Buch", "PowStudios",
+			"Lourme & Gabovitch", "Qubodup", "CGEffex", "Movingplaid",
+			"NoiseCollector", "Soundscalpel.com", "Shaynecantly", "Thebondman",
+			"The League of Moveable Type", "Special Thanks" };
+	private final CharSequence[] links = { " ",
+			"@IndieDB.com/members/vestrel00", "@Libgdx.badlogicgames.com/",
 			"@Opengameart.org/users/dogchicken", "@Opengameart.org/users/buch",
 			"@PowStudios.com", "@Jamendo.com/en/artist/560/gregoire-lourme",
 			"@Opengameart.org/users/qubodup",
@@ -43,17 +44,37 @@ public class Credits implements Updatable, Drawable {
 			"@Freesound.org/people/soundscalpel.com/sounds",
 			"@Freesound.org/people/shaynecantly/sounds",
 			"@Freesound.org/people/thebondman/sounds",
-			"@Theleagueofmoveabletype.com" };
+			"@Theleagueofmoveabletype.com", " " };
 	private final CharSequence[] works = {
+			"Copyright (C) 2012 by Vandolf Estrellado\n\n"
+					+ "The code is licensed under the GNU GPL.\n"
+					+ "It is free software and you may modify it\n"
+					+ "and/or redistribute it under the terms of this license.\n"
+					+ "See http://www.gnu.org/copyleft/gpl.html for details.",
 			"KungFu Nekko Developer (The Creator XD)\nCheck out my other project Heroes of a Lost World\n"
 					+ "at vestrel00.wix.com/hoalw\nSee all of my games at IndieDB.com/members/vestrel00\n"
 					+ "and my artwork at Opengameart.org/users/vestrel00",
+			"The libgdx project is a cross-platform game\n" +
+			"development library written in Java, with some\n" +
+			"JNI code for performance hungry sections.\n"
+					+ "It abstracts away the differences between\n" +
+					"writing desktop, Android and HTML5 games\n" +
+					"based on standards like OpenGL ES/WebGL.",
 			"Flying Tongue Monster\nCute Monster\nSkull Monster\nSpring Demon\nDance Music",
-			"Minimal sidescroller tileset\nDwarf Portrait\nPixel art user interface",
-			"Smoke animation pack 1", "Commando Team (Action)",
-			"RPG Coins Set", "Punches\nFist Punch", "Concrete Steps", "Cat 1",
-			"Foley cable woosh air", "Miners Explosion",
-			"Indiana jones style punch", "Chunkfive Font" };
+			"Minimal sidescroller tileset\nDwarf Portrait\nPixel art user interface\nChess pieces set",
+			"Smoke animation pack 1",
+			"Commando Team (Action)",
+			"RPG Coins Set",
+			"Punches\nFist Punch",
+			"Concrete Steps",
+			"Cat 1",
+			"Foley cable woosh air",
+			"Miners Explosion",
+			"Indiana jones style punch",
+			"Chunkfive Font",
+			"To my mother.\nWithout her I would not have had the time to make this\n"
+					+ "game as well as focus on my studies.\n"
+					+ "From me to her with love XD" };
 
 	private Color color;
 	private StringTyper authorTyper, linkTyper, workTyper;

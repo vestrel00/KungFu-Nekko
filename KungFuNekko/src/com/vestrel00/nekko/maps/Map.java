@@ -61,10 +61,15 @@ public class Map implements Updatable, Drawable {
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		// caller determines color
 		for (int i = 0; i < sections.size; i++)
 			sections.get(i).draw(batch);
+		// draw manager
+		manager.draw(batch);
 		for (int i = 0; i < KFNekko.enemies.size; i++)
 			KFNekko.enemies.get(i).draw(batch);
+		// set batch back to worldColor
+		batch.setColor(KFNekko.worldColor);
 	}
 
 }

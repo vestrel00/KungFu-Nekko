@@ -64,8 +64,6 @@ public class IntroScreen implements Updatable, Drawable, Disposable, Touchable {
 
 	public IntroScreen() {
 		initResources();
-		phase = 0;
-		view = VIEW_SPLASH_HOALW;
 		color = new Color(Color.CLEAR);
 		skipColor = new Color(Color.WHITE);
 		widths = new float[strings.length];
@@ -77,6 +75,7 @@ public class IntroScreen implements Updatable, Drawable, Disposable, Touchable {
 		skipRect = new Rectangle(8.0f, KFNekko.settings.viewHeight * 0.90f,
 				widths[2],
 				KFNekko.resource.chunkFive.getBounds(strings[2]).height);
+		reset();
 	}
 
 	private void initResources() {
@@ -90,11 +89,23 @@ public class IntroScreen implements Updatable, Drawable, Disposable, Touchable {
 		gruff = Gdx.audio.newSound(Gdx.files.internal("sound/gruff.mp3"));
 		wrath = Gdx.audio
 				.newMusic(Gdx.files.internal("sound/wrathOfMagic.mp3"));
+		menu = new IntroMenuManager(atlas);
+	}
+
+	/**
+	 * Reset/begin everything.
+	 */
+	public void reset() {
+		color.set(Color.CLEAR);
+		phase = 0;
+		view = VIEW_SPLASH_HOALW;
+		typer.reset(strings[0], 100000000L);
+		splashRect.set(KFNekko.camera.rect.x, KFNekko.camera.camera.position.y
+				- splashRect.height * 0.5f, 0, 2.0f);
 		if (KFNekko.settings.soundOn) {
 			introsition.play();
 			wrath.play();
 		}
-		menu = new IntroMenuManager(atlas);
 	}
 
 	@Override
@@ -154,11 +165,11 @@ public class IntroScreen implements Updatable, Drawable, Disposable, Touchable {
 			break;
 		case VIEW_SPLASH_DOGCHIKEN:
 			batch.begin();
+			batch.setColor(color);
+			batch.draw(dogChikenRegion, 0.0f, 0.0f);
 			KFNekko.resource.chunkFive.setColor(skipColor);
 			KFNekko.resource.chunkFive.draw(batch, strings[2], skipRect.x,
 					skipRect.y + skipRect.height);
-			batch.setColor(color);
-			batch.draw(dogChikenRegion, 0.0f, 0.0f);
 			KFNekko.resource.chunkFive.setColor(0.98f, 0.31f, 0.262f, color.a);
 			KFNekko.resource.chunkFive.draw(batch, typer.getTypedStr(), 20.0f,
 					KFNekko.camera.camera.position.y + 15.0f);
@@ -168,11 +179,11 @@ public class IntroScreen implements Updatable, Drawable, Disposable, Touchable {
 			break;
 		case VIEW_SPLASH_BUCH:
 			batch.begin();
+			batch.setColor(color);
+			batch.draw(buchRegion, 0.0f, 0.0f);
 			KFNekko.resource.chunkFive.setColor(skipColor);
 			KFNekko.resource.chunkFive.draw(batch, strings[2], skipRect.x,
 					skipRect.y + skipRect.height);
-			batch.setColor(color);
-			batch.draw(buchRegion, 0.0f, 0.0f);
 			KFNekko.resource.chunkFive.setColor(0.5764f, 0.2549f, 0.0235f,
 					color.a);
 			KFNekko.resource.chunkFive.draw(batch, typer.getTypedStr(),
@@ -255,7 +266,7 @@ public class IntroScreen implements Updatable, Drawable, Disposable, Touchable {
 		switch (phase) {
 		case 0:
 			typer.update();
-			if (updateColor(0.04f))
+			if (updateColor(0.04f) && KFNekko.settings.soundOn)
 				gruff.play(1.0f, 1.0f, Audio
 						.getSoundPan(KFNekko.camera.camera.position.x - 40.0f));
 			break;

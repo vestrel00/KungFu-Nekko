@@ -158,14 +158,16 @@ public class Location implements Updatable {
 				y = spawnY;
 
 			// All sprites must have same dimensions!
-			rect.set(x - (float) actor.sprite.currentTexture.originalWidth
-					* 0.5f,
-					y - (float) actor.sprite.currentTexture.originalHeight
-							* 0.5f,
-					(float) actor.sprite.currentTexture.originalWidth,
-					(float) actor.sprite.currentTexture.originalHeight);
+			updateRect();
 
 		}
+	}
+
+	public void updateRect() {
+		rect.set(x - (float) actor.sprite.currentTexture.originalWidth * 0.5f,
+				y - (float) actor.sprite.currentTexture.originalHeight * 0.5f,
+				(float) actor.sprite.currentTexture.originalWidth,
+				(float) actor.sprite.currentTexture.originalHeight);
 	}
 
 	public boolean jump() {

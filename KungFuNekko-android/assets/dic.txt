@@ -7,3 +7,6 @@ quads
 init
 hud
 apache
+intro
+highscores
+ftw

@@ -39,6 +39,7 @@ public class CuteMonsterSprite extends Sprite {
 			dyingIndex = 0;
 
 	private CuteMonster monster;
+	private static long lastStepTime;
 
 	public CuteMonsterSprite(CuteMonster monster, TextureAtlas atlas,
 			Color color) {
@@ -118,8 +119,7 @@ public class CuteMonsterSprite extends Sprite {
 				monster.onDeactivateCombat();
 			}
 			if (combatIndex == 3)
-				monster.attack(monster.damage, false,
-						monster.knockBackDistance, monster);
+				monster.attack(monster.damage, false, monster.knockBackDistance);
 
 			currentTexture = attack[combatIndex];
 			animationDelay = 80000000L;
@@ -161,8 +161,11 @@ public class CuteMonsterSprite extends Sprite {
 				if (++walkIndex == move.length)
 					walkIndex = 0;
 
-				if (walkIndex == 1 && monster.visibility == Visibility.VISIBLE)
+				if (walkIndex == 1 && monster.visibility == Visibility.VISIBLE
+						&& TimeUtils.nanoTime() - lastStepTime > 300000000L) {
+					lastStepTime = TimeUtils.nanoTime();
 					KFNekko.audio.footStep(monster.location.x);
+				}
 
 				currentTexture = move[walkIndex];
 				if (monster.location.onSlope)
@@ -175,12 +178,6 @@ public class CuteMonsterSprite extends Sprite {
 			}
 		else
 			return false;
-
-	}
-
-	@Override
-	public void onDeath() {
-		// TODO Auto-generated method stub
 
 	}
 

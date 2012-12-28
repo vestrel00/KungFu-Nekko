@@ -31,7 +31,7 @@ import com.vestrel00.nekko.interf.PickUp;
 public class PowerUp implements PickUp {
 
 	public static final int INVISIBILITY = 0, RAGE = 1, QUICKFEET = 2,
-			KUNGFU_MASTER = 3, ENDURANCE = 4;;
+			KUNGFU_MASTER = 3, ENDURANCE = 4, NONE = -1;
 	private static final long DURATION = 20000000000L;
 
 	private Rectangle rect;
@@ -69,7 +69,8 @@ public class PowerUp implements PickUp {
 		if (isActive) {
 			if ((rot += 10.0f) > 360.0f)
 				rot -= 360.0f;
-			if (TimeUtils.nanoTime() - dropTime > 2000000000L
+			// cannot pickup the drop before 1 second has passed
+			if (TimeUtils.nanoTime() - dropTime > 1000000000L
 					&& KFNekko.player.location.rect.overlaps(rect))
 				pickUp();
 			if ((xSpeed -= 2.0f) < 0.0f)
@@ -108,8 +109,7 @@ public class PowerUp implements PickUp {
 	@Override
 	public void pickUp() {
 		if (isActive) {
-			isActive = false;
-			KFNekko.player.powerUp(type);
+			isActive = KFNekko.player.powerUp(type);
 		}
 	}
 

@@ -223,8 +223,8 @@ public class NekkoSprite extends Sprite {
 							0.08f, 0.3f, true, 0.0f, color);
 			}
 			if (nekko.location.onPlatform || nekko.location.onSlope) {
-				KFNekko.camera.setEffect(Camera.EFFECT_SHAKE, 1.0f, 3.0f,
-						200000000L);
+				KFNekko.camera.setEffect(Camera.EFFECT_SHAKE, 1.0f, 4.0f,
+						300000000L);
 				activateSmoke();
 				KFNekko.audio.groundBoom(nekko.location.x);
 			}
@@ -504,7 +504,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 7 || combatIndex == spinKick.length - 1) {
-				nekko.attack(2 * damageMultiplier, true, 10.0f, nekko);
+				nekko.attack(2 * damageMultiplier, true, 10.0f);
 				activateEffect();
 			}
 			currentTexture = spinKick[combatIndex];
@@ -516,7 +516,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 4) {
-				nekko.attack(1 * damageMultiplier, true, 20.0f, nekko);
+				nekko.attack(1 * damageMultiplier, true, 20.0f);
 				activateEffect();
 			}
 			currentTexture = fastShot[combatIndex];
@@ -541,7 +541,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 0 || combatIndex == 3 || combatIndex == 6) {
-				nekko.attack(2 * damageMultiplier, true, 150.0f, nekko);
+				nekko.attack(2 * damageMultiplier, true, 150.0f);
 				activateEffect();
 			}
 			currentTexture = flyingKick[combatIndex];
@@ -553,7 +553,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 0 || combatIndex == 2 || combatIndex == 5) {
-				nekko.attack(4 * damageMultiplier, true, 40.0f, nekko);
+				nekko.attack(4 * damageMultiplier, true, 40.0f);
 				activateEffect();
 			}
 			currentTexture = superUppercut[combatIndex];
@@ -565,7 +565,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 4 || combatIndex == 7) {
-				nekko.attack(1 * damageMultiplier, true, 20.0f, nekko);
+				nekko.attack(1 * damageMultiplier, true, 20.0f);
 				activateEffect();
 			}
 			currentTexture = oneTwoCombo[combatIndex];
@@ -577,7 +577,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 2 || combatIndex == 8) {
-				nekko.attack(1 * damageMultiplier, true, 20.0f, nekko);
+				nekko.attack(1 * damageMultiplier, true, 20.0f);
 				activateEffect();
 			}
 			currentTexture = lowMiddleKick[combatIndex];
@@ -589,7 +589,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 2) {
-				nekko.attack(2 * damageMultiplier, true, 20.0f, nekko);
+				nekko.attack(2 * damageMultiplier, true, 20.0f);
 				activateEffect();
 			}
 			currentTexture = highKick[combatIndex];
@@ -601,7 +601,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 7) {
-				nekko.attack(2 * damageMultiplier, true, 20.0f, nekko);
+				nekko.attack(2 * damageMultiplier, true, 20.0f);
 				activateEffect();
 			}
 			currentTexture = downwardKick[combatIndex];
@@ -614,7 +614,7 @@ public class NekkoSprite extends Sprite {
 			}
 			stepForward(16.0f);
 			if (combatIndex == 6) {
-				nekko.attack(5 * damageMultiplier, true, 100.0f, nekko);
+				nekko.attack(5 * damageMultiplier, true, 100.0f);
 				activateEffect();
 			}
 			currentTexture = twoSidedAttack[combatIndex];
@@ -626,7 +626,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 5) {
-				nekko.attack(3 * damageMultiplier, true, 100.0f, nekko);
+				nekko.attack(3 * damageMultiplier, true, 100.0f);
 				activateEffect();
 			}
 			currentTexture = roundKick[combatIndex];
@@ -638,7 +638,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 4) {
-				nekko.attack(3 * damageMultiplier, true, 20.0f, nekko);
+				nekko.attack(3 * damageMultiplier, true, 20.0f);
 				activateEffect();
 			}
 			currentTexture = uppercut[combatIndex];
@@ -656,12 +656,6 @@ public class NekkoSprite extends Sprite {
 		effectImgIndex = incrementIndex(effectImgIndex, effectImages.length);
 		effectImages[effectImgIndex].activate(smokeEffect, nekko.location.x,
 				nekko.location.rect.y, 0.08f, 12.0f, false, 2.0f, Color.WHITE);
-	}
-
-	@Override
-	public void onDeath() {
-		// TODO Auto-generated method stub
-
 	}
 
 }
