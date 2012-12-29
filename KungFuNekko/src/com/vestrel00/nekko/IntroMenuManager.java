@@ -71,16 +71,10 @@ public class IntroMenuManager implements Updatable, Drawable, Touchable {
 		creditsRect = new Rectangle(playRect.x, instructionsRect.y
 				- playRect.height - 10.0f, playRect.width, playRect.height);
 		titleColor = new Color(Color.YELLOW);
-		targetTitleColor = genColor();
+		targetTitleColor = Color.PINK;
 		credits = new Credits();
 		instructions = new Instructions();
 		selection = new IntroSelectionManager(atlas);
-	}
-
-	private Color genColor() {
-		return new Color((float) rand.nextInt(255) / 255.0f,
-				(float) rand.nextInt(255) / 255.0f,
-				(float) rand.nextInt(255) / 255.0f, 1.0f);
 	}
 
 	@Override
@@ -172,7 +166,7 @@ public class IntroMenuManager implements Updatable, Drawable, Touchable {
 		}
 	}
 
-	private void updateTitleColor() {
+	public void updateTitleColor() {
 		boolean change = false;
 		if (titleColor.r > targetTitleColor.r) {
 			if ((titleColor.r -= COLOR_SPEED) < targetTitleColor.r)
@@ -199,7 +193,7 @@ public class IntroMenuManager implements Updatable, Drawable, Touchable {
 		}
 
 		if (change)
-			targetTitleColor = genColor();
+			Methods.randomColor(targetTitleColor, rand);
 
 	}
 

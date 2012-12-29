@@ -80,6 +80,7 @@ public class PowerUp implements PickUp {
 				rect.x = 0.0f;
 			else if (rect.x + rect.width > KFNekko.map.width)
 				rect.x = KFNekko.map.width - rect.width;
+			
 			if (TimeUtils.nanoTime() - dropTime > DURATION)
 				isActive = false;
 		}
@@ -103,13 +104,14 @@ public class PowerUp implements PickUp {
 					: -1.0f;
 			xSpeed = 20.0f;
 			dropTime = TimeUtils.nanoTime();
+			KFNekko.audio.powerupDrop(location.x);
 		}
 	}
 
 	@Override
 	public void pickUp() {
 		if (isActive) {
-			isActive = KFNekko.player.powerUp(type);
+			isActive = !KFNekko.player.powerUp(type);
 		}
 	}
 

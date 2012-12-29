@@ -36,6 +36,10 @@ public abstract class Sprite implements Updatable, Drawable {
 	protected long animationDelay, lastAnimationTime;
 	public int combatIndex = 0;
 
+	// used by monsters to prevent too many footstep sounds from being played at
+	// once
+	protected static long lastStepTime;
+
 	public Sprite(Actor actor, Color color) {
 		this.actor = actor;
 		this.color = color;

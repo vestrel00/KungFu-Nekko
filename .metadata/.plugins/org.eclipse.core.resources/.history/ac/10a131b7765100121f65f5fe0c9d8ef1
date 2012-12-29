@@ -1,0 +1,5 @@
+package com.vestrel00.nekko.actors.components;
+
+public class SkullMonsterSprite extends Sprite{
+
+}

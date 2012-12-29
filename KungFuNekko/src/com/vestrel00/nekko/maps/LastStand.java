@@ -23,14 +23,17 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vestrel00.nekko.Camera;
 import com.vestrel00.nekko.KFNekko;
-import com.vestrel00.nekko.actors.Actor;
 import com.vestrel00.nekko.actors.ChessPiece;
 import com.vestrel00.nekko.actors.CuteMonster;
 import com.vestrel00.nekko.actors.Monster;
+import com.vestrel00.nekko.actors.SkullMonster;
 import com.vestrel00.nekko.actors.components.Location;
 import com.vestrel00.nekko.actors.components.PowerUp;
 import com.vestrel00.nekko.actors.states.CombatState;
@@ -45,31 +48,36 @@ import com.vestrel00.nekko.maps.components.MapSection;
 
 public class LastStand implements LevelManager {
 
-	private static final long WAVE_DURATION = 60000000000L,
+	private static final long WAVE_DURATION = 20000000000L,
 			INTER_SPAWN = 1000000000L, POWER_UP_DROP_DELAY = 5000000000L;
 
 	private final CharSequence scoreStr = "Score : ", waveStr = "Wave : ";
-	private final int MAX_MONSTER_COUNT = 150, POWER_UP_DROP_CHANCE = 10;
+	private final int MAX_MONSTER_COUNT = 150, POWER_UP_DROP_CHANCE = 30;
 	private int score = 0, wave = 0, batchCount = 0;
+	private float portalScale, portalRotation, portalScaleDir = 0.005f;
 	private StringBuilder builder;
-	private Vector2 monsterLoc1, monsterLoc2, monsterLoc3, scoreStrVec,
+	public Vector2 monsterLoc1, monsterLoc2, monsterLoc3, scoreStrVec,
 			scoreVec, waveStrVec, waveVec, chosenSpawnLoc;
 	private long waveStartTime, monsterSpawnDelay = 1000000000L,
 			lastMonsterSpawnTime, lastInterSpawn, pauseTime, lastPowerUpDrop;
-	private Random rand;
+	public Random rand;
+	private Rectangle[] spawnPortals;
+	private LastStandInst instruction;
 	private ChessPiece chosenPiece;
-	private Array<ChessPiece> chessPieces;
+	public Array<ChessPiece> chessPieces;
+	private AtlasRegion spawnRegion;
 
 	// cache to prevent creating new monster object at run time
 	private Array<PickUp> pickUps;
 	private Array<PowerUp> powerUps;
 	private Array<CuteMonster> cuteMonsters;
+	private Array<SkullMonster> skullMonsters;
 
 	// indices
-	private int cuteMonsterIndex = 0;
+	private int cuteMonsterIndex = 0, skullMonsterIndex = 0;
 
-	// TODO TOUNGE, SKULL
-	// TODO POWER UPS AND SUPPLIES
+	// TODO TOUNGE
+	// TODO POTIONS
 
 	@Override
 	public void pause() {
@@ -209,17 +217,16 @@ public class LastStand implements LevelManager {
 		KFNekko.map.width = 1952.0f;
 		KFNekko.map.height = 1700.0f;
 
-		// make sure that the camera is not following the player
-		KFNekko.camera.manualOverride = true;
-		// IMPORTANT! make sure that the camera is at the origin
-		// This is actually called twice
-		// here and at PauseManager touch quitRect but keep it here anyways
-		KFNekko.camera.reset();
-		// make sure that the camera is again following the player
-		KFNekko.camera.manualOverride = false;
-
 		// set player spawn location
 		KFNekko.player.reset(1234.0f, 892.0f);
+		KFNekko.player.setState(FaceState.RIGHT, StatusState.ALIVE, CombatState.IDLE,
+				HorizontalMotionState.IDLE, VerticalMotionState.FALLING);
+
+		// camera work
+		KFNekko.camera.targetActor = KFNekko.player;
+		KFNekko.camera.mode = Camera.MODE_SCROLL;
+		KFNekko.camera.normalizeXSpeed = 10;
+		KFNekko.camera.normalizeYSpeed = 5;
 
 		// other
 		rand = new Random();
@@ -230,11 +237,30 @@ public class LastStand implements LevelManager {
 		monsterLoc2 = new Vector2(1851.0f, 1308.0f);
 		monsterLoc3 = new Vector2(1851.0f, 1576.0f);
 
+		// init spawn rectangles for checking visibility
+		portalScale = 1.0f;
+		portalRotation = 0.0f;
+		spawnRegion = KFNekko.resource.atlas.findRegion("blackHole");
+		float halfWidth = (float) spawnRegion.originalWidth * 0.5f, halfHeight = (float) spawnRegion.originalHeight * 0.5f;
+		spawnPortals = new Rectangle[3];
+		spawnPortals[0] = new Rectangle(monsterLoc1.x - halfWidth,
+				monsterLoc1.y - halfHeight, (float) spawnRegion.originalWidth,
+				(float) spawnRegion.originalHeight);
+		spawnPortals[1] = new Rectangle(monsterLoc2.x - halfWidth,
+				monsterLoc2.y - halfHeight, (float) spawnRegion.originalWidth,
+				(float) spawnRegion.originalHeight);
+		spawnPortals[2] = new Rectangle(monsterLoc3.x - halfWidth,
+				monsterLoc3.y - halfHeight, (float) spawnRegion.originalWidth,
+				(float) spawnRegion.originalHeight);
+
 		// draw points
 		scoreStrVec = new Vector2();
 		scoreVec = new Vector2();
 		waveStrVec = new Vector2();
 		waveVec = new Vector2();
+
+		// init the instruction manager
+		instruction = new LastStandInst(this);
 
 		// init chess pieces
 		initChessPieces();
@@ -261,12 +287,12 @@ public class LastStand implements LevelManager {
 		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.QUEEN,
 				new Location(1852.0f, 512.0f, 0, 0, 0, 0)));
 		// second level
-		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.PAWN,
-				new Location(1472.0f, 1216.0f, 0, 0, 0, 0)));
+		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.ROOK,
+				new Location(1472.0f, 1218.0f, 0, 0, 0, 0)));
 		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.BISHOP,
-				new Location(1284.0f, 1216.0f, 0, 0, 0, 0)));
+				new Location(1284.0f, 1218.0f, 0, 0, 0, 0)));
 		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.QUEEN,
-				new Location(1084.0f, 1216.0f, 0, 0, 0, 0)));
+				new Location(1084.0f, 1218.0f, 0, 0, 0, 0)));
 		// third level
 		chessPieces.add(new ChessPiece(KFNekko.enemies, ChessPiece.KNIGHT,
 				new Location(1467.0f, 1472.0f, 0, 0, 0, 0)));
@@ -296,10 +322,16 @@ public class LastStand implements LevelManager {
 
 	@Override
 	public void update() {
+		updatePortals();
 		for (int i = 0; i < pickUps.size; i++)
 			pickUps.get(i).update();
 		for (int i = 0; i < chessPieces.size; i++)
 			chessPieces.get(i).update();
+
+		if (KFNekko.view == KFNekko.VIEW_LEVEL_INTRO) {
+			instruction.update();
+			return;
+		}
 
 		if (TimeUtils.nanoTime() - waveStartTime > WAVE_DURATION) {
 			waveStartTime = TimeUtils.nanoTime();
@@ -313,31 +345,32 @@ public class LastStand implements LevelManager {
 			lastMonsterSpawnTime = TimeUtils.nanoTime();
 			lastInterSpawn = TimeUtils.nanoTime() - INTER_SPAWN;
 			batchCount = 0;
+
 			// signal start spawn stream of monsters (3 per batch)
 			switch (rand.nextInt(3)) {
 			case 0:
-				if (!spawnAtLoc(0) && !spawnAtLoc(1) && !spawnAtLoc(2))
-					break; // TODO GAME OVER
+				if (!(spawnAtLoc(0) || spawnAtLoc(1) || spawnAtLoc(2)))
+					gameOver(); // all pieces dead
 				break;
 			case 1:
-				if (!spawnAtLoc(1) && !spawnAtLoc(2) && !spawnAtLoc(0))
-					break;// TODO GAME OVER
+				if (!(spawnAtLoc(1) || spawnAtLoc(2) || spawnAtLoc(0)))
+					gameOver(); // all pieces dead
 				break;
 			case 2:
-				if (!spawnAtLoc(2) && !spawnAtLoc(0) && !spawnAtLoc(1))
-					break;// TODO GAME OVER
+				if (!(spawnAtLoc(2) || !spawnAtLoc(0) || spawnAtLoc(1)))
+					gameOver(); // all pieces dead
 				break;
 			}
-
 		}
 
 		if (TimeUtils.nanoTime() - lastInterSpawn > INTER_SPAWN
 				&& batchCount < 3) {
 			lastInterSpawn = TimeUtils.nanoTime();
-			spawnMonster(rand.nextInt(3), wave, chosenSpawnLoc, chosenPiece);
+			spawnMonster(rand.nextInt(3));
 			batchCount++;
 		}
 
+		// update text positions
 		scoreStrVec.set(KFNekko.camera.rect.x + 256.0f,
 				KFNekko.camera.rect.y + 308.0f);
 		scoreVec.set(KFNekko.camera.rect.x + 310.0f,
@@ -348,11 +381,19 @@ public class LastStand implements LevelManager {
 				KFNekko.camera.rect.y + 308.0f);
 	}
 
+	private void updatePortals() {
+		portalScale += portalScaleDir;
+		if (portalScale > 1.2f || portalScale < 0.9f)
+			portalScaleDir = -portalScaleDir;
+		if ((portalRotation -= 1.0f) < 0.0f)
+			portalRotation += 360.0f;
+	}
+
 	private boolean spawnAtLoc(int loc) {
 		int i = 0, j = 0;
 		switch (loc) {
 		case 0:
-			chosenSpawnLoc = monsterLoc1; // TODO SHOW ON VID
+			chosenSpawnLoc = monsterLoc1;
 			i = 0;
 			j = 4;
 			break;
@@ -367,66 +408,79 @@ public class LastStand implements LevelManager {
 			j = 11;
 			break;
 		}
-		while (i++ < j) {
-			if (chessPieces.get(i).statusState == StatusState.ALIVE)
+		while (i < j) {
+			if (chessPieces.get(i).statusState == StatusState.ALIVE) {
 				chosenPiece = chessPieces.get(i);
-			return true;
+				return true;
+			}
+			i++;
 		}
 		return false;
 	}
 
-	private void spawnMonster(int type, int level, Vector2 spawnLoc,
-			Actor primeTarget) {
+	private void gameOver() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void spawnMonster(int type) {
 		Monster monster = null;
 		switch (type) {
 		case 0:
 			monster = cuteMonsters.get(cuteMonsterIndex);
-			monster.location.speed.maxXSpeed = 2.0f + (float) wave * 0.08f;
+			monster.location.speed.maxXSpeed = 2.0f + (float) wave * 0.15f;
 			if (++cuteMonsterIndex == cuteMonsters.size)
 				cuteMonsterIndex = 0;
 			break;
 		case 1:
-			// TODO CHANGE TO TOUNGE
-			monster = cuteMonsters.get(cuteMonsterIndex);
-			monster.location.speed.maxXSpeed = 2.0f + (float) wave * 0.08f;
-			if (++cuteMonsterIndex == cuteMonsters.size)
-				cuteMonsterIndex = 0;
+			monster = skullMonsters.get(skullMonsterIndex);
+			monster.location.speed.maxXSpeed = 1.0f + (float) wave * 0.1f;
+			if (++skullMonsterIndex == skullMonsters.size)
+				skullMonsterIndex = 0;
 			break;
 		case 2:
-			// TODO CHANGE TO SKULL
-			monster = cuteMonsters.get(cuteMonsterIndex);
-			monster.location.speed.maxXSpeed = 2.0f + (float) wave * 0.08f;
-			if (++cuteMonsterIndex == cuteMonsters.size)
-				cuteMonsterIndex = 0;
+			// TODO CHANGE TO TOUNGE
+			monster = skullMonsters.get(skullMonsterIndex);
+			monster.location.speed.maxXSpeed = 1.0f + (float) wave * 0.05f;
+			if (++skullMonsterIndex == skullMonsters.size)
+				skullMonsterIndex = 0;
 			break;
 		}
 		monster.setState(FaceState.RIGHT, StatusState.ALIVE, CombatState.IDLE,
 				HorizontalMotionState.IDLE, VerticalMotionState.FALLING);
 		// reset
-		monster.reset(level);
-		monster.reset(spawnLoc.x, spawnLoc.y);
+		monster.reset(wave);
+		monster.reset(chosenSpawnLoc.x, chosenSpawnLoc.y);
 		// set speed
 		genColor(monster.sprite.color);
-		monster.setPrimeTarget(primeTarget);
+		monster.setPrimeTarget(chosenPiece);
 		// do not exceed maximum monster count (LIFO - Queue)
 		if (KFNekko.enemies.size >= MAX_MONSTER_COUNT)
 			KFNekko.enemies.removeIndex(0);
 		KFNekko.enemies.add(monster); // add to size - 1 (end of list)
+		KFNekko.audio.spawn(chosenSpawnLoc.x);
 	}
 
 	private void initMonsters() {
 		cuteMonsters = new Array<CuteMonster>();
+		skullMonsters = new Array<SkullMonster>();
 		for (int i = 0; i < 150; i++) {
-			// Monster.MONSTER_CUTE:
-			CuteMonster monster = new CuteMonster(KFNekko.resource.atlas,
+			CuteMonster cuteMon = new CuteMonster(KFNekko.resource.atlas,
 					new Location(0, 0, 4.0f, 22.0f, 80.0f, 18.0f),
-					KFNekko.allies, 100.0f, KFNekko.map.width, new Color(
-							Color.WHITE), 1);
-			monster.setState(FaceState.RIGHT, StatusState.DEAD,
+					KFNekko.allies, KFNekko.map.width, KFNekko.map.width,
+					new Color(Color.WHITE), 1);
+			cuteMon.setState(FaceState.RIGHT, StatusState.DEAD,
 					CombatState.IDLE, HorizontalMotionState.IDLE,
 					VerticalMotionState.FALLING);
-			cuteMonsters.add(monster);
-			// TODO Monster.MONSTER_SKULL:
+			cuteMonsters.add(cuteMon);
+			SkullMonster skullMon = new SkullMonster(KFNekko.resource.atlas,
+					new Location(0, 0, 4.0f, 22.0f, 80.0f, 18.0f),
+					KFNekko.allies, KFNekko.map.width, KFNekko.map.width,
+					new Color(Color.WHITE), 1);
+			skullMon.setState(FaceState.RIGHT, StatusState.DEAD,
+					CombatState.IDLE, HorizontalMotionState.IDLE,
+					VerticalMotionState.FALLING);
+			skullMonsters.add(skullMon);
 			// TODO Monster.MONSTER_TOUNGE:
 		}
 	}
@@ -447,34 +501,53 @@ public class LastStand implements LevelManager {
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		// draw the spawn locations
+		for (int i = 0; i < spawnPortals.length; i++)
+			if (spawnPortals[i].overlaps(KFNekko.camera.rect))
+				batch.draw(spawnRegion, spawnPortals[i].x, spawnPortals[i].y,
+						spawnPortals[i].width * 0.5f,
+						spawnPortals[i].height * .5f, spawnPortals[i].width,
+						spawnPortals[i].height, portalScale, portalScale,
+						portalRotation);
+
 		// draw the chess pieces
 		for (int i = 0; i < chessPieces.size; i++)
 			chessPieces.get(i).draw(batch);
-
 		// draw pickups
 		for (int i = 0; i < pickUps.size; i++)
 			pickUps.get(i).draw(batch);
+		// draw the chess pieces as icons from right side of screen to left
+		for (int i = 0, x = 130; i < chessPieces.size; x += chessPieces.get(i).chessSprite.currentTexture.originalWidth * 0.25f, i++)
+			chessPieces.get(i).chessSprite.drawIcon(batch, x, 260.0f, 0.15f);
 	}
 
 	@Override
 	public void drawText(SpriteBatch batch) {
-		batch.begin();
-		// DRAW SCORE
-		KFNekko.resource.arial.setColor(Color.WHITE);
-		KFNekko.resource.arial.setScale(1.0f);
-		KFNekko.resource.arial.draw(batch, scoreStr, scoreStrVec.x,
-				scoreStrVec.y);
-		// to avoid heap allocation - no String.valueOf()
-		builder.delete(0, builder.length());
-		builder.append(score);
-		KFNekko.resource.arial.draw(batch, builder, scoreVec.x, scoreVec.y);
-		// DRAW WAVE
-		KFNekko.resource.arial.draw(batch, waveStr, waveStrVec.x, waveStrVec.y);
-		// to avoid heap allocation - no String.valueOf()
-		builder.delete(0, builder.length());
-		builder.append(wave);
-		KFNekko.resource.arial.draw(batch, builder, waveVec.x, waveVec.y);
-		batch.end();
+		switch (KFNekko.view) {
+		case KFNekko.VIEW_GAME:
+			batch.begin();
+			// DRAW SCORE
+			KFNekko.resource.arial.setColor(Color.WHITE);
+			KFNekko.resource.arial.setScale(1.0f);
+			KFNekko.resource.arial.draw(batch, scoreStr, scoreStrVec.x,
+					scoreStrVec.y);
+			// to avoid heap allocation - no String.valueOf()
+			builder.delete(0, builder.length());
+			builder.append(score);
+			KFNekko.resource.arial.draw(batch, builder, scoreVec.x, scoreVec.y);
+			// DRAW WAVE
+			KFNekko.resource.arial.draw(batch, waveStr, waveStrVec.x,
+					waveStrVec.y);
+			// to avoid heap allocation - no String.valueOf()
+			builder.delete(0, builder.length());
+			builder.append(wave);
+			KFNekko.resource.arial.draw(batch, builder, waveVec.x, waveVec.y);
+			batch.end();
+			break;
+		case KFNekko.VIEW_LEVEL_INTRO:
+			instruction.draw(batch);
+			break;
+		}
 	}
 
 	@Override
@@ -485,11 +558,17 @@ public class LastStand implements LevelManager {
 			pickUps.removeIndex(0);
 		if (TimeUtils.nanoTime() - lastPowerUpDrop > POWER_UP_DROP_DELAY
 				&& rand.nextInt(100) < POWER_UP_DROP_CHANCE) {
+			lastPowerUpDrop = TimeUtils.nanoTime();
 			PowerUp power = powerUps.get(rand.nextInt(powerUps.size));
 			power.drop(monster.location);
 			pickUps.add(power);
 
 		}
 		// TODO FOOD pickup
+	}
+
+	@Override
+	public boolean onTouchDown(float x, float y) {
+		return instruction.onTouchDown(x, y);
 	}
 }

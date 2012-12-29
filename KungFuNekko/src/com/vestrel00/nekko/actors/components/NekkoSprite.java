@@ -26,6 +26,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.vestrel00.nekko.Camera;
 import com.vestrel00.nekko.KFNekko;
+import com.vestrel00.nekko.Methods;
 import com.vestrel00.nekko.actors.Nekko;
 import com.vestrel00.nekko.actors.components.effects.AfterImage;
 import com.vestrel00.nekko.actors.states.CombatState;
@@ -51,8 +52,10 @@ public class NekkoSprite extends Sprite {
 	private AtlasRegion attackEffect1, smokeEffect;
 
 	private Nekko nekko;
-	public long speedUp, lastCombatImage;
+	public long speedUp, lastCombatImage, lastStepTime;
 	public int damageMultiplier;
+	public Color targetColor;
+	public float colorSpeed;
 
 	public NekkoSprite(Nekko nekko, TextureAtlas atlas, Color color) {
 		super(nekko, color);
@@ -61,6 +64,8 @@ public class NekkoSprite extends Sprite {
 		initEffects(atlas);
 		speedUp = 0L;
 		damageMultiplier = 1;
+		colorSpeed = 0.04f;
+		targetColor = new Color(color);
 	}
 
 	private void initEffects(TextureAtlas atlas) {
@@ -94,8 +99,6 @@ public class NekkoSprite extends Sprite {
 		lowMiddleKick = new AtlasRegion[12];
 		superUppercut = new AtlasRegion[13];
 
-		hurt[0] = atlas.findRegion("nekkoHurt1");
-		hurt[1] = atlas.findRegion("nekkoHurt2");
 		int i = 0;
 		for (i = 0; i < 4; i++) {
 			idle[i] = atlas.findRegion("nekkoIdle" + String.valueOf(i));
@@ -138,11 +141,15 @@ public class NekkoSprite extends Sprite {
 			superUppercut[i] = atlas.findRegion("nekkoSuperUppercut"
 					+ String.valueOf(i));
 
+		hurt[0] = dying[1];
+		hurt[1] = dying[2];
+
 		currentTexture = idle[0];
 	}
 
 	@Override
 	public void update() {
+		Methods.updateColor(color, targetColor, colorSpeed);
 		// update after images
 		for (int i = 0; i < combatImages.length; i++)
 			combatImages[i].update();
@@ -201,14 +208,20 @@ public class NekkoSprite extends Sprite {
 		nekko.location.update();
 		nekko.location.speed.xSpeed = nekko.location.speed.maxXSpeed;
 
-		if (nekko.location.onSlope || nekko.location.onPlatform)
+		if ((nekko.location.onSlope || nekko.location.onPlatform)
+				&& TimeUtils.nanoTime() - lastStepTime > 100000000L) {
+			lastStepTime = TimeUtils.nanoTime();
 			KFNekko.audio.footStep(nekko.location.x);
+		}
 	}
 
 	private void activateEffect() {
 		KFNekko.bumpWC(0.1f, 0.1f, 0.1f);
 		float zoomAmount = 0.0f;
-		stepForward(12.0f);
+		// do not exceed a certain value (maybe 20?) since it might cause you to
+		// fall of the map!
+		stepForward(14.0f);
+		stepForward(14.0f);
 		switch (nekko.combatState) {
 		case SPIN:
 			zoomAmount = 0.07f;
@@ -612,7 +625,7 @@ public class NekkoSprite extends Sprite {
 				combatIndex = 0;
 				nekko.onDeactivateCombat();
 			}
-			stepForward(16.0f);
+			stepForward(14.0f);
 			if (combatIndex == 6) {
 				nekko.attack(5 * damageMultiplier, true, 100.0f);
 				activateEffect();

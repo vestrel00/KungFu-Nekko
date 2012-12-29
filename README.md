@@ -24,3 +24,6 @@ and because it make the code look graceful even though it is chicken scratch XD.
 It is pretty trivial to put stuff on a text file or JSON or whatever then parse the data
 at run time in order to keep the source code short and sweet (and reusable) but it is also
 boring and slows me down a bit in setting things up.
+
+*** I know a lot of code could be optimized/re-written to make things faster and neater
+but I was rushing things so that's that!

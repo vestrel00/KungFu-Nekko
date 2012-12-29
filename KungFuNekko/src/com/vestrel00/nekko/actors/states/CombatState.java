@@ -20,7 +20,7 @@
 package com.vestrel00.nekko.actors.states;
 
 public enum CombatState {
-	ATTACK, // for monsters 
+	ATTACK, SPECIAL,// for monsters 
 	IDLE, // out of combat
 	// normal default attack aoe
 	FASTSHOT, 

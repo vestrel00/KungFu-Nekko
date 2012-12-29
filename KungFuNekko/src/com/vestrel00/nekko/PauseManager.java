@@ -99,7 +99,8 @@ public class PauseManager implements Touchable, Drawable, Updatable {
 			KFNekko.audio.touch();
 			KFNekko.map.manager.resume();
 			// move camera back to origin
-			KFNekko.camera.manualOverride = true;
+			KFNekko.camera.targetActor = null;
+			KFNekko.camera.targetLoc.x = -1.0f;
 			KFNekko.camera.reset();
 			if (KFNekko.audio.music.isPlaying())
 				KFNekko.audio.music.stop();

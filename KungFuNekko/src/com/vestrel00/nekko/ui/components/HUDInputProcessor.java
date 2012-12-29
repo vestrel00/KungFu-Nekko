@@ -49,6 +49,9 @@ public class HUDInputProcessor implements InputProcessor {
 		case KFNekko.VIEW_INTRO:
 			return (KFNekko.intro.onTouchDown(touchPos.x, touchPos.y)) ? true
 					: false;
+		case KFNekko.VIEW_LEVEL_INTRO:
+			return (KFNekko.map.manager.onTouchDown(touchPos.x, touchPos.y)) ? true
+					: false;
 		case KFNekko.VIEW_GAME:
 			return (KFNekko.hud.onTouchDown(touchPos.x, touchPos.y)) ? true
 					: false;
@@ -86,63 +89,62 @@ public class HUDInputProcessor implements InputProcessor {
 	// DESKTOP
 	@Override
 	public boolean keyDown(int keycode) {
-		switch (keycode) {
-		case Keys.A:
-			player.setCombatState(attackManager
-					.input(ComboAttackManager.INPUT_DOWN));
-			return true;
-		case Keys.Z:
-			if (++player.health >= player.maxHealth)
-				player.health = player.maxHealth;
-			return true;
-		case Keys.X:
-			if (++player.stamina >= player.maxStamina)
-				player.stamina = player.maxStamina;
-			return true;
-		case Keys.S:
-			player.setCombatState(attackManager
-					.input(ComboAttackManager.INPUT_LEFT));
-			return true;
-		case Keys.D:
-			player.setCombatState(attackManager
-					.input(ComboAttackManager.INPUT_RIGHT));
-			return true;
-		case Keys.F:
-			player.setCombatState(attackManager
-					.input(ComboAttackManager.INPUT_UP));
-			return true;
-		case Keys.LEFT:
-			player.setHorizontalMotionState(HorizontalMotionState.MOVING);
-			player.faceState = FaceState.LEFT;
-			return true;
-		case Keys.RIGHT:
-			player.setHorizontalMotionState(HorizontalMotionState.MOVING);
-			player.faceState = FaceState.RIGHT;
-			return true;
-		case Keys.SPACE: // JUMP
-			player.setCombatState(attackManager
-					.input(ComboAttackManager.INPUT_JUMP));
-			player.jump();
-			return true;
-		case Keys.E: // FORCE JUMP TODO REMOVE
-			player.location.onPlatform = true;
-			player.jump();
-			return true;
-		default: // any other key is attack
-			player.setCombatState(attackManager
-					.input(ComboAttackManager.INPUT_ATTACK));
-			return true;
-		}
+		if (KFNekko.view == KFNekko.VIEW_GAME)
+			switch (keycode) {
+			case Keys.A:
+				player.setCombatState(attackManager
+						.input(ComboAttackManager.INPUT_DOWN));
+				return true;
+			case Keys.Z:
+				if (++player.health >= player.maxHealth)
+					player.health = player.maxHealth;
+				return true;
+			case Keys.X:
+				if (++player.stamina >= player.maxStamina)
+					player.stamina = player.maxStamina;
+				return true;
+			case Keys.S:
+				player.setCombatState(attackManager
+						.input(ComboAttackManager.INPUT_LEFT));
+				return true;
+			case Keys.D:
+				player.setCombatState(attackManager
+						.input(ComboAttackManager.INPUT_RIGHT));
+				return true;
+			case Keys.F:
+				player.setCombatState(attackManager
+						.input(ComboAttackManager.INPUT_UP));
+				return true;
+			case Keys.LEFT:
+				player.setHorizontalMotionState(HorizontalMotionState.MOVING);
+				player.faceState = FaceState.LEFT;
+				return true;
+			case Keys.RIGHT:
+				player.setHorizontalMotionState(HorizontalMotionState.MOVING);
+				player.faceState = FaceState.RIGHT;
+				return true;
+			case Keys.SPACE: // JUMP
+				player.setCombatState(attackManager
+						.input(ComboAttackManager.INPUT_JUMP));
+				player.jump();
+				return true;
+			default: // any other key is attack
+				player.setCombatState(attackManager
+						.input(ComboAttackManager.INPUT_ATTACK));
+				return true;
+			}
+		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		switch (keycode) {
-		case Keys.LEFT:
-		case Keys.RIGHT:
-			player.setHorizontalMotionState(HorizontalMotionState.IDLE);
-			return true;
-		}
+		if (KFNekko.view == KFNekko.VIEW_GAME)
+			switch (keycode) {
+			case Keys.LEFT:
+			case Keys.RIGHT:
+				player.setHorizontalMotionState(HorizontalMotionState.IDLE);
+				return true;
+			}
 		return false;
 	}
 

@@ -108,7 +108,8 @@ public abstract class Actor implements Updatable, Drawable {
 	}
 
 	public void onDeath() {
-		statusState = StatusState.DYING;
+		if (statusState == StatusState.ALIVE)
+			statusState = StatusState.DYING;
 	}
 
 	public void reset(float locationX, float locationY) {

@@ -19,7 +19,9 @@
 
 package com.vestrel00.nekko.actors;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.components.Location;
 import com.vestrel00.nekko.actors.states.CombatState;
@@ -31,6 +33,8 @@ public abstract class Monster extends Actor {
 
 	protected Actor target, primeTarget;
 	protected float aggroRange, motionRange;
+	public long lastAttackTime, attackDelay;
+	protected Rectangle aggroRect;
 	public int level;
 
 	public Monster(Array<Actor> targets, Location location, int maxHealth,
@@ -38,6 +42,20 @@ public abstract class Monster extends Actor {
 		super(targets, location, maxHealth);
 		this.aggroRange = aggroRange;
 		this.motionRange = motionRange;
+		aggroRect = new Rectangle();
+	}
+
+	@Override
+	public void attack(int damage, boolean aoe, float knockBackDistance) {
+		for (int i = 0; i < targets.size; i++)
+			if (targets.get(i).statusState == StatusState.ALIVE
+					&& location.rect.overlaps(targets.get(i).location.rect)) {
+				targets.get(i).receiveDamage(damage);
+				targets.get(i).location.knockBack(knockBackDistance,
+						(faceState == FaceState.LEFT) ? -1.0f : 1.0f);
+				if (!aoe)
+					break;
+			}
 	}
 
 	@Override
@@ -65,6 +83,12 @@ public abstract class Monster extends Actor {
 	public void update() {
 		if (statusState != StatusState.DEAD) {
 			// make sure that target is still alive and within the aggro range
+			if (primeTarget != null)
+				if (primeTarget.statusState != StatusState.DEAD)
+					target = primeTarget;
+				else
+					target = null;
+
 			if (target != null
 					&& (target.statusState == StatusState.DEAD || !withinAggroRange(target)))
 				target = null;
@@ -75,7 +99,6 @@ public abstract class Monster extends Actor {
 						target = targets.get(i);
 						break;
 					}
-
 			// update combatState
 			updateCombatState();
 
@@ -87,9 +110,12 @@ public abstract class Monster extends Actor {
 	}
 
 	protected void updateCombatState() {
-		if (target != null && sprite.combatIndex == 0
-				&& location.rect.overlaps(target.location.rect)) {
-			setCombatState(CombatState.ATTACK);
+		if (TimeUtils.nanoTime() - lastAttackTime > attackDelay) {
+			lastAttackTime = TimeUtils.nanoTime();
+			if (target != null && sprite.combatIndex == 0
+					&& location.rect.overlaps(target.location.rect)) {
+				setCombatState(CombatState.ATTACK);
+			}
 		}
 	}
 
@@ -97,11 +123,7 @@ public abstract class Monster extends Actor {
 		if (target != null) {
 			faceState = (target.location.x >= location.x) ? FaceState.RIGHT
 					: FaceState.LEFT;
-			setHorizontalMotionState(HorizontalMotionState.MOVING);
-		} else if (primeTarget != null) {
-			faceState = (primeTarget.location.x >= location.x) ? FaceState.RIGHT
-					: FaceState.LEFT;
-			setHorizontalMotionState(HorizontalMotionState.MOVING);
+				setHorizontalMotionState(HorizontalMotionState.MOVING);
 		}
 
 		if (location.x < 30.0f || location.x < location.spawnX - motionRange)
@@ -113,10 +135,9 @@ public abstract class Monster extends Actor {
 	}
 
 	protected boolean withinAggroRange(Actor targ) {
-		return targ.location.x >= location.x - aggroRange
-				&& targ.location.x <= location.x + aggroRange
-				&& targ.location.y >= location.y - aggroRange
-				&& targ.location.y <= location.y + aggroRange;
+		aggroRect.set(location.x - aggroRange, location.rect.y,
+				aggroRange * 2.0f, location.rect.height);
+		return aggroRect.overlaps(aggroRect);
 	}
 
 	public void setPrimeTarget(Actor primeTarget) {

@@ -26,15 +26,13 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.components.CuteMonsterSprite;
 import com.vestrel00.nekko.actors.components.Location;
-import com.vestrel00.nekko.actors.states.FaceState;
-import com.vestrel00.nekko.actors.states.StatusState;
 import com.vestrel00.nekko.actors.states.Visibility;
 
 public class CuteMonster extends Monster {
 
 	private static long lastGrowlTime;
 	private CuteMonsterSprite cuteSprite;
-	private long lastjumpTime, lastAttackTime;
+	private long lastjumpTime;
 	public int damage;
 	public float knockBackDistance;
 
@@ -44,16 +42,16 @@ public class CuteMonster extends Monster {
 		super(targets, location, 0, aggroRange, motionRange);
 		cuteSprite = new CuteMonsterSprite(this, atlas, color);
 		sprite = cuteSprite;
+		attackDelay = 800000000L;
 		location.setActor(this);
 		reset(level);
 	}
 
-
 	@Override
 	public void reset(int level) {
 		knockBackDistance = 20.0f + (float) level;
-		damage = 1 + level/10; // long division ftw > level>>2
-		this.maxHealth = 4 + level;
+		damage = 1 + level / 10; // long division ftw > level>>2
+		this.maxHealth = 4 + level / 4;
 		health = this.maxHealth;
 		this.level = level;
 	}
@@ -69,22 +67,11 @@ public class CuteMonster extends Monster {
 
 	@Override
 	public void attack(int damage, boolean aoe, float knockBackDistance) {
-		if (TimeUtils.nanoTime() - lastAttackTime > 2000000000L) {
-			lastAttackTime = TimeUtils.nanoTime();
-			for (int i = 0; i < targets.size; i++)
-				if (targets.get(i).statusState == StatusState.ALIVE
-						&& location.rect.overlaps(targets.get(i).location.rect)) {
-					targets.get(i).receiveDamage(damage);
-					targets.get(i).location.knockBack(knockBackDistance,
-							(faceState == FaceState.LEFT) ? -1.0f : 1.0f);
-					if (!aoe)
-						break;
-				}
-			if (visibility == Visibility.VISIBLE
-					&& TimeUtils.nanoTime() - lastGrowlTime > 500000000L) {
-				lastGrowlTime = TimeUtils.nanoTime();
-				KFNekko.audio.growl(location.x);
-			}
+		super.attack(damage, aoe, knockBackDistance);
+		if (visibility == Visibility.VISIBLE
+				&& TimeUtils.nanoTime() - lastGrowlTime > 500000000L) {
+			lastGrowlTime = TimeUtils.nanoTime();
+			KFNekko.audio.cuteGrowl(location.x);
 		}
 	}
 

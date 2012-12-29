@@ -25,9 +25,15 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Resource implements Disposable {
-	
+
 	public TextureAtlas atlas;
 	public BitmapFont chunkFive, arial;
+
+	// NOTE : bitmap fonts are susceptible to "shaking" due to rounding of draw
+	// locations. Since the normalization speed of the camera is not necessarily
+	// a whole number, and our pixel - scene ratio (zoom) = 1 some rounding will
+	// occur that may result in a 2 pixel difference in location in NDC in each
+	// update.
 
 	public Resource() {
 		atlas = new TextureAtlas(Gdx.files.internal("texture/main.pack"));

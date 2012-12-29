@@ -39,7 +39,6 @@ public class CuteMonsterSprite extends Sprite {
 			dyingIndex = 0;
 
 	private CuteMonster monster;
-	private static long lastStepTime;
 
 	public CuteMonsterSprite(CuteMonster monster, TextureAtlas atlas,
 			Color color) {
@@ -56,8 +55,6 @@ public class CuteMonsterSprite extends Sprite {
 		dying = new AtlasRegion[7];
 		jump = new AtlasRegion[8];
 
-		hurt[0] = atlas.findRegion("cuteMonsterHurt1");
-		hurt[1] = atlas.findRegion("cuteMonsterHurt2");
 		int i = 0;
 		for (i = 0; i < idle.length; i++)
 			idle[i] = atlas.findRegion("cuteMonsterIdle" + String.valueOf(i));
@@ -70,6 +67,8 @@ public class CuteMonsterSprite extends Sprite {
 			dying[i] = atlas.findRegion("cuteMonsterHurt" + String.valueOf(i));
 		for (i = 0; i < jump.length; i++)
 			jump[i] = atlas.findRegion("cuteMonsterJump" + String.valueOf(i));
+		hurt[0] = dying[1];
+		hurt[1] = dying[2];
 
 		currentTexture = idle[0];
 	}
@@ -119,10 +118,10 @@ public class CuteMonsterSprite extends Sprite {
 				monster.onDeactivateCombat();
 			}
 			if (combatIndex == 3)
-				monster.attack(monster.damage, false, monster.knockBackDistance);
+				monster.attack(monster.damage, true, monster.knockBackDistance);
 
 			currentTexture = attack[combatIndex];
-			animationDelay = 80000000L;
+			animationDelay = 65000000L;
 			return true;
 		default:
 			return false;

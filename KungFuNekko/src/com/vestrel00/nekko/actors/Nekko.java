@@ -38,7 +38,7 @@ public class Nekko extends Actor {
 
 	private final long POWERUP_DURATION = 20000000000L;
 
-	private NekkoSprite nekkoSprite;
+	public NekkoSprite nekkoSprite;
 	private long powerUpTime;
 	private float speedTmp;
 	public int stamina, maxStamina, powerUp;
@@ -269,12 +269,11 @@ public class Nekko extends Actor {
 
 	private void onDeactivatePowerUp() {
 		// undo changes
-		// TODO SOUND
-		nekkoSprite.color.set(Color.WHITE);
+		nekkoSprite.targetColor.set(Color.WHITE);
 		switch (powerUp) {
 		// cannot be hit
 		case PowerUp.INVISIBILITY:
-			// nothing
+			location.knockBackImmune = false;
 			break;
 		// do twice damage
 		case PowerUp.RAGE:
@@ -301,37 +300,34 @@ public class Nekko extends Actor {
 		if (powerUp != PowerUp.NONE)
 			return false;
 
+		KFNekko.audio.powerup(location.x);
 		powerUp = type;
 		powerUpTime = TimeUtils.nanoTime();
 		switch (type) {
 		// cannot be hit
 		case PowerUp.INVISIBILITY:
-			// TODO SOUND
-			nekkoSprite.color.set(1.0f, 1.0f, 1.0f, 0.4f);
+			nekkoSprite.targetColor.set(1.0f, 1.0f, 1.0f, 0.4f);
+			location.knockBackImmune = true;
 			break;
 		// do twice damage
 		case PowerUp.RAGE:
 			nekkoSprite.damageMultiplier = 2;
-			nekkoSprite.color.set(1.0f, 0.0f, 0.0f, 1.0f);
-			// TODO SOUND
+			nekkoSprite.targetColor.set(1.0f, 0.0f, 0.0f, 1.0f);
 			break;
 		// move 1.5 x speed
 		case PowerUp.QUICKFEET:
-			nekkoSprite.color.set(Color.BLUE);
+			nekkoSprite.targetColor.set(Color.BLUE);
 			speedTmp = location.speed.maxXSpeed;
 			location.speed.maxXSpeed = speedTmp * 1.5f;
-			// TODO SOUND
 			break;
 		// animation speedup
 		case PowerUp.KUNGFU_MASTER:
-			nekkoSprite.color.set(0.1f, 0.1f, 0.1f, 1.0f);
+			nekkoSprite.targetColor.set(0.1f, 0.1f, 0.1f, 1.0f);
 			nekkoSprite.speedUp = 20000000L;
-			// TODO SOUND
 			break;
 		// do not subtract stamina
 		case PowerUp.ENDURANCE:
-			nekkoSprite.color.set(Color.YELLOW);
-			// TODO SOUND
+			nekkoSprite.targetColor.set(Color.YELLOW);
 			break;
 		}
 		return true;
@@ -342,7 +338,7 @@ public class Nekko extends Actor {
 		if (powerUp == PowerUp.INVISIBILITY)
 			return;
 		super.receiveDamage(damage);
-		KFNekko.camera.setEffect(Camera.EFFECT_SHAKE, 1.0f, 3.0f, 200000000L);
+		KFNekko.camera.setEffect(Camera.EFFECT_SHAKE, -1.0f, 3.0f, 200000000L);
 	}
 
 	@Override

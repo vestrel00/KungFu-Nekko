@@ -98,13 +98,12 @@ public class IntroSelectionManager implements Updatable, Drawable, Touchable {
 	@Override
 	public boolean onTouchDown(float x, float y) {
 		if (lastStandRect.contains(x, y)) {
-			KFNekko.map.setLevel(Map.LAST_STAND);
-			KFNekko.background.setOffsetRatio();
-			if (KFNekko.intro.music.isPlaying())
-				KFNekko.intro.music.stop();
-			if (KFNekko.settings.musicOn)
-				KFNekko.audio.music.play();
-			phase = 1;
+			// lots of checks may be unnecessary but why not
+			if (phase == 0 && KFNekko.map.finished) {
+				KFNekko.map.setLevel(Map.LAST_STAND);
+				KFNekko.background.setOffsetRatio();
+				phase = 1;
+			}
 			return true;
 		} else if (mercenaryRect.contains(x, y)) {
 			// TODO
@@ -115,8 +114,10 @@ public class IntroSelectionManager implements Updatable, Drawable, Touchable {
 		} else if (adventurerRect.contains(x, y)) {
 			// TODO
 			return true;
-		} else
+		} else {
+			phase = 2;
 			return false;
+		}
 	}
 
 	private boolean updateColor(float colorSpeed) {
@@ -134,11 +135,19 @@ public class IntroSelectionManager implements Updatable, Drawable, Touchable {
 				return true;
 			}
 			break;
-		case 1: // fade out to game
+		case 1: // fade out to game level intro
 			color.a -= 0.03f;
 			if (color.a < 0.0f) {
 				phase = 0;
-				KFNekko.view = KFNekko.VIEW_GAME;
+				KFNekko.view = KFNekko.VIEW_LEVEL_INTRO;
+				color.set(Color.CLEAR);
+				return true;
+			}
+			break;
+		case 2: // fade out to nothing
+			color.a -= 0.03f;
+			if (color.a < 0.0f) {
+				phase = 0;
 				color.set(Color.CLEAR);
 				return true;
 			}

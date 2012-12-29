@@ -31,7 +31,8 @@ public class Audio implements Disposable {
 
 	private Array<Disposable> disposables;
 	private Array<Sound> punch, smack;
-	private Sound superSmack, footStep, growl, groundBoom, meow, touch;
+	private Sound superSmack, footStep, cuteGrowl,skullGrowl, groundBoom, meow, touch,
+			spawn, powerup, powerupDrop, drink, drinkDrop;
 	public Music music;
 	private Random rand;
 
@@ -47,11 +48,21 @@ public class Audio implements Disposable {
 		superSmack = Gdx.audio.newSound(Gdx.files
 				.internal("sound/superSmack.mp3"));
 		footStep = Gdx.audio.newSound(Gdx.files.internal("sound/footStep.mp3"));
-		growl = Gdx.audio.newSound(Gdx.files.internal("sound/growl.mp3"));
+		cuteGrowl = Gdx.audio.newSound(Gdx.files
+				.internal("sound/cuteGrowl.mp3"));
+		skullGrowl= Gdx.audio.newSound(Gdx.files
+				.internal("sound/skullGrowl.mp3"));
 		groundBoom = Gdx.audio.newSound(Gdx.files
 				.internal("sound/groundBoom.mp3"));
 		meow = Gdx.audio.newSound(Gdx.files.internal("sound/meow.mp3"));
 		touch = Gdx.audio.newSound(Gdx.files.internal("sound/touch.mp3"));
+		spawn = Gdx.audio.newSound(Gdx.files.internal("sound/spawn.mp3"));
+		powerup = Gdx.audio.newSound(Gdx.files.internal("sound/powerup.mp3"));
+		powerupDrop = Gdx.audio.newSound(Gdx.files
+				.internal("sound/powerupDrop.mp3"));
+		drink = Gdx.audio.newSound(Gdx.files.internal("sound/drink.mp3"));
+		drinkDrop = Gdx.audio.newSound(Gdx.files
+				.internal("sound/drinkDrop.mp3"));
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("music/main.mp3"));
 		music.setLooping(true);
@@ -67,16 +78,47 @@ public class Audio implements Disposable {
 		disposables.addAll(smack);
 		disposables.add(superSmack);
 		disposables.add(footStep);
-		disposables.add(growl);
+		disposables.add(cuteGrowl);
 		disposables.add(groundBoom);
 		disposables.add(meow);
 		disposables.add(touch);
 		disposables.add(music);
+		disposables.add(spawn);
+		disposables.add(powerup);
+		disposables.add(powerupDrop);
+		disposables.add(drink);
+		disposables.add(drinkDrop);
+		disposables.add(skullGrowl);
 	}
 
 	public void touch() {
 		if (KFNekko.settings.soundOn)
 			touch.play();
+	}
+
+	public void drinkDrop(float x) {
+		if (KFNekko.settings.soundOn)
+			powerupDrop.play(1.0f, 1.0f, getSoundPan(x));
+	}
+
+	public void drink(float x) {
+		if (KFNekko.settings.soundOn)
+			drink.play(1.0f, 1.0f, getSoundPan(x));
+	}
+
+	public void powerupDrop(float x) {
+		if (KFNekko.settings.soundOn)
+			powerupDrop.play(1.0f, 1.0f, getSoundPan(x));
+	}
+
+	public void powerup(float x) {
+		if (KFNekko.settings.soundOn)
+			powerup.play(1.0f, 1.0f, getSoundPan(x));
+	}
+
+	public void spawn(float x) {
+		if (KFNekko.settings.soundOn)
+			spawn.play(1.0f, 1.0f, getSoundPan(x));
 	}
 
 	public void meow(float x) {
@@ -88,10 +130,15 @@ public class Audio implements Disposable {
 		if (KFNekko.settings.soundOn)
 			groundBoom.play(1.0f, 1.0f, getSoundPan(x));
 	}
-
-	public void growl(float x) {
+	
+	public void skullGrowl(float x) {
 		if (KFNekko.settings.soundOn)
-			growl.play(1.0f, 1.0f, getSoundPan(x));
+			skullGrowl.play(1.0f, 1.0f, getSoundPan(x));
+	}
+
+	public void cuteGrowl(float x) {
+		if (KFNekko.settings.soundOn)
+			cuteGrowl.play(1.0f, 1.0f, getSoundPan(x));
 	}
 
 	public void footStep(float x) {

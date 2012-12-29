@@ -24,7 +24,7 @@ import com.vestrel00.nekko.actors.Monster;
 import com.vestrel00.nekko.interf.Drawable;
 import com.vestrel00.nekko.interf.Updatable;
 
-public interface LevelManager extends Updatable, Drawable {
+public interface LevelManager extends Updatable, Drawable, Touchable {
 
 	public void monsterDown(Monster monster);
 

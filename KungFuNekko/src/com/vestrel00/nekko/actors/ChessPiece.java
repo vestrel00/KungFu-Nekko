@@ -38,69 +38,73 @@ public class ChessPiece extends Actor {
 
 	public static final int PAWN = 0, KNIGHT = 1, BISHOP = 2, ROOK = 3,
 			QUEEN = 4, KING = 5;
+	public static final long DEFAULT_VIBRATE_DURATION = 300000000L;
 
-	private ChessPieceSprite chessSprite;
-	private long lastAttackTime, attackDelay;
+	public ChessPieceSprite chessSprite;
+	public long lastAttackTime, vibrationDuration;
+	private long attackDelay;
 	private int damage;
 	private float knockBackDistance, vibrateDirection = 1.0f;
-	private boolean aoe, hit;
+	public float vibrationSpeed = 10.0f, vibrationDist = 5.0f;
+	private boolean aoe;
+	public boolean hit, forceVibrate;
 
 	public ChessPiece(Array<Actor> targets, int type, Location location) {
 		super(targets, location, 0);
+		vibrationDuration = DEFAULT_VIBRATE_DURATION;
 		AtlasRegion region = null;
 		switch (type) {
 		case PAWN:
 			region = KFNekko.resource.atlas.findRegion("pawn");
 			attackDelay = 1000000000L;
 			damage = 1;
-			knockBackDistance = 40.0f;
+			knockBackDistance = 80.0f;
 			aoe = false;
-			maxHealth = 100;
+			maxHealth = 150;
 			break;
 		case KNIGHT:
 			region = KFNekko.resource.atlas.findRegion("knight");
-			attackDelay = 333333333L;
-			damage = 1;
-			knockBackDistance = 70.0f;
+			attackDelay = 200000000L;
+			damage = 2;
+			knockBackDistance = 140.0f;
 			aoe = false;
-			maxHealth = 200;
+			maxHealth = 300;
 			break;
 		case BISHOP:
 			region = KFNekko.resource.atlas.findRegion("bishop");
 			attackDelay = 500000000L;
 			damage = 2;
-			knockBackDistance = 40.0f;
+			knockBackDistance = 100.0f;
 			aoe = true;
-			maxHealth = 150;
+			maxHealth = 200;
 			break;
 		case ROOK:
 			region = KFNekko.resource.atlas.findRegion("rook");
-			attackDelay = 1000000000L;
+			attackDelay = 2000000000L;
 			damage = 5;
 			knockBackDistance = 150.0f;
 			aoe = true;
-			maxHealth = 400;
+			maxHealth = 600;
 			break;
 		case QUEEN:
 			region = KFNekko.resource.atlas.findRegion("queen");
 			attackDelay = 500000000L;
-			damage = 2;
-			knockBackDistance = 200.0f;
+			damage = 4;
+			knockBackDistance = 240.0f;
 			aoe = true;
-			maxHealth = 600;
+			maxHealth = 1000;
 			break;
 		case KING:
 			region = KFNekko.resource.atlas.findRegion("king");
 			attackDelay = 1000000000L;
 			damage = 6;
-			knockBackDistance = 180.0f;
+			knockBackDistance = 260.0f;
 			aoe = true;
-			maxHealth = 1000;
+			maxHealth = 2000;
 			break;
 		}
 		health = maxHealth;
-		chessSprite = new ChessPieceSprite(this, new Color(Color.DARK_GRAY),
-				region);
+		chessSprite = new ChessPieceSprite(this, new Color(Color.WHITE), region);
 		sprite = chessSprite;
 		location.setActor(this);
 		// we are passing in the bottom (feet) y value not the center so...
@@ -109,6 +113,24 @@ public class ChessPiece extends Actor {
 		setState(FaceState.RIGHT, StatusState.ALIVE, CombatState.IDLE,
 				HorizontalMotionState.IDLE, VerticalMotionState.FALLING);
 
+	}
+	
+	
+
+	@Override
+	public void onDeath() {
+		chessSprite.targetColor.a = 0.0f;
+		super.onDeath();
+	}
+
+
+
+	public void resetVibrationState() {
+		hit = false;
+		vibrationDuration = ChessPiece.DEFAULT_VIBRATE_DURATION;
+		vibrationSpeed = 10.0f;
+		vibrationDist = 5.0f;
+		forceVibrate = false;
 	}
 
 	@Override
@@ -121,17 +143,19 @@ public class ChessPiece extends Actor {
 		if (statusState != StatusState.DEAD) {
 			// no ai like monster - just keep attacking
 			// cannot attack if not visible!
-			if (visibility == Visibility.VISIBLE
-					&& TimeUtils.nanoTime() - lastAttackTime > attackDelay) {
-				lastAttackTime = TimeUtils.nanoTime();
-				attack(damage, aoe, knockBackDistance);
-			}
+			if (!forceVibrate)
+				if (visibility == Visibility.VISIBLE
+						&& TimeUtils.nanoTime() - lastAttackTime > attackDelay) {
+					lastAttackTime = TimeUtils.nanoTime();
+					attack(damage, aoe, knockBackDistance);
+				}
 
 			// imitate vibration
-			if (hit && TimeUtils.nanoTime() - lastAttackTime < 300000000L) {
-				location.x += 12.0f * vibrateDirection;
-				if (location.x < location.spawnX - 5.0f
-						|| location.x > location.spawnX + 5.0f)
+			if (hit
+					&& TimeUtils.nanoTime() - lastAttackTime < vibrationDuration) {
+				location.x += vibrationSpeed * vibrateDirection;
+				if (location.x < location.spawnX - vibrationDist
+						|| location.x > location.spawnX + vibrationDist)
 					vibrateDirection *= -1.0f;
 			} else {
 				// revert to original position
@@ -153,15 +177,17 @@ public class ChessPiece extends Actor {
 	@Override
 	protected void receiveDamage(int damage) {
 		super.receiveDamage(damage);
-		float c = (float) damage / (float) maxHealth;
+		// 75% because start at 100% color and end at 25% (dark_gray)
+		float c = ((float) damage / (float) maxHealth) * 0.75f;
 
-		if ((sprite.color.r += c) > 1.0f)
-			sprite.color.r = 1.0f;
-		if ((sprite.color.g += c) > 1.0f)
-			sprite.color.g = 1.0f;
-		if ((sprite.color.b += c) > 1.0f)
-			sprite.color.b = 1.0f;
+		if ((chessSprite.targetColor.r -= c) < 0.25f)
+			chessSprite.targetColor.r = 0.25f;
+		if ((chessSprite.targetColor.g -= c) < 0.25f)
+			chessSprite.targetColor.g = 0.25f;
+		if ((chessSprite.targetColor.b -= c) < 0.25f)
+			chessSprite.targetColor.b = 0.25f;
 		// TODO SOUND
+		chessSprite.color.set(Color.RED);
 	}
 
 	@Override
