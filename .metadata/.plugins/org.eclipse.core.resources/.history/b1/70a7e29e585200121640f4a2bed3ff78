@@ -1,0 +1,58 @@
+/***************************************************************************
+ *  Copyright (C) 2012 by Vandolf Estrellado
+ *  All Rights Reserved
+ * 
+ *  This file is part of KungFu Nekko.
+ *  KungFu Nekko is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  KungFu Nekko is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with KungFu Nekko.  If not, see <http://www.gnu.org/licenses/>.
+ *****************************************************************************/
+
+package com.vestrel00.nekko.actors;
+
+import com.badlogic.gdx.utils.Array;
+import com.vestrel00.nekko.actors.components.Location;
+import com.vestrel00.nekko.actors.components.SkullMonsterSprite;
+import com.vestrel00.nekko.actors.components.ToungeMonsterSprite;
+
+/**
+ * Highest DPS out of all three monsters.
+ * @author Estrellado, Vandolf
+ *
+ */
+public class ToungeMonster extends Monster {
+
+	private static long lastGrowlTime;
+	private ToungeMonsterSprite toungeSprite;
+	public int damage;
+	public float knockBackDistance;
+
+	public ToungeMonster(Array<Actor> targets, Location location,
+			int maxHealth, float aggroRange, float motionRange) {
+		super(targets, location, maxHealth, aggroRange, motionRange);
+		toungeSprite = new ToungeMonsterSprite(this, atlas, color);
+		sprite = toungeSprite;
+		attackDelay = 2000000000L;
+		location.setActor(this);
+		reset(level);
+	}
+
+	@Override
+	public void reset(int level) {
+		knockBackDistance = 40.0f + (float) level * 2.0f;
+		damage = 4 + level / 7; // long division ftw > level>>2
+		this.maxHealth = 6 + level / 4;
+		health = this.maxHealth;
+		this.level = level;
+	}
+
+}

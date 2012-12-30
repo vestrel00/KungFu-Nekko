@@ -25,6 +25,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.extras.StringTyper;
 import com.vestrel00.nekko.interf.Drawable;
 import com.vestrel00.nekko.interf.Touchable;
@@ -46,13 +47,13 @@ public class Instructions implements Updatable, Drawable, Touchable {
 			"The more red this is, the more health you have.\n"
 					+ "Once it turns completely gray, it is game over!\n"
 					+ "You can keep tapping this to regain 1 health for each tap.\n"
-					+ "You can also regain stamina by drinking potions!",
+					+ "You can also regain stamina by drinking soda!",
 			"The more yellow this is, the more stamina you have.\n"
 					+ "Once it turns completely gray, you can no longer attack!\n"
 					+ "Your stamina decreses everytime you attack.\n"
 					+ "Some attacks cost more than the others.\n"
 					+ "You can keep tapping this to regain 2 stamina for each tap.\n"
-					+ "You can also regain stamina by drinking potions!",
+					+ "You can also regain stamina by drinking soda!",
 			"Touch this if you need to go to the bathroom!\n"
 					+ "Or for some other reason...\n"
 					+ "You may quit or resume the game by touching\n"

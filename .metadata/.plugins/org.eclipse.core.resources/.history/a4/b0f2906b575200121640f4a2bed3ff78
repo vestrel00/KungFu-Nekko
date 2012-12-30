@@ -1,0 +1,34 @@
+package com.vestrel00.nekko.actors;
+
+import com.badlogic.gdx.utils.Array;
+import com.vestrel00.nekko.actors.components.Location;
+import com.vestrel00.nekko.actors.components.SkullMonsterSprite;
+import com.vestrel00.nekko.actors.components.ToungeMonsterSprite;
+
+public class ToungeMonster extends Monster {
+
+	private static long lastGrowlTime;
+	private ToungeMonsterSprite toungeSprite;
+	public int damage;
+	public float knockBackDistance;
+
+	public ToungeMonster(Array<Actor> targets, Location location,
+			int maxHealth, float aggroRange, float motionRange) {
+		super(targets, location, maxHealth, aggroRange, motionRange);
+		toungeSprite = new ToungeMonsterSprite(this, atlas, color);
+		sprite = toungeSprite;
+		attackDelay = 2000000000L;
+		location.setActor(this);
+		reset(level);
+	}
+
+	@Override
+	public void reset(int level) {
+		knockBackDistance = 40.0f + (float) level * 2.0f;
+		damage = 3 + level / 8; // long division ftw > level>>2
+		this.maxHealth = 8 + level / 3;
+		health = this.maxHealth;
+		this.level = level;
+	}
+
+}

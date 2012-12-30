@@ -33,37 +33,41 @@ public class HUDInputProcessor implements InputProcessor {
 	public CombatStateManager attackManager;
 	private Vector3 touchPos;
 	private Nekko player;
+	public boolean isListening;
 
 	public HUDInputProcessor(Nekko player) {
 		this.player = player;
 		touchPos = new Vector3();
 		// attackManager = new ComboAttackManager();
 		attackManager = new SimpleAttackManager(player);
+		isListening = true;
 	}
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		touchPos.set(x, y, 0);
-		KFNekko.camera.camera.unproject(touchPos);
-		switch (KFNekko.view) {
-		case KFNekko.VIEW_INTRO:
-			return (KFNekko.intro.onTouchDown(touchPos.x, touchPos.y)) ? true
-					: false;
-		case KFNekko.VIEW_LEVEL_INTRO:
-			return (KFNekko.map.manager.onTouchDown(touchPos.x, touchPos.y)) ? true
-					: false;
-		case KFNekko.VIEW_GAME:
-			return (KFNekko.hud.onTouchDown(touchPos.x, touchPos.y)) ? true
-					: false;
-		case KFNekko.VIEW_PAUSED:
-			return (KFNekko.pauseManager.onTouchDown(touchPos.x, touchPos.y)) ? true
-					: false;
-		case KFNekko.VIEW_OPTIONS:
-			if (KFNekko.pauseManager.onTouchDown(touchPos.x, touchPos.y)
-					|| KFNekko.optionsManager.onTouchDown(touchPos.x,
-							touchPos.y))
-				return true;
-			break;
+		if (isListening) {
+			touchPos.set(x, y, 0);
+			KFNekko.camera.camera.unproject(touchPos);
+			switch (KFNekko.view) {
+			case KFNekko.VIEW_INTRO:
+				return (KFNekko.intro.onTouchDown(touchPos.x, touchPos.y)) ? true
+						: false;
+			case KFNekko.VIEW_LEVEL_INTRO:
+				return (KFNekko.map.manager.onTouchDown(touchPos.x, touchPos.y)) ? true
+						: false;
+			case KFNekko.VIEW_GAME:
+				return (KFNekko.hud.onTouchDown(touchPos.x, touchPos.y)) ? true
+						: false;
+			case KFNekko.VIEW_PAUSED:
+				return (KFNekko.pauseManager
+						.onTouchDown(touchPos.x, touchPos.y)) ? true : false;
+			case KFNekko.VIEW_OPTIONS:
+				if (KFNekko.pauseManager.onTouchDown(touchPos.x, touchPos.y)
+						|| KFNekko.optionsManager.onTouchDown(touchPos.x,
+								touchPos.y))
+					return true;
+				break;
+			}
 		}
 		return false;
 	}

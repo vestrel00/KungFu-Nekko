@@ -49,7 +49,8 @@ public class ChessPiece extends Actor {
 	private boolean aoe;
 	public boolean hit, forceVibrate;
 
-	public ChessPiece(Array<Actor> targets, int type, Location location) {
+	public ChessPiece(Array<Actor> targets, int type, Location location,
+			FaceState face, int maxHealth) {
 		super(targets, location, 0);
 		vibrationDuration = DEFAULT_VIBRATE_DURATION;
 		AtlasRegion region = null;
@@ -60,7 +61,8 @@ public class ChessPiece extends Actor {
 			damage = 1;
 			knockBackDistance = 80.0f;
 			aoe = false;
-			maxHealth = 150;
+			// maxHealth = 300;
+			this.maxHealth = maxHealth;
 			break;
 		case KNIGHT:
 			region = KFNekko.resource.atlas.findRegion("knight");
@@ -68,7 +70,8 @@ public class ChessPiece extends Actor {
 			damage = 2;
 			knockBackDistance = 140.0f;
 			aoe = false;
-			maxHealth = 300;
+			// maxHealth = 600;
+			this.maxHealth = maxHealth;
 			break;
 		case BISHOP:
 			region = KFNekko.resource.atlas.findRegion("bishop");
@@ -76,7 +79,8 @@ public class ChessPiece extends Actor {
 			damage = 2;
 			knockBackDistance = 100.0f;
 			aoe = true;
-			maxHealth = 200;
+			// maxHealth = 400;
+			this.maxHealth = maxHealth;
 			break;
 		case ROOK:
 			region = KFNekko.resource.atlas.findRegion("rook");
@@ -84,7 +88,8 @@ public class ChessPiece extends Actor {
 			damage = 5;
 			knockBackDistance = 150.0f;
 			aoe = true;
-			maxHealth = 600;
+			// maxHealth = 1000;
+			this.maxHealth = maxHealth;
 			break;
 		case QUEEN:
 			region = KFNekko.resource.atlas.findRegion("queen");
@@ -92,7 +97,8 @@ public class ChessPiece extends Actor {
 			damage = 4;
 			knockBackDistance = 240.0f;
 			aoe = true;
-			maxHealth = 1000;
+			// maxHealth = 3000;
+			this.maxHealth = maxHealth;
 			break;
 		case KING:
 			region = KFNekko.resource.atlas.findRegion("king");
@@ -100,7 +106,8 @@ public class ChessPiece extends Actor {
 			damage = 6;
 			knockBackDistance = 260.0f;
 			aoe = true;
-			maxHealth = 2000;
+			// maxHealth = 5000;
+			this.maxHealth = maxHealth;
 			break;
 		}
 		health = maxHealth;
@@ -110,20 +117,17 @@ public class ChessPiece extends Actor {
 		// we are passing in the bottom (feet) y value not the center so...
 		location.y += (float) sprite.currentTexture.originalHeight * 0.5f;
 		location.updateRect();
-		setState(FaceState.RIGHT, StatusState.ALIVE, CombatState.IDLE,
+		setState(face, StatusState.ALIVE, CombatState.IDLE,
 				HorizontalMotionState.IDLE, VerticalMotionState.FALLING);
-
+		// will not change face
+		chessSprite.xScale = (faceState == FaceState.LEFT) ? -1.0f : 1.0f;
 	}
-	
-	
 
 	@Override
 	public void onDeath() {
 		chessSprite.targetColor.a = 0.0f;
 		super.onDeath();
 	}
-
-
 
 	public void resetVibrationState() {
 		hit = false;

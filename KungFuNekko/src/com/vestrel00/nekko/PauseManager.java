@@ -106,6 +106,8 @@ public class PauseManager implements Touchable, Drawable, Updatable {
 				KFNekko.audio.music.stop();
 			// reset the intro states!
 			KFNekko.intro.reset();
+			// reset the player!
+			KFNekko.player.reset(0, 0);
 			return true;
 		}
 		return false;

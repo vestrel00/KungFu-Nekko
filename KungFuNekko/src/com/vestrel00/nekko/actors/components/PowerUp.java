@@ -32,7 +32,6 @@ public class PowerUp implements PickUp {
 
 	public static final int INVISIBILITY = 0, RAGE = 1, QUICKFEET = 2,
 			KUNGFU_MASTER = 3, ENDURANCE = 4, NONE = -1;
-	private static final long DURATION = 20000000000L;
 
 	private Rectangle rect;
 	private AtlasRegion region;
@@ -80,7 +79,7 @@ public class PowerUp implements PickUp {
 				rect.x = 0.0f;
 			else if (rect.x + rect.width > KFNekko.map.width)
 				rect.x = KFNekko.map.width - rect.width;
-			
+
 			if (TimeUtils.nanoTime() - dropTime > DURATION)
 				isActive = false;
 		}
@@ -104,7 +103,8 @@ public class PowerUp implements PickUp {
 					: -1.0f;
 			xSpeed = 20.0f;
 			dropTime = TimeUtils.nanoTime();
-			KFNekko.audio.powerupDrop(location.x);
+			if (KFNekko.camera.rect.overlaps(rect))
+				KFNekko.audio.powerupDrop(location.x);
 		}
 	}
 

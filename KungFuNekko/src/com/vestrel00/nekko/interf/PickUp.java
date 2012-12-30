@@ -23,6 +23,8 @@ import com.vestrel00.nekko.actors.components.Location;
 
 public interface PickUp extends Updatable, Drawable {
 	
+	public static final long DURATION = 20000000000L;
+	
 	public void drop(Location location);
 	
 	public void pickUp();

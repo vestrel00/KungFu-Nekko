@@ -31,31 +31,26 @@ import com.vestrel00.nekko.maps.components.Platform;
 
 public class Map implements Updatable, Drawable {
 
-	public static final int LAST_STAND = 0;
+	public static final int LAST_STAND = 0, MAP_1 = 1, MAP_2 = 2, MAP_3 = 3,
+			MAP_4 = 4;
 
 	private Array<MapSection> sections;
 	public LevelManager manager;
 	public Platform platform;
 	public float width, height;
-	public boolean finished = true;
 
 	public Map() {
 		MapPieceGenerator.init();
 	}
 
-	public void setLevel(int mode) {
-		// critical section - do not allow this method to be called while
-		// !finished! This is crucial for touch events that run on a separate
-		// thread.
-		finished = false;
+	public void setLevel(int mode, int mapId) {
 		sections = new Array<MapSection>();
 		switch (mode) {
 		case LAST_STAND:
-			manager = new LastStand(sections);
+			manager = new LastStand(sections, mapId);
 			break;
 		}
 		platform = new Platform(sections);
-		finished = true;
 	}
 
 	@Override

@@ -31,8 +31,8 @@ public class Audio implements Disposable {
 
 	private Array<Disposable> disposables;
 	private Array<Sound> punch, smack;
-	private Sound superSmack, footStep, cuteGrowl,skullGrowl, groundBoom, meow, touch,
-			spawn, powerup, powerupDrop, drink, drinkDrop;
+	private Sound superSmack, footStep, cuteGrowl, skullGrowl, groundBoom,
+			meow, touch, spawn, powerup, powerupDrop, sodaOpen, sodaDrop;
 	public Music music;
 	private Random rand;
 
@@ -50,7 +50,7 @@ public class Audio implements Disposable {
 		footStep = Gdx.audio.newSound(Gdx.files.internal("sound/footStep.mp3"));
 		cuteGrowl = Gdx.audio.newSound(Gdx.files
 				.internal("sound/cuteGrowl.mp3"));
-		skullGrowl= Gdx.audio.newSound(Gdx.files
+		skullGrowl = Gdx.audio.newSound(Gdx.files
 				.internal("sound/skullGrowl.mp3"));
 		groundBoom = Gdx.audio.newSound(Gdx.files
 				.internal("sound/groundBoom.mp3"));
@@ -60,9 +60,8 @@ public class Audio implements Disposable {
 		powerup = Gdx.audio.newSound(Gdx.files.internal("sound/powerup.mp3"));
 		powerupDrop = Gdx.audio.newSound(Gdx.files
 				.internal("sound/powerupDrop.mp3"));
-		drink = Gdx.audio.newSound(Gdx.files.internal("sound/drink.mp3"));
-		drinkDrop = Gdx.audio.newSound(Gdx.files
-				.internal("sound/drinkDrop.mp3"));
+		sodaOpen = Gdx.audio.newSound(Gdx.files.internal("sound/sodaOpen.mp3"));
+		sodaDrop = Gdx.audio.newSound(Gdx.files.internal("sound/sodaDrop.mp3"));
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("music/main.mp3"));
 		music.setLooping(true);
@@ -86,8 +85,8 @@ public class Audio implements Disposable {
 		disposables.add(spawn);
 		disposables.add(powerup);
 		disposables.add(powerupDrop);
-		disposables.add(drink);
-		disposables.add(drinkDrop);
+		disposables.add(sodaOpen);
+		disposables.add(sodaDrop);
 		disposables.add(skullGrowl);
 	}
 
@@ -96,14 +95,14 @@ public class Audio implements Disposable {
 			touch.play();
 	}
 
-	public void drinkDrop(float x) {
+	public void sodaDrop(float x) {
 		if (KFNekko.settings.soundOn)
-			powerupDrop.play(1.0f, 1.0f, getSoundPan(x));
+			sodaDrop.play(1.0f, 1.0f, getSoundPan(x));
 	}
 
-	public void drink(float x) {
+	public void sodaOpen(float x) {
 		if (KFNekko.settings.soundOn)
-			drink.play(1.0f, 1.0f, getSoundPan(x));
+			sodaOpen.play(1.0f, 1.0f, getSoundPan(x));
 	}
 
 	public void powerupDrop(float x) {
@@ -130,7 +129,7 @@ public class Audio implements Disposable {
 		if (KFNekko.settings.soundOn)
 			groundBoom.play(1.0f, 1.0f, getSoundPan(x));
 	}
-	
+
 	public void skullGrowl(float x) {
 		if (KFNekko.settings.soundOn)
 			skullGrowl.play(1.0f, 1.0f, getSoundPan(x));

@@ -194,7 +194,7 @@ public class Nekko extends Actor {
 		case FASTSHOT:
 		case LOWMIDDLEKICK:
 		case ONETWOCOMBO:
-			staminaCost = 1;
+			staminaCost = 2;
 			break;
 		case SPIN:
 		case UPPERCUT:
@@ -202,12 +202,12 @@ public class Nekko extends Actor {
 			staminaCost = 3;
 			break;
 		case FLYINGKICK:
-			staminaCost = 4;
+			staminaCost = 5;
 			break;
 		case POWERSHOT:
 		case HIGHKICK:
 		case DOWNWARDKICK:
-			staminaCost = 2;
+			staminaCost = 3;
 			break;
 		case TWOSIDEDATTACK:
 		case SUPERUPPERCUT:

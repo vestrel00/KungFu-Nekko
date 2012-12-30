@@ -87,22 +87,16 @@ Assets taken from thebondman Under CC-BY 3.0 License:
 http://www.freesound.org/people/thebondman/sounds/111739/
 
 ------------------------------------------------------------------------------------------------
-Assets taken from Goldy-sama Under CC-BY 3.0 License:
------------------------------------------------------------------------------------------------
-"bulle.wav"
-http://www.freesound.org/people/Goldy-sama/sounds/4239/
-
-------------------------------------------------------------------------------------------------
-Assets taken from Jamius Under CC-BY 3.0 License:
------------------------------------------------------------------------------------------------
-"PotionDrinkLONG.wav"
-http://www.freesound.org/people/Jamius/sounds/41529/
-
-------------------------------------------------------------------------------------------------
 Assets taken from morgantj Under CC-BY 3.0 License:
 -----------------------------------------------------------------------------------------------
 "coin.mp3"
 http://www.freesound.org/people/morgantj/sounds/59593/
+
+------------------------------------------------------------------------------------------------
+Assets taken from FreqMan Under CC-BY 3.0 License:
+-----------------------------------------------------------------------------------------------
+"empty soda can drop 1.wav"
+http://www.freesound.org/people/FreqMan/sounds/25723/
 
 ------------------------------------------------------------------------------------------------
 Assets taken from The League of Moveable Type Fonts Under SIL Open Font 1.1 License:
@@ -118,6 +112,9 @@ http://opengameart.org/content/flare-effect-blender
 http://opengameart.org/content/teleport-spell
 http://opengameart.org/content/gui-sound-effects
 http://opengameart.org/content/tango-desktop-icons
+http://opengameart.org/content/soda-pop-can-themed-game-pieces
+http://www.freesound.org/people/timgormly/sounds/144031/
+http://www.freesound.org/people/ShawnyBoy/sounds/166057/
 http://www.freesound.org/people/MrPokephile/sounds/133974/
 http://www.freesound.org/people/cosmician/sounds/159574/
 http://www.freesound.org/people/Ekokubza123/sounds/104183/

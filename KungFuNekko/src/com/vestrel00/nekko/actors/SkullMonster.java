@@ -29,6 +29,11 @@ import com.vestrel00.nekko.actors.components.SkullMonsterSprite;
 import com.vestrel00.nekko.actors.states.CombatState;
 import com.vestrel00.nekko.actors.states.Visibility;
 
+/**
+ * Highest health out of all three monsters.
+ * @author Estrellado, Vandolf
+ *
+ */
 public class SkullMonster extends Monster {
 
 	private static long lastGrowlTime;
@@ -60,7 +65,9 @@ public class SkullMonster extends Monster {
 
 	@Override
 	protected void updateCombatState() {
-		if (TimeUtils.nanoTime() - lastSpecialAttTime > 8000000000L) {
+		if (target != null
+				&& (location.x > target.location.x - 200.0f && location.x < target.location.x + 200.0f)
+				&& TimeUtils.nanoTime() - lastSpecialAttTime > 8000000000L) {
 			lastSpecialAttTime = TimeUtils.nanoTime();
 			setCombatState(CombatState.SPECIAL);
 			location.knockBackImmune = true;
@@ -72,7 +79,7 @@ public class SkullMonster extends Monster {
 			lastAttackTime = TimeUtils.nanoTime();
 			if (target != null && sprite.combatIndex == 0
 					&& location.rect.overlaps(target.location.rect)) {
-					setCombatState(CombatState.ATTACK);
+				setCombatState(CombatState.ATTACK);
 			}
 		}
 	}
@@ -89,8 +96,8 @@ public class SkullMonster extends Monster {
 
 	@Override
 	public void reset(int level) {
-		knockBackDistance = 40.0f + (float) level * 2.0f;
-		damage = 3 + level / 8; // long division ftw > level>>2
+		knockBackDistance = 80.0f + (float) level * 3.0f;
+		damage = 2 + level / 8; // long division ftw > level>>2
 		this.maxHealth = 8 + level / 3;
 		health = this.maxHealth;
 		this.level = level;

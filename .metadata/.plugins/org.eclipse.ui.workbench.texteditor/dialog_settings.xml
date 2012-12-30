@@ -2,36 +2,36 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="330" key="DIALOG_WIDTH"/>
-		<item value="373" key="DIALOG_Y_ORIGIN"/>
+		<item value="291" key="DIALOG_Y_ORIGIN"/>
+		<item value="754" key="DIALOG_X_ORIGIN"/>
 		<item value="451" key="DIALOG_HEIGHT"/>
-		<item value="1368" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="true" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
-		<item value="true" key="wholeword"/>
-		<item value="player" key="selection"/>
+		<item value="false" key="wholeword"/>
+		<item value="initMonster" key="selection"/>
 		<list key="findhistory">
-			<item value="player"/>
-			<item value="over"/>
-			<item value="gameOver"/>
-			<item value="phase"/>
-			<item value="lastStandRect.contains"/>
-			<item value="lastStandRect"/>
-			<item value="normalizeYSpeed"/>
-			<item value="updateCombatState"/>
+			<item value="initMonster"/>
+			<item value="SPECIAL"/>
+			<item value="skullMonsters"/>
+			<item value="SkullMonster"/>
+			<item value="skull"/>
+			<item value="Skull"/>
+			<item value="idle"/>
+			<item value="initMonsters"/>
 		</list>
 		<list key="replacehistory">
-			<item value="cuteGrowl"/>
-			<item value="skull"/>
-			<item value="SkullMonster"/>
-			<item value="portalHeightHalf"/>
-			<item value="portalWidthHalf"/>
-			<item value="drink"/>
-			<item value="powerupDrop"/>
+			<item value="tongue"/>
+			<item value="Tongue"/>
+			<item value="put"/>
+			<item value="Health"/>
+			<item value="health"/>
+			<item value="sodaDrop"/>
+			<item value="sodaOpen"/>
 			<item value=""/>
 		</list>
 	</section>

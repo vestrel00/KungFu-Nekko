@@ -87,14 +87,18 @@ public class Location implements Updatable {
 				if (knockBackDirection < 0.0f) {
 					speed.xDirection = Speed.DIRECTION_LEFT;
 					actor.faceState = FaceState.RIGHT;
-					if (x <= knockBackFinal || rect.x < 10.0f)
+					if (x <= knockBackFinal || rect.x < 10.0f) {
 						actor.horizontalMotionState = HorizontalMotionState.IDLE;
+						speed.xSpeed = speed.maxXSpeed;
+					}
 				} else if (knockBackDirection > 0.0f) {
 					speed.xDirection = Speed.DIRECTION_RIGHT;
 					actor.faceState = FaceState.LEFT;
 					if (x >= knockBackFinal
-							|| rect.x + rect.width > KFNekko.map.width - 10.0f)
+							|| rect.x + rect.width > KFNekko.map.width - 10.0f) {
 						actor.horizontalMotionState = HorizontalMotionState.IDLE;
+						speed.xSpeed = speed.maxXSpeed;
+					}
 				}
 				break;
 			}
@@ -116,6 +120,9 @@ public class Location implements Updatable {
 				break;
 			case FALLING:
 				speed.accelDown();
+				break;
+			case FLYING:
+				speed.accelUp();
 				break;
 			}
 

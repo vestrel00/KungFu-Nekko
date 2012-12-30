@@ -97,10 +97,9 @@ public class KFNekko implements ApplicationListener {
 	}
 
 	private void initPlayer() {
-		Location location = new Location(0.0f, 0.0f, 9.0f, 22.0f, 100.0f,
-				18.0f);
+		Location location = new Location(0.0f, 0.0f, 9.0f, 22.0f, 100.0f, 18.0f);
 		player = new Nekko(resource.atlas, location, enemies, 400, new Color(
-				Color.WHITE), 600);
+				Color.WHITE), 300);
 		player.setState(FaceState.RIGHT, StatusState.ALIVE, CombatState.IDLE,
 				HorizontalMotionState.IDLE, VerticalMotionState.FALLING);
 		location.setActor(player);
@@ -250,8 +249,7 @@ public class KFNekko implements ApplicationListener {
 	@Override
 	public void pause() {
 		settings.commit();
-		if (map.manager != null
-				&& (view != VIEW_PAUSED || view != VIEW_OPTIONS)) {
+		if (map.manager != null && view == VIEW_GAME) {
 			view = VIEW_PAUSED;
 			map.manager.pause();
 		}

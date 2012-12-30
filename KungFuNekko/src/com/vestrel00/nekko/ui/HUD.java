@@ -41,12 +41,14 @@ public class HUD implements Updatable, Drawable, Disposable, Touchable {
 	public ShapeRenderer shape;
 	public HUDUI ui;
 	private Nekko player;
+	public HUDInputProcessor processor;
 
 	public HUD(Nekko player, HUDInputProcessor processor) {
 		this.player = player;
 		shape = new ShapeRenderer();
 		// ui = new HUDPad(player, processor);
 		ui = new HUDSimple(player, processor);
+		this.processor = processor;
 		Gdx.input.setInputProcessor(processor);
 	}
 

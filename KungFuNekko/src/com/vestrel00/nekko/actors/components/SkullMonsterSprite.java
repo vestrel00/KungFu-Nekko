@@ -53,7 +53,7 @@ public class SkullMonsterSprite extends Sprite {
 		move = new AtlasRegion[4];
 		attack = new AtlasRegion[4];
 		dying = new AtlasRegion[7];
-		specialAttack = new AtlasRegion[7];
+		specialAttack = new AtlasRegion[12]; // some repeat backwards
 
 		int i = 0;
 		for (i = 0; i < idle.length; i++)
@@ -65,9 +65,15 @@ public class SkullMonsterSprite extends Sprite {
 					+ String.valueOf(i));
 		for (i = 0; i < dying.length; i++)
 			dying[i] = atlas.findRegion("skullMonsterHurt" + String.valueOf(i));
-		for (i = 0; i < specialAttack.length; i++)
+		for (i = 0; i < 7; i++)
 			specialAttack[i] = atlas.findRegion("skullMonsterSpecial"
 					+ String.valueOf(i));
+		// revert back from special attack form (skull)
+		specialAttack[7] = atlas.findRegion("skullMonsterSpecial4");
+		specialAttack[8] = atlas.findRegion("skullMonsterSpecial3");
+		specialAttack[9] = atlas.findRegion("skullMonsterSpecial2");
+		specialAttack[10] = atlas.findRegion("skullMonsterSpecial1");
+		specialAttack[11] = atlas.findRegion("skullMonsterSpecial0");
 
 		hurt[0] = dying[1];
 		hurt[1] = dying[2];
@@ -112,15 +118,16 @@ public class SkullMonsterSprite extends Sprite {
 	private boolean switchCombatState() {
 		switch (monster.combatState) {
 		case SPECIAL:
-			if (++combatIndex == specialAttack.length) {
-				if (TimeUtils.nanoTime() - monster.lastSpecialAttTime < 2000000000L)
-					combatIndex = 5;
-				else {
-					combatIndex = 0;
-					monster.onDeactivateCombat();
-				}
+			if (++combatIndex == 7
+					&& TimeUtils.nanoTime() - monster.lastSpecialAttTime < 2000000000L) {
+				// remain in special attack for 2 seconds!
+				combatIndex = 5;
+			} else if (combatIndex == specialAttack.length) {
+				combatIndex = 0;
+				monster.onDeactivateCombat();
 			}
-			if (combatIndex == 4)
+
+			if (combatIndex == 6)
 				monster.attack((int) ((float) monster.damage * 1.5f), true,
 						monster.knockBackDistance);
 
@@ -163,16 +170,16 @@ public class SkullMonsterSprite extends Sprite {
 					walkIndex = 0;
 
 				if (walkIndex == 1 && monster.visibility == Visibility.VISIBLE
-						&& TimeUtils.nanoTime() - lastStepTime > 300000000L) {
+						&& TimeUtils.nanoTime() - lastStepTime > STEP_DELAY) {
 					lastStepTime = TimeUtils.nanoTime();
 					KFNekko.audio.footStep(monster.location.x);
 				}
 
 				currentTexture = move[walkIndex];
 				if (monster.location.onSlope)
-					animationDelay = 100000000L;
+					animationDelay = 110000000L;
 				else
-					animationDelay = 50000000L;
+					animationDelay = 70000000L;
 				return true;
 			default:
 				return false;

@@ -28,6 +28,11 @@ import com.vestrel00.nekko.actors.components.CuteMonsterSprite;
 import com.vestrel00.nekko.actors.components.Location;
 import com.vestrel00.nekko.actors.states.Visibility;
 
+/**
+ * Highest movement speed out of all three monsters.
+ * @author Estrellado, Vandolf
+ *
+ */
 public class CuteMonster extends Monster {
 
 	private static long lastGrowlTime;
@@ -51,7 +56,7 @@ public class CuteMonster extends Monster {
 	public void reset(int level) {
 		knockBackDistance = 20.0f + (float) level;
 		damage = 1 + level / 10; // long division ftw > level>>2
-		this.maxHealth = 4 + level / 4;
+		this.maxHealth = 4 + level / 5;
 		health = this.maxHealth;
 		this.level = level;
 	}

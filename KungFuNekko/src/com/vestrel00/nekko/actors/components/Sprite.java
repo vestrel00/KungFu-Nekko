@@ -32,12 +32,14 @@ public abstract class Sprite implements Updatable, Drawable {
 	protected Actor actor;
 	public Color color;
 	public AtlasRegion currentTexture;
-	protected float xScale, rotation;
+	public float xScale;
+	protected float rotation;
 	protected long animationDelay, lastAnimationTime;
 	public int combatIndex = 0;
 
 	// used by monsters to prevent too many footstep sounds from being played at
 	// once
+	protected static final long STEP_DELAY = 300000000L;
 	protected static long lastStepTime;
 
 	public Sprite(Actor actor, Color color) {

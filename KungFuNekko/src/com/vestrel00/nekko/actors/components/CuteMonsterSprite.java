@@ -161,7 +161,7 @@ public class CuteMonsterSprite extends Sprite {
 					walkIndex = 0;
 
 				if (walkIndex == 1 && monster.visibility == Visibility.VISIBLE
-						&& TimeUtils.nanoTime() - lastStepTime > 300000000L) {
+						&& TimeUtils.nanoTime() - lastStepTime > STEP_DELAY) {
 					lastStepTime = TimeUtils.nanoTime();
 					KFNekko.audio.footStep(monster.location.x);
 				}

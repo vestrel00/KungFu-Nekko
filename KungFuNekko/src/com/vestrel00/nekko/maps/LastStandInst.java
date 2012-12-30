@@ -24,7 +24,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.vestrel00.nekko.Camera;
 import com.vestrel00.nekko.Instructions;
 import com.vestrel00.nekko.KFNekko;
@@ -49,13 +48,14 @@ public class LastStandInst implements Touchable, Updatable, Drawable {
 					+ "Help him in his final moments\n"
 					+ "as he fight a horde of cute monsters.\n"
 					+ "Help him defeat as many monsters as possible!",
-			"There are 11 chess pieces in the map.\n"
+			"There are several chess pieces in the map.\n"
 					+ "It is game over once all the pieces are destoyed,\n"
-					+ "or if your cat falls first.\n"
+					+ "or if your cat is defeated in battle.\n"
 					+ "All of the chess pieces will attack enemies\n"
 					+ "only if they are within your sight!\n"
 					+ "Each piece's health is indicated by\n"
-					+ "its color. Dark gray means dead!",
+					+ "its color. Dark gray means dead!\n"
+					+ "Each piece drop soda at the beginning of every wave.",
 			"These are your basic defense units.\n"
 					+ "They don't have much health and do minimal damage.\n",
 			"Have a lot of health and power.\n"
@@ -63,8 +63,7 @@ public class LastStandInst implements Touchable, Updatable, Drawable {
 					+ "However, they will not last forever.",
 			"The most powerful piece in the game.\n"
 					+ "Queens destroy multiple enemies at once\n"
-					+ "with ease. They also have plenty of health.\n"
-					+ "There are two queens in the game.",
+					+ "with ease. They also have plenty of health.",
 			"Stronger and lasts longer than a pawn.\n"
 					+ "Bishops also attack multiple enemies at once.",
 			"Knights are stronger than rooks\n" + "but have less health.",
@@ -72,13 +71,13 @@ public class LastStandInst implements Touchable, Updatable, Drawable {
 					+ "next to the Queen. The King has twice\n"
 					+ "the health of a Queen!",
 			"Monsters will spawn at one of these these locations.\n"
-					+ "There are three in the game.\n"
 					+ "Monsters will spawn more frequently as time passes\n"
-					+ "and also become faster, stronger, and better!" };
+					+ "and also become faster, stronger, and better!\n"
+					+ "These units may drop soda and powerups!" };
 	private final CharSequence SKIP = "SKIP", NEXT = "NEXT";
 
 	private LastStand level;
-	private int phase = 0, instructionIndex = 0, nextInstructionIndex = 1;
+	public int phase = 0, instructionIndex = 0, nextInstructionIndex = 1;
 	private Color color;
 	private StringTyper textTyper, titleTyper;
 	private float[] widths, heights;
@@ -184,7 +183,7 @@ public class LastStandInst implements Touchable, Updatable, Drawable {
 				if (instructionIndex == TITLES.length)
 					start();
 				else
-					setCamera();
+					level.helper.setCamera(instructionIndex);
 
 				titleTyper.reset(TITLES[instructionIndex]);
 				textTyper.reset(TEXT[instructionIndex]);
@@ -194,85 +193,6 @@ public class LastStandInst implements Touchable, Updatable, Drawable {
 			break;
 		}
 		return false;
-	}
-
-	private void setCamera() {
-		switch (instructionIndex) {
-		case 1: // "The Pieces"
-			KFNekko.player.nekkoSprite.targetColor.set(Color.DARK_GRAY);
-			for (int i = 0; i < level.chessPieces.size; i++) {
-				level.chessPieces.get(i).chessSprite.targetColor
-						.set(Color.BLUE);
-				// vibrate until next instruction
-				level.chessPieces.get(i).hit = true;
-				level.chessPieces.get(i).lastAttackTime = TimeUtils.nanoTime();
-				level.chessPieces.get(i).vibrationDuration = 10000000000000000L;
-				level.chessPieces.get(i).forceVibrate = true;
-				level.chessPieces.get(i).vibrationSpeed = 1.0f;
-				level.chessPieces.get(i).vibrationDist = 1.0f;
-			}
-			break;
-		case 2: // "Pawn"
-			KFNekko.camera.normalizeYSpeed = 6;
-			// undo changes
-			KFNekko.player.nekkoSprite.targetColor.set(Color.WHITE);
-			for (int i = 0; i < level.chessPieces.size; i++) {
-				level.chessPieces.get(i).chessSprite.targetColor
-						.set(Color.WHITE);
-				level.chessPieces.get(i).resetVibrationState();
-			}
-			KFNekko.camera.targetActor = level.chessPieces.get(0);
-			level.chessPieces.get(0).chessSprite.targetColor.set(Color.BLUE);
-			break;
-		case 3: // "Rook"
-			KFNekko.camera.normalizeYSpeed = 7;
-			// reset
-			level.chessPieces.get(0).chessSprite.targetColor.set(Color.WHITE);
-
-			KFNekko.camera.targetActor = level.chessPieces.get(2);
-			level.chessPieces.get(2).chessSprite.targetColor.set(Color.BLUE);
-			break;
-		case 4: // "Queen"
-			KFNekko.camera.normalizeYSpeed = 3;
-			// reset
-			level.chessPieces.get(2).chessSprite.targetColor.set(Color.WHITE);
-
-			KFNekko.camera.targetActor = level.chessPieces.get(3);
-			level.chessPieces.get(3).chessSprite.targetColor.set(Color.BLUE);
-			break;
-		case 5: // "Bishop"
-			KFNekko.camera.normalizeYSpeed = 13;
-			// reset
-			level.chessPieces.get(3).chessSprite.targetColor.set(Color.WHITE);
-
-			KFNekko.camera.targetActor = level.chessPieces.get(5);
-			level.chessPieces.get(5).chessSprite.targetColor.set(Color.BLUE);
-			break;
-		case 6: // "Knight"
-			KFNekko.camera.normalizeYSpeed = 14;
-			// reset
-			level.chessPieces.get(5).chessSprite.targetColor.set(Color.WHITE);
-
-			KFNekko.camera.targetActor = level.chessPieces.get(7);
-			level.chessPieces.get(7).chessSprite.targetColor.set(Color.BLUE);
-			break;
-		case 7: // "King"
-			KFNekko.camera.normalizeYSpeed = 0;
-			// reset
-			level.chessPieces.get(7).chessSprite.targetColor.set(Color.WHITE);
-
-			KFNekko.camera.targetActor = level.chessPieces.get(10);
-			level.chessPieces.get(10).chessSprite.targetColor.set(Color.BLUE);
-			break;
-		case 8: // "Black Hole"
-			KFNekko.camera.normalizeYSpeed = 17;
-			// reset
-			level.chessPieces.get(10).chessSprite.targetColor.set(Color.WHITE);
-
-			KFNekko.camera.targetActor = null;
-			KFNekko.camera.targetLoc.set(level.monsterLoc1);
-			break;
-		}
 	}
 
 	private void start() {
@@ -291,9 +211,10 @@ public class LastStandInst implements Touchable, Updatable, Drawable {
 
 		// reset
 		KFNekko.player.nekkoSprite.targetColor.set(Color.WHITE);
-		for (int i = 0; i < level.chessPieces.size; i++) {
-			level.chessPieces.get(i).chessSprite.targetColor.set(Color.WHITE);
-			level.chessPieces.get(i).resetVibrationState();
+		for (int i = 0; i < level.helper.chessPieces.size; i++) {
+			level.helper.chessPieces.get(i).chessSprite.targetColor
+					.set(Color.WHITE);
+			level.helper.chessPieces.get(i).resetVibrationState();
 		}
 	}
 
