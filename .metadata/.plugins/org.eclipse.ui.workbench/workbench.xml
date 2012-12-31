@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workbench progressCount="33" version="2.0">
 <workbenchAdvisor/>
-<window height="1028" width="1288" x="421" y="-5">
+<window height="1028" width="896" x="780" y="5">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
 </perspectiveBar>
 <coolbarLayout>
 <coolItem id="group.file" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="160" y="22"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="222" y="22"/>
 <coolItem id="com.google.gdt.eclipse.suite.GDTPulldownToolbar" itemType="typeToolBarContribution" x="53" y="22"/>
 <coolItem id="additions" itemType="typeGroupMarker"/>
 <coolItem id="adt.actionSet.avdManager" itemType="typeToolBarContribution" x="61" y="22"/>
@@ -26,7 +26,7 @@
 <coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="com.google.gwt.eclipse.core.editors.gwtJavaEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.PropertiesFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="com.android.ide.eclipse.editors.CommonXmlEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
@@ -36,25 +36,14 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="KFNekko.java" partName="KFNekko.java" path="C:/Users/Gundum48/Desktop/KungFuNekko/KungFuNekko/src/com/vestrel00/nekko/KFNekko.java" title="KFNekko.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/KFNekko.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/KungFuNekko/src/com/vestrel00/nekko/KFNekko.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4705" selectionTopPixel="1067"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LastStand.java" partName="LastStand.java" path="C:/Users/Gundum48/Desktop/KungFuNekko/KungFuNekko/src/com/vestrel00/nekko/maps/LastStand.java" title="LastStand.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/maps/LastStand.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/KungFuNekko/src/com/vestrel00/nekko/maps/LastStand.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="10060" selectionTopPixel="3525"/>
-</editor>
 </editors>
 <views>
 <view id="org.eclipse.jdt.ui.TypeHierarchy" partName="Type Hierarchy">
-<viewState hidefields="false" hidelocaltypes="false" hidenonpublic="false" hidestatic="false" input="=KungFuNekko/src&lt;com.vestrel00.nekko.maps{LastStandHelper.java[LastStandHelper" link_editors="0" mv_vertical_scroll="0" orientation="3" qualified_names="0" ratio="350" selection="=KungFuNekko/src&lt;com.vestrel00.nekko.maps{LSRoadOfMartyrs.java[LSRoadOfMartyrs" showinherited="false" sortbydefiningtype="false" vertical_scroll="0" view="2" workingSetName=""/>
+<viewState hidefields="false" hidelocaltypes="false" hidenonpublic="false" hidestatic="false" input="=KungFuNekko/src&lt;com.vestrel00.nekko.maps.components{Background.java[Background" link_editors="0" mv_vertical_scroll="0" orientation="3" qualified_names="0" ratio="350" selection="=KungFuNekko/src&lt;com.vestrel00.nekko.maps.components{Background.java[Background" showinherited="false" sortbydefiningtype="false" vertical_scroll="0" view="2" workingSetName=""/>
 </view>
 <view id="org.eclipse.ui.views.ProgressView" partName="Progress">
 <viewState/>
@@ -101,9 +90,6 @@
 <visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
 </viewState>
 </view>
-<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
-<viewState/>
-</view>
 <view id="org.eclipse.jdt.ui.PackageExplorer" partName="Package Explorer">
 <viewState group_libraries="1" layout="2" linkWithEditor="0" rootMode="1" workingSetName="">
 <customFilters userDefinedPatternsEnabled="false">
@@ -134,6 +120,9 @@
 </customFilters>
 </viewState>
 </view>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
+</view>
 <view id="org.eclipse.mylyn.tasks.ui.views.tasks" partName="Task List">
 <viewState linkWithEditor="true" presentation="org.eclipse.mylyn.tasks.ui.categorized">
 <sorter groupBy="CATEGORY_QUERY">&#x0A;<sorter>&#x0A;<sort0 sortDirection="1" sortKey="PRIORITY"/>
@@ -158,7 +147,7 @@
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePerspective="org.eclipse.jdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jdt.internal.ui.JavaPerspectiveFactory" id="org.eclipse.jdt.ui.JavaPerspective" label="Java"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -250,22 +239,22 @@
 <view id="org.eclipse.ui.views.ProblemView" ratio="0.3"/>
 <view id="org.eclipse.jdt.ui.JavadocView" ratio="0.3"/>
 <view id="org.eclipse.jdt.ui.SourceView" ratio="0.3"/>
-<view id="org.eclipse.ui.console.ConsoleView" ratio="0.29262927"/>
-<view id="com.android.ide.eclipse.ddms.views.DeviceView" ratio="0.2955289"/>
+<view id="org.eclipse.ui.console.ConsoleView" ratio="0.29007635"/>
+<view id="com.android.ide.eclipse.ddms.views.DeviceView" ratio="0.2948295"/>
 <view id="com.android.ide.eclipse.ddms.views.LogCatView" ratio="0.2780807"/>
 <view id="org.eclipse.ui.views.ProgressView" ratio="0.29964748"/>
 <view id="com.google.gwt.eclipse.DevModeView" ratio="0.29988727"/>
 </fastViews>
 </fastViewBar>
-<fastViewBar fastViewLocation="131072" id="org.eclipse.ui.internal.ViewStack@1ae0a56" orientation="512" selectedTabId="org.eclipse.jdt.callhierarchy.view" style="0">
-<fastViews>
-<view id="org.eclipse.jdt.callhierarchy.view" ratio="0.8753799"/>
-</fastViews>
-</fastViewBar>
 <fastViewBar fastViewLocation="16384" id="left" orientation="512" selectedTabId="org.eclipse.jdt.ui.PackageExplorer" style="0">
 <fastViews>
-<view id="org.eclipse.jdt.ui.PackageExplorer" ratio="0.41652894"/>
-<view id="org.eclipse.jdt.ui.TypeHierarchy" ratio="0.29789865"/>
+<view id="org.eclipse.jdt.ui.PackageExplorer" ratio="0.8264059"/>
+<view id="org.eclipse.jdt.ui.TypeHierarchy" ratio="0.29765257"/>
+</fastViews>
+</fastViewBar>
+<fastViewBar fastViewLocation="131072" id="org.eclipse.ui.internal.ViewStack@1ae0a56" orientation="512" selectedTabId="org.eclipse.jdt.callhierarchy.view" style="0">
+<fastViews>
+<view id="org.eclipse.jdt.callhierarchy.view" ratio="0.87511736"/>
 </fastViews>
 </fastViewBar>
 <fastViewBar fastViewLocation="131072" id="right" orientation="512" selectedTabId="org.eclipse.ui.views.ContentOutline" style="0">
@@ -282,7 +271,7 @@
 <layout>
 <mainWindow>
 <info folder="true" part="left">
-<folder appearance="2" expanded="2">
+<folder appearance="2" expanded="0">
 <page content="org.eclipse.jdt.ui.PackageExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
@@ -301,7 +290,7 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.25" ratioLeft="250" ratioRight="750" relationship="2" relative="left"/>
+<info part="org.eclipse.ui.editorss" ratio="0.23751523" ratioLeft="390" ratioRight="1252" relationship="2" relative="left"/>
 <info folder="true" part="bottom" ratio="0.716895" ratioLeft="628" ratioRight="248" relationship="4" relative="org.eclipse.ui.editorss">
 <folder appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="LabelNotFound"/>
@@ -356,171 +345,7 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory>
-<editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/SkullMonsterSprite.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/TongueMonsterSprite.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/Sprite.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/actors/Actor.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/CuteMonsterSprite.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/maps/LastStand.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/Location.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/KFNekko.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/actors/TongueMonster.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/maps/LSRoadOfMartyrs.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/maps/LSKingsAndQueens.java"/>
-</editors>
-<item historyLabel="TongueMonsterSprite.java" index="1">
-<position/>
-</item>
-<item historyLabel="Actor.java" index="3">
-<position info="not_deleted" x="3409" y="18"/>
-</item>
-<item historyLabel="TongueMonsterSprite.java" index="1">
-<position/>
-</item>
-<item historyLabel="SkullMonsterSprite.java" index="0">
-<position/>
-</item>
-<item historyLabel="TongueMonsterSprite.java" index="1">
-<position/>
-</item>
-<item historyLabel="SkullMonsterSprite.java" index="0">
-<position/>
-</item>
-<item historyLabel="TongueMonsterSprite.java" index="1">
-<position/>
-</item>
-<item historyLabel="CuteMonsterSprite.java" index="4">
-<position/>
-</item>
-<item historyLabel="TongueMonsterSprite.java" index="1">
-<position/>
-</item>
-<item historyLabel="CuteMonsterSprite.java" index="4">
-<position/>
-</item>
-<item historyLabel="TongueMonsterSprite.java" index="1">
-<position/>
-</item>
-<item historyLabel="CuteMonsterSprite.java" index="4">
-<position info="not_deleted" x="4737" y="10"/>
-</item>
-<item historyLabel="TongueMonsterSprite.java" index="1">
-<position/>
-</item>
-<item historyLabel="SkullMonsterSprite.java" index="0">
-<position/>
-</item>
-<item historyLabel="TongueMonsterSprite.java" index="1">
-<position/>
-</item>
-<item historyLabel="SkullMonsterSprite.java" index="0">
-<position/>
-</item>
-<item historyLabel="TongueMonsterSprite.java" index="1">
-<position/>
-</item>
-<item historyLabel="Sprite.java" index="2">
-<position/>
-</item>
-<item historyLabel="TongueMonsterSprite.java" index="1">
-<position/>
-</item>
-<item historyLabel="SkullMonsterSprite.java" index="0">
-<position/>
-</item>
-<item historyLabel="LastStand.java" index="5">
-<position info="not_deleted" x="8412" y="0"/>
-</item>
-<item historyLabel="Location.java" index="6">
-<position info="not_deleted" x="4172" y="0"/>
-</item>
-<item historyLabel="LastStand.java" index="5">
-<position info="not_deleted" x="8463" y="0"/>
-</item>
-<item historyLabel="SkullMonsterSprite.java" index="0">
-<position info="not_deleted" x="78" y="0"/>
-</item>
-<item historyLabel="SkullMonsterSprite.java" index="0">
-<position info="not_deleted" x="4373" y="0"/>
-</item>
-<item historyLabel="SkullMonsterSprite.java" index="0">
-<position info="not_deleted" x="2233" y="0"/>
-</item>
-<item historyLabel="Sprite.java" index="2">
-<position info="not_deleted" x="2076" y="52"/>
-</item>
-<item historyLabel="SkullMonsterSprite.java" index="0">
-<position info="not_deleted" x="3919" y="0"/>
-</item>
-<item historyLabel="TongueMonsterSprite.java" index="1">
-<position info="not_deleted" x="2938" y="0"/>
-</item>
-<item historyLabel="SkullMonsterSprite.java" index="0">
-<position info="not_deleted" x="5920" y="0"/>
-</item>
-<item historyLabel="TongueMonsterSprite.java" index="1">
-<position info="not_deleted" x="2403" y="0"/>
-</item>
-<item historyLabel="SkullMonsterSprite.java" index="0">
-<position info="not_deleted" x="5920" y="0"/>
-</item>
-<item historyLabel="LastStand.java" index="5">
-<position info="not_deleted" x="8463" y="0"/>
-</item>
-<item historyLabel="KFNekko.java" index="7">
-<position info="not_deleted" x="78" y="0"/>
-</item>
-<item historyLabel="KFNekko.java" index="7">
-<position info="not_deleted" x="4705" y="0"/>
-</item>
-<item historyLabel="LastStand.java" index="5">
-<position info="not_deleted" x="10639" y="0"/>
-</item>
-<item historyLabel="TongueMonster.java" index="8">
-<position info="not_deleted" x="1562" y="13"/>
-</item>
-<item historyLabel="TongueMonster.java" index="8">
-<position info="not_deleted" x="2429" y="0"/>
-</item>
-<item historyLabel="LastStand.java" index="5">
-<position info="not_deleted" x="10060" y="0"/>
-</item>
-<item historyLabel="LSRoadOfMartyrs.java" index="9">
-<position/>
-</item>
-<item historyLabel="LSKingsAndQueens.java" index="10">
-<position info="not_deleted" x="4255" y="0"/>
-</item>
-<item historyLabel="LSRoadOfMartyrs.java" index="9">
-<position/>
-</item>
-<item historyLabel="LSKingsAndQueens.java" index="10">
-<position info="not_deleted" x="4204" y="33"/>
-</item>
-<item historyLabel="LSRoadOfMartyrs.java" index="9">
-<position/>
-</item>
-<item historyLabel="LSKingsAndQueens.java" index="10">
-<position info="not_deleted" x="4255" y="0"/>
-</item>
-<item historyLabel="LSRoadOfMartyrs.java" index="9">
-<position/>
-</item>
-<item historyLabel="LSKingsAndQueens.java" index="10">
-<position info="not_deleted" x="4226" y="10"/>
-</item>
-<item historyLabel="LSRoadOfMartyrs.java" index="9">
-<position info="not_deleted" x="78" y="0"/>
-</item>
-<item historyLabel="LSKingsAndQueens.java" index="10">
-<position info="not_deleted" x="4182" y="0"/>
-</item>
-<item active="true" historyLabel="LastStand.java" index="5">
-<position info="not_deleted" x="10060" y="0"/>
-</item>
-</navigationHistory>
+<navigationHistory/>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
@@ -550,50 +375,50 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LSRoadOfMartyrs.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/maps/LSRoadOfMartyrs.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/maps/LSRoadOfMartyrs.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HUD.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/ui/HUD.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/ui/HUD.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LSKingsAndQueens.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/maps/LSKingsAndQueens.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/maps/LSKingsAndQueens.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Audio.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/Audio.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/Audio.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="KFNekko.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/KFNekko.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/KFNekko.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TongueMonster.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/TongueMonster.java">
 <persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/TongueMonster.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TongueMonsterSprite.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/components/TongueMonsterSprite.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/TongueMonsterSprite.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Sprite.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/components/Sprite.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/Sprite.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SkullMonster.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/SkullMonster.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/SkullMonster.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SkullMonsterSprite.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/components/SkullMonsterSprite.java">
 <persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/SkullMonsterSprite.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Location.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/components/Location.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/Location.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Sprite.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/components/Sprite.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/Sprite.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CuteMonsterSprite.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/components/CuteMonsterSprite.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/CuteMonsterSprite.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TongueMonsterSprite.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/components/TongueMonsterSprite.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/TongueMonsterSprite.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Actor.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/Actor.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/Actor.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Projectile.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/components/Projectile.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/Projectile.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Updatable.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/interf/Updatable.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/interf/Updatable.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Soda.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/components/Soda.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/Soda.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="VerticalMotionState.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/states/VerticalMotionState.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/states/VerticalMotionState.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Nekko.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/Nekko.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/Nekko.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Monster.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/Monster.java">
 <persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/Monster.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CuteMonster.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/CuteMonster.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/CuteMonster.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FaceState.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/states/FaceState.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/states/FaceState.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ToungeMonsterSprite.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/components/ToungeMonsterSprite.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/ToungeMonsterSprite.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Methods.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/Methods.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/Methods.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SkullMonster.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/SkullMonster.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/SkullMonster.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Actor.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/Actor.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/Actor.java"/>
 </file>
 </mruList>
 </workbench>

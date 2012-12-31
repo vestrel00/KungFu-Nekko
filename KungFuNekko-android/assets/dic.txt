@@ -11,3 +11,6 @@ intro
 highscores
 ftw
 rects
+projectile
+melee
+projectiles

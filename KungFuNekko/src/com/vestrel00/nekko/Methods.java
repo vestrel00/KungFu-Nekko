@@ -5,6 +5,13 @@ import java.util.Random;
 import com.badlogic.gdx.graphics.Color;
 
 public class Methods {
+	
+	public static int incrementIndex(int index, int maxIndex) {
+		if (++index == maxIndex)
+			return 0;
+		else
+			return index;
+	}
 
 	public static void randomColor(Color color, Random rand) {
 		color.set((float) rand.nextInt(255) / 255.0f,

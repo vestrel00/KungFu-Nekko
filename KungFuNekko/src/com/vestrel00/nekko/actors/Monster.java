@@ -67,7 +67,7 @@ public abstract class Monster extends Actor {
 	public abstract void reset(int level);
 
 	@Override
-	protected void receiveDamage(int damage) {
+	public void receiveDamage(int damage) {
 		super.receiveDamage(damage);
 		float c = (float) damage / (float) maxHealth;
 

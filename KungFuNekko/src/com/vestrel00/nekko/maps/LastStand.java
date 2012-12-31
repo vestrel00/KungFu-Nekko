@@ -24,7 +24,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vestrel00.nekko.IntroMenuManager;
 import com.vestrel00.nekko.KFNekko;
+import com.vestrel00.nekko.Methods;
 import com.vestrel00.nekko.actors.CuteMonster;
 import com.vestrel00.nekko.actors.Monster;
 import com.vestrel00.nekko.actors.SkullMonster;
@@ -37,19 +39,20 @@ import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.HorizontalMotionState;
 import com.vestrel00.nekko.actors.states.StatusState;
 import com.vestrel00.nekko.actors.states.VerticalMotionState;
+import com.vestrel00.nekko.interf.LevelHelper;
 import com.vestrel00.nekko.interf.LevelManager;
 import com.vestrel00.nekko.interf.PickUp;
 import com.vestrel00.nekko.maps.components.MapSection;
 
 public class LastStand implements LevelManager {
 
-	private static final long WAVE_DURATION = 30000000000L,
-			POWER_UP_DROP_DELAY = 5000000000L, SODA_DROP_DELAY = 3000000000L;
-
+	private final long WAVE_DURATION = 30000000000L,
+			POWER_UP_DROP_DELAY = 5000000000L, SODA_DROP_DELAY = 1000000000L;
 	private final CharSequence scoreStr = "Score : ", waveStr = "Wave : ",
-			highScoreStr = "HighScore : ";
+			highScoreStr = "HighScore : ", gameOverStr = "Game Over";
 	private final int MAX_MONSTER_COUNT = 120, POWER_UP_DROP_CHANCE = 30,
 			SODA_DROP_CHANCE = 30;
+
 	public int score = 0, wave = 0, batchCount = 0, maxBatchCount, highscore,
 			mapId;
 	private float portalScale, portalRotation, portalScaleDir = 0.005f;
@@ -57,7 +60,8 @@ public class LastStand implements LevelManager {
 	private long waveStartTime, lastMonsterSpawnTime, lastInterSpawn,
 			pauseTime, lastPowerUpDrop, lastSodaDrop, lastSpawnSound;
 	public LastStandInst instruction;
-	LastStandHelper helper;
+	public LastStandHelper helper;
+	private Color gameOverColor, targetGameOverColor;
 	private Vector2 scoreStrVec, scoreVec, waveStrVec, waveVec,
 			highScoreStrVec, highScoreVec;
 
@@ -135,9 +139,12 @@ public class LastStand implements LevelManager {
 		instruction = new LastStandInst(this);
 
 		// other
+		KFNekko.targetWorldColor.set(0.7f, 0.7f, 0.7f, 1.0f);
 		portalScale = 1.0f;
 		portalRotation = 0.0f;
 		builder = new StringBuilder();
+		gameOverColor = new Color(Color.CLEAR);
+		targetGameOverColor = new Color(Color.WHITE);
 
 		// clear the list of enemies
 		KFNekko.enemies.clear();
@@ -176,6 +183,30 @@ public class LastStand implements LevelManager {
 		for (int i = 0; i < helper.chessPieces.size; i++)
 			helper.chessPieces.get(i).update();
 
+		// update text positions
+		scoreStrVec.set(KFNekko.camera.rect.x + 256.0f,
+				KFNekko.camera.rect.y + 308.0f);
+		scoreVec.set(KFNekko.camera.rect.x + 310.0f,
+				KFNekko.camera.rect.y + 308.0f);
+		waveStrVec.set(KFNekko.camera.rect.x + 156.0f,
+				KFNekko.camera.rect.y + 308.0f);
+		waveVec.set(KFNekko.camera.rect.x + 208.0f,
+				KFNekko.camera.rect.y + 308.0f);
+		highScoreStrVec.set(KFNekko.camera.rect.x + 180.0f,
+				KFNekko.camera.rect.y + 54.0f);
+		highScoreVec.set(KFNekko.camera.rect.x + 270.0f,
+				KFNekko.camera.rect.y + 54.0f);
+
+		// update high score
+		if (score > highscore)
+			highscore = score;
+
+		// case game over
+		if (KFNekko.view == KFNekko.VIEW_GAME_OVER) {
+			Methods.updateColor(gameOverColor, targetGameOverColor, 0.01f);
+			return;
+		}
+
 		if (KFNekko.view == KFNekko.VIEW_LEVEL_INTRO) {
 			instruction.update();
 			return;
@@ -207,24 +238,6 @@ public class LastStand implements LevelManager {
 			spawnMonster(helper.rand.nextInt(3));
 			batchCount++;
 		}
-
-		// update text positions
-		scoreStrVec.set(KFNekko.camera.rect.x + 256.0f,
-				KFNekko.camera.rect.y + 308.0f);
-		scoreVec.set(KFNekko.camera.rect.x + 310.0f,
-				KFNekko.camera.rect.y + 308.0f);
-		waveStrVec.set(KFNekko.camera.rect.x + 156.0f,
-				KFNekko.camera.rect.y + 308.0f);
-		waveVec.set(KFNekko.camera.rect.x + 208.0f,
-				KFNekko.camera.rect.y + 308.0f);
-		highScoreStrVec.set(KFNekko.camera.rect.x + 180.0f,
-				KFNekko.camera.rect.y + 54.0f);
-		highScoreVec.set(KFNekko.camera.rect.x + 270.0f,
-				KFNekko.camera.rect.y + 54.0f);
-
-		// update high score
-		if (score > highscore)
-			highscore = score;
 	}
 
 	private void updatePortals() {
@@ -354,37 +367,50 @@ public class LastStand implements LevelManager {
 	@Override
 	public void drawText(SpriteBatch batch) {
 		switch (KFNekko.view) {
+		case KFNekko.VIEW_GAME_OVER:
+			batch.begin();
+			drawScores(batch);
+			KFNekko.resource.chunkFive.setColor(gameOverColor);
+			KFNekko.resource.chunkFive.setScale(1.0f);
+			KFNekko.resource.chunkFive.draw(batch, gameOverStr,
+					KFNekko.camera.rect.x + 154.0f,
+					KFNekko.camera.rect.y + 280.0f);
+			batch.end();
+			break;
 		case KFNekko.VIEW_GAME:
 			batch.begin();
-			// DRAW SCORE
-			KFNekko.resource.arial.setColor(Color.WHITE);
-			KFNekko.resource.arial.setScale(1.0f);
-			KFNekko.resource.arial.draw(batch, scoreStr, scoreStrVec.x,
-					scoreStrVec.y);
-			// to avoid heap allocation - no String.valueOf()
-			builder.delete(0, builder.length());
-			builder.append(score);
-			KFNekko.resource.arial.draw(batch, builder, scoreVec.x, scoreVec.y);
-			// DRAW WAVE
-			KFNekko.resource.arial.draw(batch, waveStr, waveStrVec.x,
-					waveStrVec.y);
-			// to avoid heap allocation - no String.valueOf()
-			builder.delete(0, builder.length());
-			builder.append(wave);
-			KFNekko.resource.arial.draw(batch, builder, waveVec.x, waveVec.y);
-			// draw high score
-			KFNekko.resource.arial.draw(batch, highScoreStr, highScoreStrVec.x,
-					highScoreStrVec.y);
-			builder.delete(0, builder.length());
-			builder.append(highscore);
-			KFNekko.resource.arial.draw(batch, builder, highScoreVec.x,
-					highScoreVec.y);
+			drawScores(batch);
 			batch.end();
 			break;
 		case KFNekko.VIEW_LEVEL_INTRO:
 			instruction.draw(batch);
 			break;
 		}
+	}
+
+	private void drawScores(SpriteBatch batch) {
+		// DRAW SCORE
+		KFNekko.resource.arial.setColor(Color.WHITE);
+		KFNekko.resource.arial.setScale(1.0f);
+		KFNekko.resource.arial.draw(batch, scoreStr, scoreStrVec.x,
+				scoreStrVec.y);
+		// to avoid heap allocation - no String.valueOf()
+		builder.delete(0, builder.length());
+		builder.append(score);
+		KFNekko.resource.arial.draw(batch, builder, scoreVec.x, scoreVec.y);
+		// DRAW WAVE
+		KFNekko.resource.arial.draw(batch, waveStr, waveStrVec.x, waveStrVec.y);
+		// to avoid heap allocation - no String.valueOf()
+		builder.delete(0, builder.length());
+		builder.append(wave);
+		KFNekko.resource.arial.draw(batch, builder, waveVec.x, waveVec.y);
+		// draw high score
+		KFNekko.resource.arial.draw(batch, highScoreStr, highScoreStrVec.x,
+				highScoreStrVec.y);
+		builder.delete(0, builder.length());
+		builder.append(highscore);
+		KFNekko.resource.arial.draw(batch, builder, highScoreVec.x,
+				highScoreVec.y);
 	}
 
 	@Override
@@ -418,6 +444,35 @@ public class LastStand implements LevelManager {
 
 	@Override
 	public boolean onTouchDown(float x, float y) {
-		return instruction.onTouchDown(x, y);
+		switch (KFNekko.view) {
+		case KFNekko.VIEW_LEVEL_INTRO:
+			return instruction.onTouchDown(x, y);
+		case KFNekko.VIEW_GAME_OVER:
+			if (gameOverColor.a > 0.9f) {
+				// reset previous views
+				KFNekko.view = KFNekko.VIEW_INTRO;
+				KFNekko.intro.menu.view = IntroMenuManager.VIEW_MENU;
+				KFNekko.intro.menu.nextView = IntroMenuManager.VIEW_MENU;
+				KFNekko.audio.touch();
+				KFNekko.map.manager.resume();
+				// move camera back to origin
+				KFNekko.camera.targetActor = null;
+				KFNekko.camera.targetLoc.x = -1.0f;
+				KFNekko.camera.reset();
+				// reset the intro states!
+				KFNekko.intro.reset();
+				// reset the player!
+				KFNekko.player.reset(0, 0);
+				return true;
+
+			}
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public LevelHelper getHelper() {
+		return helper;
 	}
 }

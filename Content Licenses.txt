@@ -60,7 +60,8 @@ Assets taken from vestrel00 under CC-BY-3.0 License:
 ----------------------------------------------------------------------------
 "gruff.mp3"
 "wrathOfMagic.mp3"
-vestrel00.wix.com/hoalw
+"gameOver.mp3"
+IndieDB.com/members/vestrel00
 
 ----------------------------------------------------------------------------
 Assets taken from NoiseCollector under CC-BY-3.0 License:
@@ -113,6 +114,8 @@ http://opengameart.org/content/teleport-spell
 http://opengameart.org/content/gui-sound-effects
 http://opengameart.org/content/tango-desktop-icons
 http://opengameart.org/content/soda-pop-can-themed-game-pieces
+http://www.freesound.org/people/Deganoth/sounds/165911/
+http://www.freesound.org/people/dave.des/sounds/127197/
 http://www.freesound.org/people/timgormly/sounds/144031/
 http://www.freesound.org/people/ShawnyBoy/sounds/166057/
 http://www.freesound.org/people/MrPokephile/sounds/133974/

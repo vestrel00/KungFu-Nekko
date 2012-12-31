@@ -27,6 +27,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Disposable;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.Nekko;
+import com.vestrel00.nekko.actors.components.PowerUp;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.HorizontalMotionState;
 import com.vestrel00.nekko.interf.Drawable;
@@ -43,6 +44,8 @@ public class HUD implements Updatable, Drawable, Disposable, Touchable {
 	private Nekko player;
 	public HUDInputProcessor processor;
 
+	private float accelMult, maxSpeed;
+
 	public HUD(Nekko player, HUDInputProcessor processor) {
 		this.player = player;
 		shape = new ShapeRenderer();
@@ -56,6 +59,14 @@ public class HUD implements Updatable, Drawable, Disposable, Touchable {
 	public void update() {
 		ui.update();
 
+		if (player.powerUp == PowerUp.QUICKFEET) {
+			accelMult = 9.0f;
+			maxSpeed = 13.0f;
+		} else {
+			accelMult = 6.0f;
+			maxSpeed = 9.0f;
+		}
+
 		if (KFNekko.view == KFNekko.VIEW_GAME) {
 			// -y(-10) <-------------landscape---------------> +y
 			float accel = Gdx.input.getAccelerometerY();
@@ -65,21 +76,21 @@ public class HUD implements Updatable, Drawable, Disposable, Touchable {
 				if (accel < -1.5f)
 					accel = -1.5f;
 				if (player.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK)
-					if ((player.location.speed.maxXSpeed = -accel * 6.0f) < -9.0f)
-						player.location.speed.maxXSpeed = -9.0f;
+					if ((player.location.speed.maxXSpeed = -accel * accelMult) < -maxSpeed)
+						player.location.speed.maxXSpeed = -maxSpeed;
 			} else if (accel > 0.6f) {
 				player.faceState = FaceState.RIGHT;
 				player.setHorizontalMotionState(HorizontalMotionState.MOVING);
 				if (accel > 1.5f)
 					accel = 1.5f;
 				if (player.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK)
-					if ((player.location.speed.maxXSpeed = accel * 6.0f) > 9.0f)
-						player.location.speed.maxXSpeed = 9.0f;
+					if ((player.location.speed.maxXSpeed = accel * accelMult) > maxSpeed)
+						player.location.speed.maxXSpeed = maxSpeed;
 			} else {
 				if (player.horizontalMotionState != HorizontalMotionState.FORCED_MOVING) {
-					// player.setHorizontalMotionState(HorizontalMotionState.IDLE);
-					// TODO REMOVE
-					// player.location.speed.maxXSpeed = 0.0f;
+					// Comment out for desktop build
+					player.setHorizontalMotionState(HorizontalMotionState.IDLE);
+					player.location.speed.maxXSpeed = 0.0f;
 				}
 			}
 		}

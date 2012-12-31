@@ -72,8 +72,10 @@ public class LSKingsAndQueens extends LastStandHelper {
 
 		KFNekko.map.width = 1152.0f;
 		KFNekko.map.height = 960.0f;
+		KFNekko.background.setOffsetRatio();
 
-		// set player spawn location
+		// initialize the player
+		KFNekko.player.maxHealth = 1000;
 		KFNekko.player.reset(576.0f, 704.0f);
 		KFNekko.player.setState(FaceState.LEFT, StatusState.ALIVE,
 				CombatState.IDLE, HorizontalMotionState.IDLE,
@@ -97,7 +99,7 @@ public class LSKingsAndQueens extends LastStandHelper {
 		//
 		maxBatchCount = 5;
 		interSpawnDelay = 200000000L;
-		difficulty = 3;
+		difficulty = 1;
 
 		// init spawn rectangles for checking visibility
 		initSpawnPortals();
@@ -108,15 +110,15 @@ public class LSKingsAndQueens extends LastStandHelper {
 		chessPieces
 				.add(new ChessPiece(KFNekko.enemies, ChessPiece.QUEEN,
 						new Location(470.0f, 128.0f, 0, 0, 0, 0),
-						FaceState.LEFT, 2000));
+						FaceState.LEFT, 3000));
 		chessPieces
 				.add(new ChessPiece(KFNekko.enemies, ChessPiece.KING,
 						new Location(576.0f, 128.0f, 0, 0, 0, 0),
-						FaceState.RIGHT, 5000));
+						FaceState.RIGHT, 6000));
 		chessPieces
 				.add(new ChessPiece(KFNekko.enemies, ChessPiece.QUEEN,
 						new Location(682.0f, 128.0f, 0, 0, 0, 0),
-						FaceState.RIGHT, 2000));
+						FaceState.RIGHT, 3000));
 		KFNekko.allies.clear();
 		KFNekko.allies.add(KFNekko.player);
 		KFNekko.allies.addAll(chessPieces);
@@ -124,7 +126,7 @@ public class LSKingsAndQueens extends LastStandHelper {
 
 	private boolean spawnAtLoc(int loc) {
 		chosenSpawnLoc = monsterLocs[loc];
-		if (chessPieces.get(loc).statusState == StatusState.ALIVE) {
+		if (chessPieces.get(loc).statusState != StatusState.DEAD) {
 			chosenPiece = chessPieces.get(loc);
 			return true;
 		} else

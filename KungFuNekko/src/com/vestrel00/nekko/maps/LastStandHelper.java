@@ -21,6 +21,7 @@ package com.vestrel00.nekko.maps;
 
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -28,9 +29,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.ChessPiece;
+import com.vestrel00.nekko.interf.LevelHelper;
 import com.vestrel00.nekko.maps.components.MapSection;
 
-public abstract class LastStandHelper {
+public abstract class LastStandHelper implements LevelHelper {
 
 	public AtlasRegion spawnRegion;
 	public Array<ChessPiece> chessPieces;
@@ -59,9 +61,16 @@ public abstract class LastStandHelper {
 					(float) spawnRegion.originalHeight);
 	}
 
-	protected void gameOver() {
-		// TODO Auto-generated method stub
-
+	@Override
+	public void gameOver() {
+		if (KFNekko.view != KFNekko.VIEW_GAME_OVER) {
+			KFNekko.view = KFNekko.VIEW_GAME_OVER;
+			KFNekko.targetWorldColor.set(Color.GRAY);
+			if (KFNekko.audio.music.isPlaying())
+				KFNekko.audio.music.stop();
+			if (KFNekko.settings.soundOn)
+				KFNekko.audio.gameOver.play();
+		}
 	}
 
 	public abstract void signalSpawn();

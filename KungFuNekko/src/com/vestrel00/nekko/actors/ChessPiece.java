@@ -179,7 +179,7 @@ public class ChessPiece extends Actor {
 	}
 
 	@Override
-	protected void receiveDamage(int damage) {
+	public void receiveDamage(int damage) {
 		super.receiveDamage(damage);
 		// 75% because start at 100% color and end at 25% (dark_gray)
 		float c = ((float) damage / (float) maxHealth) * 0.75f;

@@ -92,25 +92,25 @@ public class Soda implements PickUp {
 		if (isActive) {
 			switch (type) {
 			case STAMINA:
-				if (KFNekko.player.stamina < KFNekko.player.maxStamina - 20) {
-					if ((KFNekko.player.stamina += 20) > KFNekko.player.maxStamina)
+				if (KFNekko.player.stamina < KFNekko.player.maxStamina - 50) {
+					if ((KFNekko.player.stamina += 50) > KFNekko.player.maxStamina)
 						KFNekko.player.stamina = KFNekko.player.maxStamina;
 				} else
 					return;
 				break;
 			case HEALTH:
-				if (KFNekko.player.health < KFNekko.player.maxHealth - 20) {
-					if ((KFNekko.player.health += 20) > KFNekko.player.maxHealth)
+				if (KFNekko.player.health < KFNekko.player.maxHealth - 50) {
+					if ((KFNekko.player.health += 50) > KFNekko.player.maxHealth)
 						KFNekko.player.health = KFNekko.player.maxHealth;
 				} else
 					return;
 				break;
 			case MIX:
-				if (KFNekko.player.health < KFNekko.player.maxHealth - 20
-						|| KFNekko.player.stamina < KFNekko.player.maxStamina - 20) {
-					if ((KFNekko.player.health += 20) > KFNekko.player.maxHealth)
+				if (KFNekko.player.health < KFNekko.player.maxHealth - 50
+						|| KFNekko.player.stamina < KFNekko.player.maxStamina - 50) {
+					if ((KFNekko.player.health += 50) > KFNekko.player.maxHealth)
 						KFNekko.player.health = KFNekko.player.maxHealth;
-					if ((KFNekko.player.stamina += 20) > KFNekko.player.maxStamina)
+					if ((KFNekko.player.stamina += 50) > KFNekko.player.maxStamina)
 						KFNekko.player.stamina = KFNekko.player.maxStamina;
 				} else
 					return;

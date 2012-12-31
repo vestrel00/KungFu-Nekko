@@ -46,7 +46,7 @@ public class KFNekko implements ApplicationListener {
 
 	// the public static modifier without the final modifier is not secure.
 	public static final int VIEW_INTRO = 0, VIEW_GAME = 2, VIEW_PAUSED = 3,
-			VIEW_OPTIONS = 4, VIEW_LEVEL_INTRO = 5;
+			VIEW_OPTIONS = 4, VIEW_LEVEL_INTRO = 5, VIEW_GAME_OVER = 6;
 	public static int view;
 
 	public static SpriteBatch batch;
@@ -150,7 +150,12 @@ public class KFNekko implements ApplicationListener {
 			case VIEW_GAME:
 				for (int i = 0; i < updatables.size; i++)
 					updatables.get(i).update();
-				updateWorldColor();
+				Methods.updateColor(worldColor, targetWorldColor, colorSpeed);
+				Methods.updateColor(worldColor, targetWorldColor, colorSpeed);
+				break;
+			case VIEW_GAME_OVER:
+				map.manager.update();
+				Methods.updateColor(worldColor, targetWorldColor, colorSpeed);
 				break;
 			case VIEW_PAUSED:
 				if (audio.music.isPlaying())
@@ -174,6 +179,7 @@ public class KFNekko implements ApplicationListener {
 			break;
 		case VIEW_LEVEL_INTRO:
 		case VIEW_GAME:
+		case VIEW_GAME_OVER:
 			batch.setColor(worldColor);
 			drawGame();
 			break;
@@ -199,20 +205,14 @@ public class KFNekko implements ApplicationListener {
 		batch.end();
 
 		// draw separately since this conflicts with the SpriteBatch in use
+		// make sure that zoom does not pass a certain amount (1 - 0.065)
+		if (camera.camera.zoom < 0.935f) {
+			camera.camera.zoom = 0.935f;
+			camera.camera.update();
+			batch.setProjectionMatrix(camera.camera.combined);
+		}
 		hud.draw(batch);
 		map.manager.drawText(batch);
-	}
-
-	private void updateWorldColor() {
-		if (worldColor.r > targetWorldColor.r
-				&& (worldColor.r -= colorSpeed) < targetWorldColor.r)
-			worldColor.r = targetWorldColor.r;
-		if (worldColor.g > targetWorldColor.g
-				&& (worldColor.g -= colorSpeed) < targetWorldColor.g)
-			worldColor.g = targetWorldColor.g;
-		if (worldColor.b > targetWorldColor.b
-				&& (worldColor.b -= colorSpeed) < targetWorldColor.b)
-			worldColor.b = targetWorldColor.b;
 	}
 
 	/**

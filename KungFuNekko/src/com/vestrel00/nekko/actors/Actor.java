@@ -91,7 +91,7 @@ public abstract class Actor implements Updatable, Drawable {
 			this.horizontalMotionState = horizontalMotionState;
 	}
 
-	protected void receiveDamage(int damage) {
+	public void receiveDamage(int damage) {
 		if (health > 0) {
 			health -= damage;
 			if (health <= 0)

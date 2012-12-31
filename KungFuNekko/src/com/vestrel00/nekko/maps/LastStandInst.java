@@ -73,7 +73,8 @@ public class LastStandInst implements Touchable, Updatable, Drawable {
 			"Monsters will spawn at one of these these locations.\n"
 					+ "Monsters will spawn more frequently as time passes\n"
 					+ "and also become faster, stronger, and better!\n"
-					+ "These units may drop soda and powerups!" };
+					+ "These units may drop soda and powerups!\n"
+					+ "Beat the color out of them!" };
 	private final CharSequence SKIP = "SKIP", NEXT = "NEXT";
 
 	private LastStand level;

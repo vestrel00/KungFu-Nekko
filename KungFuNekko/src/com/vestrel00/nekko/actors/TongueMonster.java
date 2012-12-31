@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.components.Location;
 import com.vestrel00.nekko.actors.components.TongueMonsterSprite;
 import com.vestrel00.nekko.actors.states.CombatState;
@@ -38,7 +39,7 @@ import com.vestrel00.nekko.actors.states.Visibility;
 public class TongueMonster extends Monster {
 
 	private static long lastGrowlTime;
-	private TongueMonsterSprite toungeSprite;
+	private TongueMonsterSprite tongueSprite;
 	public int damage;
 	public float knockBackDistance;
 
@@ -46,8 +47,8 @@ public class TongueMonster extends Monster {
 			Array<Actor> targets, float aggroRange, float motionRange,
 			Color color, int level) {
 		super(targets, location, 0, aggroRange, motionRange);
-		toungeSprite = new TongueMonsterSprite(this, atlas, color);
-		sprite = toungeSprite;
+		tongueSprite = new TongueMonsterSprite(this, atlas, color);
+		sprite = tongueSprite;
 		attackDelay = 2000000000L;
 		location.setActor(this);
 		reset(level);
@@ -70,7 +71,7 @@ public class TongueMonster extends Monster {
 		if (visibility == Visibility.VISIBLE
 				&& TimeUtils.nanoTime() - lastGrowlTime > 500000000L) {
 			lastGrowlTime = TimeUtils.nanoTime();
-			// KFNekko.audio.tongueGrowl(location.x); TODO
+			KFNekko.audio.growl(location.x, 2.0f);
 		}
 	}
 
@@ -92,6 +93,7 @@ public class TongueMonster extends Monster {
 		this.maxHealth = 6 + level / 4;
 		health = this.maxHealth;
 		this.level = level;
+		tongueSprite.combatIndex = 0;
 	}
 
 }

@@ -20,10 +20,10 @@
 package com.vestrel00.nekko.actors.states;
 
 public enum CombatState {
-	ATTACK, SPECIAL,// for monsters 
+	ATTACK, SPECIAL, // for monsters
 	IDLE, // out of combat
 	// normal default attack aoe
-	FASTSHOT, 
+	JAB,
 	// double hit attacks 1 damage * 2 aoe
 	ONETWOCOMBO, LOWMIDDLEKICK,
 	// power attacks 2 damage aoe
@@ -38,6 +38,8 @@ public enum CombatState {
 	SPIN,
 	// aoe jump attack 2 damage
 	FLYINGKICK,
-	// projectile power attack 3 damage
-	POWERSHOT;
+	// projectile attacks 1 - 2 - 3 - 4 damage aoe
+	FASTSHOT, JUMPSHOT, POWERSHOT, SUPERSHOT, 
+	// special mixed combo attacks (ender moves)
+	BEATDOWN, LIGHTNINGKICKS, SPEEDYHANDS, GATTLINGSHOT;
 }

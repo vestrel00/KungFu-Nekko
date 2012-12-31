@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="330" key="DIALOG_WIDTH"/>
-		<item value="291" key="DIALOG_Y_ORIGIN"/>
-		<item value="754" key="DIALOG_X_ORIGIN"/>
+		<item value="424" key="DIALOG_Y_ORIGIN"/>
 		<item value="451" key="DIALOG_HEIGHT"/>
+		<item value="882" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="true" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="initMonster" key="selection"/>
+		<item value="audio" key="selection"/>
 		<list key="findhistory">
-			<item value="initMonster"/>
-			<item value="SPECIAL"/>
-			<item value="skullMonsters"/>
-			<item value="SkullMonster"/>
-			<item value="skull"/>
-			<item value="Skull"/>
-			<item value="idle"/>
-			<item value="initMonsters"/>
+			<item value="audio"/>
+			<item value="growl"/>
+			<item value="zoom"/>
+			<item value="jumpShotRegions"/>
+			<item value="draw"/>
+			<item value="Gdx"/>
+			<item value="// TODO PLAY LAUNCH SOUND"/>
+			<item value="stepForward"/>
 		</list>
 		<list key="replacehistory">
-			<item value="tongue"/>
-			<item value="Tongue"/>
-			<item value="put"/>
-			<item value="Health"/>
-			<item value="health"/>
-			<item value="sodaDrop"/>
-			<item value="sodaOpen"/>
-			<item value=""/>
+			<item value="KFNekko.audio.punch(nekko.location.x);"/>
+			<item value="Methods.incrementIndex"/>
+			<item value="=new AtlasRegion[];"/>
+			<item value="initLoc"/>
+			<item value="combat"/>
+			<item value="50"/>
+			<item value="JAB"/>
+			<item value="Methods.updateColor(worldColor, targetWorldColor, colorSpeed);"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

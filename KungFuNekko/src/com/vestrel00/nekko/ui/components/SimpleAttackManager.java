@@ -35,32 +35,34 @@ public class SimpleAttackManager implements CombatStateManager {
 		this.actor = actor;
 		inputIndex = -1;
 
-		comboDown = new CombatState[4];
-		comboUp = new CombatState[4];
-		comboLeft = new CombatState[4];
-		comboRight = new CombatState[4];
+		comboDown = new CombatState[5];
+		comboUp = new CombatState[5];
+		comboLeft = new CombatState[5];
+		comboRight = new CombatState[5];
 
-		comboDown[0] = CombatState.FASTSHOT;
+		comboDown[0] = CombatState.JAB;
 		comboDown[1] = CombatState.ONETWOCOMBO;
 		comboDown[2] = CombatState.UPPERCUT;
 		comboDown[3] = CombatState.SUPERUPPERCUT;
+		comboDown[4] = CombatState.SPEEDYHANDS;
 
 		comboUp[0] = CombatState.LOWMIDDLEKICK;
 		comboUp[1] = CombatState.HIGHKICK;
 		comboUp[2] = CombatState.DOWNWARDKICK;
 		comboUp[3] = CombatState.ROUNDKICK;
-
-		// TODO INPUT_LEFT MAKE INTO PROJECTILE ATTACKS
+		comboUp[4] = CombatState.LIGHTNINGKICKS;
+		// Projectile attacks
 		comboLeft[0] = CombatState.FASTSHOT;
-		comboLeft[1] = CombatState.ONETWOCOMBO;
-		comboLeft[2] = CombatState.ROUNDKICK;
-		comboLeft[3] = CombatState.TWOSIDEDATTACK;
-		// //////////
+		comboLeft[1] = CombatState.POWERSHOT;
+		comboLeft[2] = CombatState.JUMPSHOT;
+		comboLeft[3] = CombatState.SUPERSHOT;
+		comboLeft[4] = CombatState.GATTLINGSHOT;
 
 		comboRight[0] = CombatState.FLYINGKICK;
 		comboRight[1] = CombatState.SPIN;
 		comboRight[2] = CombatState.HIGHKICK;
 		comboRight[3] = CombatState.TWOSIDEDATTACK;
+		comboRight[4] = CombatState.BEATDOWN;
 	}
 
 	/**
@@ -69,10 +71,11 @@ public class SimpleAttackManager implements CombatStateManager {
 	 * </p>
 	 * <ol>
 	 * <b>INPUT_DOWN</b>
-	 * <li>FASTSHOT</li>
+	 * <li>JAB</li>
 	 * <li>ONETWOCOMBO</li>
 	 * <li>UPPERCUT</li>
 	 * <li>SUPERUPPERCUT</li>
+	 * <li>SPEEDYHANDS</li>
 	 * </ol>
 	 * <ol>
 	 * <b>INPUT_UP</b>
@@ -80,13 +83,15 @@ public class SimpleAttackManager implements CombatStateManager {
 	 * <li>HIGHKICK</li>
 	 * <li>DOWNWARDKICK</li>
 	 * <li>ROUNDKICK</li>
+	 * <li>LIGHTNINGKICKS</li>
 	 * </ol>
 	 * <ol>
 	 * <b>INPUT_LEFT</b>
-	 * <li>FASTSHOT</li>
+	 * <li>JAB</li>
 	 * <li>ONETWOCOMBO</li>
 	 * <li>ROUNDKICK</li>
 	 * <li>TWOSIDEDATTACK</li>
+	 * <li>GATTLINGSHOT</li>
 	 * </ol>
 	 * <ol>
 	 * <b>INPUT_RIGHT</b>
@@ -94,6 +99,7 @@ public class SimpleAttackManager implements CombatStateManager {
 	 * <li>SPIN</li>
 	 * <li>HIGHKICK</li>
 	 * <li>TWOSIDEDATTACK</li>
+	 * <li>BEATDOWN</li>
 	 * </ol>
 	 */
 	@Override

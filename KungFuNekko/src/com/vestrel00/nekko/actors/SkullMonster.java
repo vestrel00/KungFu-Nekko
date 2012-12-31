@@ -90,7 +90,7 @@ public class SkullMonster extends Monster {
 		if (visibility == Visibility.VISIBLE
 				&& TimeUtils.nanoTime() - lastGrowlTime > 500000000L) {
 			lastGrowlTime = TimeUtils.nanoTime();
-			KFNekko.audio.skullGrowl(location.x);
+			KFNekko.audio.growl(location.x, 1.0f);
 		}
 	}
 
@@ -101,6 +101,7 @@ public class SkullMonster extends Monster {
 		this.maxHealth = 8 + level / 3;
 		health = this.maxHealth;
 		this.level = level;
+		skullSprite.combatIndex = 0;
 	}
 
 }

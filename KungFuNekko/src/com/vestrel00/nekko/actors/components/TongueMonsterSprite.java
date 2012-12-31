@@ -23,10 +23,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.TongueMonster;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.HorizontalMotionState;
 import com.vestrel00.nekko.actors.states.StatusState;
+import com.vestrel00.nekko.actors.states.Visibility;
 
 public class TongueMonsterSprite extends Sprite {
 
@@ -94,6 +96,11 @@ public class TongueMonsterSprite extends Sprite {
 			currentTexture = move[moveIndex];
 			animationDelay = (monster.horizontalMotionState == HorizontalMotionState.IDLE) ? 100000000L
 					: 50000000L;
+			if (moveIndex == 2 && monster.visibility == Visibility.VISIBLE
+					&& TimeUtils.nanoTime() - lastStepTime > STEP_DELAY) {
+				lastStepTime = TimeUtils.nanoTime();
+				KFNekko.audio.wingFlap(monster.location.x);
+			}
 			return true;
 		case KNOCKED_BACK:
 			if (++hurtIndex == hurt.length)

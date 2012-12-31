@@ -19,6 +19,7 @@
 
 package com.vestrel00.nekko.maps.components;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.vestrel00.nekko.actors.Actor;
 import com.vestrel00.nekko.actors.components.Speed;
@@ -40,6 +41,57 @@ public class Platform {
 				section = sections.get(i);
 				break;
 			}
+	}
+
+	public boolean hitSlopeVec(Vector2 initLoc, float dx, float dy) {
+		setSection(initLoc.x, initLoc.y);
+		if (section == null)
+			return false;
+		for (int i = 0; i < section.pieces.size; i++)
+			if (section.pieces.get(i).slope != null) {
+				float[] slope = section.pieces.get(i).slope;
+				for (int j = 0; j < slope.length; j += 4) {
+					// remember slope[j] = {x1, y1, x2, y2}
+					float yVal = (((slope[j + 3] - slope[j + 1]) / (slope[j + 2] - slope[j])) * (initLoc.x - slope[j]))
+							+ slope[j + 1];
+					// now we have x1, y, x2 just like hitPlatform!
+
+					// check if within x range
+					if ((initLoc.x <= slope[j + 2] && initLoc.x >= slope[j])
+							|| (initLoc.x + dx <= slope[j + 2] && initLoc.x
+									+ dx >= slope[j]))
+						// determine if we hit a slope
+						if (initLoc.y + DETECTION_OFFSET >= yVal
+								&& initLoc.y + dy <= yVal)
+							return true;
+				}
+			}
+		return false;
+	}
+
+	public boolean hitPlatformVec(Vector2 initLoc, float dx, float dy) {
+		setSection(initLoc.x, initLoc.y);
+		if (section == null)
+			return false;
+
+		for (int i = 0; i < section.pieces.size; i++)
+			if (section.pieces.get(i).horizontal != null) {
+				float[] horizontal = section.pieces.get(i).horizontal;
+
+				// horizontal[j] = x1, horizontal[j+1] = y1 or y2,
+				// horizontal[j+2] = x2
+				for (int j = 0; j < horizontal.length; j += 3) {
+					// check if within x range
+					if ((initLoc.x <= horizontal[j + 2] && initLoc.x >= horizontal[j])
+							|| (initLoc.x + dx <= horizontal[j + 2] && initLoc.x
+									+ dx >= horizontal[j]))
+						if (initLoc.y + DETECTION_OFFSET >= horizontal[j + 1]
+								&& initLoc.y + dy <= horizontal[j + 1])
+							return true;
+				}
+			}
+
+		return false;
 	}
 
 	/**
