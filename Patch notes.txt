@@ -1,0 +1,5 @@
+Version name 1.0.b
+Fix issues with highscores not being recorded for certain cases.
+1) Highscore now immediately recorded at game over.
+2) Highscore now being recorded after hitting the return button on 
+the game over screen instead of touching the screen first.

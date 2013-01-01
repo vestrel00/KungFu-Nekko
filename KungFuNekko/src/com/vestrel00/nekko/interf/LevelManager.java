@@ -28,6 +28,8 @@ public interface LevelManager extends Updatable, Drawable, Touchable {
 
 	public void monsterDown(Monster monster);
 
+	public void saveHighScores();
+
 	public void pause();
 
 	public void resume();

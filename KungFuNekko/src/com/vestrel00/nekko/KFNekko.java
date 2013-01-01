@@ -249,6 +249,8 @@ public class KFNekko implements ApplicationListener {
 	@Override
 	public void pause() {
 		settings.commit();
+		// record high scores regardless of view to make sure it is recorded!
+		map.manager.saveHighScores();
 		if (map.manager != null && view == VIEW_GAME) {
 			view = VIEW_PAUSED;
 			map.manager.pause();

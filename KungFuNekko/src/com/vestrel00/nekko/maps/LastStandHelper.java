@@ -64,6 +64,7 @@ public abstract class LastStandHelper implements LevelHelper {
 	@Override
 	public void gameOver() {
 		if (KFNekko.view != KFNekko.VIEW_GAME_OVER) {
+			ls.saveHighScores();
 			KFNekko.view = KFNekko.VIEW_GAME_OVER;
 			KFNekko.targetWorldColor.set(Color.GRAY);
 			if (KFNekko.audio.music.isPlaying())
