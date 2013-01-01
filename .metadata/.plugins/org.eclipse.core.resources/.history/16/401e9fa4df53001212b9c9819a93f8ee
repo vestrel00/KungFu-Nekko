@@ -1,3 +1,22 @@
+/***************************************************************************
+ *  Copyright (C) 2012 by Vandolf Estrellado
+ *  All Rights Reserved
+ * 
+ *  This file is part of KungFu Nekko.
+ *  KungFu Nekko is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  KungFu Nekko is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with KungFu Nekko.  If not, see <http://www.gnu.org/licenses/>.
+ *****************************************************************************/
+
 package com.vestrel00.nekko.ui;
 
 import com.badlogic.gdx.Gdx;
@@ -8,6 +27,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Disposable;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.Nekko;
+import com.vestrel00.nekko.actors.components.PowerUp;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.HorizontalMotionState;
 import com.vestrel00.nekko.interf.Drawable;
@@ -20,14 +40,18 @@ import com.vestrel00.nekko.ui.components.HUDSimple;
 public class HUD implements Updatable, Drawable, Disposable, Touchable {
 
 	public ShapeRenderer shape;
-	private HUDUI ui;
+	public HUDUI ui;
 	private Nekko player;
+	public HUDInputProcessor processor;
+
+	private float accelMult, maxSpeed;
 
 	public HUD(Nekko player, HUDInputProcessor processor) {
 		this.player = player;
 		shape = new ShapeRenderer();
 		// ui = new HUDPad(player, processor);
 		ui = new HUDSimple(player, processor);
+		this.processor = processor;
 		Gdx.input.setInputProcessor(processor);
 	}
 
@@ -35,28 +59,39 @@ public class HUD implements Updatable, Drawable, Disposable, Touchable {
 	public void update() {
 		ui.update();
 
-		// -y(-10) <-------------landscape---------------> +y
-		float accel = Gdx.input.getAccelerometerY();
-		if (accel < -0.6f) {
-			player.faceState = FaceState.LEFT;
-			player.setHorizontalMotionState(HorizontalMotionState.MOVING);
-			if (accel < -1.5f)
-				accel = -1.5f;
-			if (player.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK)
-				if ((player.location.speed.maxXSpeed = -accel * 5.0f) < -7.0f)
-					player.location.speed.maxXSpeed = -7.0f;
-		} else if (accel > 0.6f) {
-			player.faceState = FaceState.RIGHT;
-			player.setHorizontalMotionState(HorizontalMotionState.MOVING);
-			if (accel > 1.5f)
-				accel = 1.5f;
-			if (player.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK)
-				if ((player.location.speed.maxXSpeed = accel * 5.0f) > 7.0f)
-					player.location.speed.maxXSpeed = 7.0f;
+		if (player.powerUp == PowerUp.QUICKFEET) {
+			accelMult = 9.0f;
+			maxSpeed = 13.0f;
 		} else {
-			if (player.horizontalMotionState != HorizontalMotionState.FORCED_MOVING) {
-				// player.setHorizontalMotionState(HorizontalMotionState.IDLE);
-				// player.location.speed.maxXSpeed = 0.0f;
+			accelMult = 6.0f;
+			maxSpeed = 9.0f;
+		}
+
+		if (KFNekko.view == KFNekko.VIEW_GAME) {
+			// -y(-10) <-------------landscape---------------> +y
+			float accel = Gdx.input.getAccelerometerY();
+			if (accel < -0.6f) {
+				player.faceState = FaceState.LEFT;
+				player.setHorizontalMotionState(HorizontalMotionState.MOVING);
+				if (accel < -1.5f)
+					accel = -1.5f;
+				if (player.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK)
+					if ((player.location.speed.maxXSpeed = -accel * accelMult) < -maxSpeed)
+						player.location.speed.maxXSpeed = -maxSpeed;
+			} else if (accel > 0.6f) {
+				player.faceState = FaceState.RIGHT;
+				player.setHorizontalMotionState(HorizontalMotionState.MOVING);
+				if (accel > 1.5f)
+					accel = 1.5f;
+				if (player.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK)
+					if ((player.location.speed.maxXSpeed = accel * accelMult) > maxSpeed)
+						player.location.speed.maxXSpeed = maxSpeed;
+			} else {
+				if (player.horizontalMotionState != HorizontalMotionState.FORCED_MOVING) {
+					// Comment out for desktop build
+					// player.setHorizontalMotionState(HorizontalMotionState.IDLE);
+					// player.location.speed.maxXSpeed = 0.0f;
+				}
 			}
 		}
 
@@ -86,11 +121,6 @@ public class HUD implements Updatable, Drawable, Disposable, Touchable {
 		// shape.filledCircle(KFNekko.camera.rect.x + 90.0f,
 		// KFNekko.camera.rect.y, 100.0f);
 		shape.end();
-		
-		if(KFNekko.view == KFNekko.VIEW_PAUSED){
-			shape.begin(ShapeType.FilledTriangle);
-			shape.rotate(axisX, axisY, 1, angle)
-		}
 
 		batch.begin();
 		ui.draw(batch);
