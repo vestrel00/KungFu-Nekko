@@ -24,6 +24,8 @@ import com.badlogic.gdx.utils.Array;
 
 public interface HUDUI extends Updatable, Drawable, Touchable {
 
-	public Array<Rectangle> getScreenRects();
+	Array<Rectangle> getBaseRects();
+
+	Array<Rectangle> getQuitResumeRects();
 
 }

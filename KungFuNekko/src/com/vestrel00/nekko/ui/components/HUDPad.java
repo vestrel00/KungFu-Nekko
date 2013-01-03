@@ -194,7 +194,13 @@ public class HUDPad implements HUDUI {
 	}
 
 	@Override
-	public Array<Rectangle> getScreenRects() {
+	public Array<Rectangle> getQuitResumeRects() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Array<Rectangle> getBaseRects() {
 		// TODO Auto-generated method stub
 		return null;
 	}

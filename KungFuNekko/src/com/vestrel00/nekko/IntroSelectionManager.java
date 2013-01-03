@@ -37,13 +37,13 @@ public class IntroSelectionManager implements Updatable, Drawable, Touchable {
 	private final CharSequence[] LS_MAP_STR = { "Final Fortress",
 			"Road of Martyrs", "King & Queens", "Coming Soon" };
 
-	private static final int VIEW_MODE = 0, VIEW_MAP = 1, VIEW_MAP_LS = 2,
+	public static final int VIEW_MODE = 0, VIEW_MAP = 1, VIEW_MAP_LS = 2,
 			VIEW_MAP_MODE2 = 3, VIEW_MAP_MODE3 = 4, VIEW_MAP_MODE4 = 5;
 
 	private CharSequence[] chosenMode;
 	private float[] modeWidths, lsMapModeWidths, chosenMapModeWidths;
-	private int view = VIEW_MODE, mapView, phase = 0, nextView;
-	private Color color;
+	public int view = VIEW_MODE, mapView, phase = 0, nextView;
+	public Color color;
 	private AtlasRegion buttonRegion;
 	private Rectangle lastStandRect, mercenaryRect, collectorRect,
 			adventurerRect;

@@ -8,3 +8,6 @@ Version name 1.0.c
 Fixed a small NullPointerException in KFNekko.java
 map.manager is null at the time of closing the app
 inserted 1 if statement ><
+
+Version name 1.0.d
+Made actual hit boxes for resume and quit buttons

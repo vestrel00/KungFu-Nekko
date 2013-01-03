@@ -25,6 +25,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.vestrel00.nekko.interf.Drawable;
 import com.vestrel00.nekko.interf.Touchable;
 import com.vestrel00.nekko.interf.Updatable;
@@ -35,31 +37,39 @@ public class PauseManager implements Touchable, Drawable, Updatable {
 	private final CharSequence PAUSED = "PAUSED", RESUME = "RESUME",
 			QUIT = "QUIT";
 
+	private Array<Rectangle> baseRects;
 	private Rectangle resumeRect, quitRect;
+	private Vector2 resumeVec, quitVec;
 	private float halfWidth;
 	public Color resumeColor, targetResumeColor;
 	private Random rand;
 
 	public PauseManager() {
 		TextBounds bound = KFNekko.resource.chunkFive.getBounds(RESUME);
-		resumeRect = new Rectangle(0, 0, bound.width * 0.5f,
-				bound.height * 0.5f);
+		resumeVec = new Vector2();
 		bound = KFNekko.resource.chunkFive.getBounds(QUIT);
-		quitRect = new Rectangle(0, 0, bound.width * 0.5f, bound.height * 0.5f);
+		quitVec = new Vector2();
 		bound = KFNekko.resource.chunkFive.getBounds(PAUSED);
 		halfWidth = bound.width * 0.5f;
 		resumeColor = new Color(Color.WHITE);
 		targetResumeColor = new Color(Color.YELLOW);
 		rand = new Random();
+		baseRects = KFNekko.hud.ui.getQuitResumeRects();
+		resumeRect = new Rectangle(baseRects.get(1));
+		quitRect = new Rectangle(baseRects.get(0));
 	}
 
 	@Override
 	public void update() {
 		updateResumeColor();
-		resumeRect.x = KFNekko.camera.rect.x + 380.0f;
-		resumeRect.y = KFNekko.camera.rect.y + 290.0f;
-		quitRect.x = KFNekko.camera.rect.x + 22.0f;
-		quitRect.y = KFNekko.camera.rect.y + 290.0f;
+		resumeVec.x = KFNekko.camera.rect.x + 380.0f;
+		resumeVec.y = KFNekko.camera.rect.y + 302.0f;
+		quitVec.x = KFNekko.camera.rect.x + 22.0f;
+		quitVec.y = KFNekko.camera.rect.y + 302.0f;
+		resumeRect.x = KFNekko.camera.rect.x + baseRects.get(1).x;
+		resumeRect.y = KFNekko.camera.rect.y + baseRects.get(1).y;
+		quitRect.x = KFNekko.camera.rect.x + baseRects.get(0).x;
+		quitRect.y = KFNekko.camera.rect.y + baseRects.get(0).y;
 	}
 
 	@Override
@@ -74,10 +84,9 @@ public class PauseManager implements Touchable, Drawable, Updatable {
 		}
 		KFNekko.resource.chunkFive.setColor(resumeColor);
 		KFNekko.resource.chunkFive.setScale(0.5f);
-		KFNekko.resource.chunkFive.draw(batch, RESUME, resumeRect.x,
-				resumeRect.y + resumeRect.height);
-		KFNekko.resource.chunkFive.draw(batch, QUIT, quitRect.x, quitRect.y
-				+ quitRect.height);
+		KFNekko.resource.chunkFive
+				.draw(batch, RESUME, resumeVec.x, resumeVec.y);
+		KFNekko.resource.chunkFive.draw(batch, QUIT, quitVec.x, quitVec.y);
 		KFNekko.resource.chunkFive.setScale(1.0f);
 		batch.end();
 	}
@@ -140,14 +149,8 @@ public class PauseManager implements Touchable, Drawable, Updatable {
 		}
 
 		if (change)
-			targetResumeColor = genColor();
+			Methods.randomColor(targetResumeColor, rand);
 
-	}
-
-	private Color genColor() {
-		return new Color((float) rand.nextInt(255) / 255.0f,
-				(float) rand.nextInt(255) / 255.0f,
-				(float) rand.nextInt(255) / 255.0f, 1.0f);
 	}
 
 }

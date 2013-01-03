@@ -206,16 +206,24 @@ public class HUDSimple implements HUDUI {
 	}
 
 	@Override
-	public Array<Rectangle> getScreenRects() {
+	public Array<Rectangle> getBaseRects() {
 		Array<Rectangle> rects = new Array<Rectangle>();
-		rects.add(attack1);
-		rects.add(attack2);
-		rects.add(attack3);
-		rects.add(attack4);
-		rects.add(pause);
-		rects.add(options);
-		rects.add(topLeft);
-		rects.add(topRight);
+		rects.add(attack1Base);
+		rects.add(attack2Base);
+		rects.add(attack3Base);
+		rects.add(attack4Base);
+		rects.add(pauseBase);
+		rects.add(optionsBase);
+		rects.add(topLeftBase);
+		rects.add(topRightBase);
+		return rects;
+	}
+
+	@Override
+	public Array<Rectangle> getQuitResumeRects() {
+		Array<Rectangle> rects = new Array<Rectangle>();
+		rects.add(topLeftBase);
+		rects.add(topRightBase);
 		return rects;
 	}
 }

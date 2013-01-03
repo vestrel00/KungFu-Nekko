@@ -41,7 +41,7 @@ public class IntroMenuManager implements Updatable, Drawable, Touchable {
 	private final float COLOR_SPEED = 0.01f;
 
 	private final CharSequence[] strings = { "Play", "Credits", "KungFu Nekko",
-			"Instructions" };
+			"Instructions", "Choose Game Mode", "Choose Map" };
 	private float[] widths;
 
 	private AtlasRegion baseRegion, buttonRegion, buttonLargeRegion;
@@ -126,10 +126,19 @@ public class IntroMenuManager implements Updatable, Drawable, Touchable {
 			break;
 		case VIEW_SELECTION:
 			KFNekko.resource.chunkFive.setColor(titleColor.r, titleColor.g,
-					titleColor.b, color.a);
-			KFNekko.resource.chunkFive.draw(batch, strings[2],
-					KFNekko.camera.camera.position.x - widths[2] * 0.5f,
-					KFNekko.settings.viewHeight - 7.0f);
+					titleColor.b, selection.color.a);
+			switch(selection.view){
+			case IntroSelectionManager.VIEW_MODE:
+				KFNekko.resource.chunkFive.draw(batch, strings[4],
+						KFNekko.camera.camera.position.x - widths[4] * 0.5f,
+						KFNekko.settings.viewHeight - 7.0f);
+				break;
+			case IntroSelectionManager.VIEW_MAP:
+				KFNekko.resource.chunkFive.draw(batch, strings[5],
+						KFNekko.camera.camera.position.x - widths[5] * 0.5f,
+						KFNekko.settings.viewHeight - 7.0f);
+				break;
+			}
 			selection.draw(batch);
 
 			break;

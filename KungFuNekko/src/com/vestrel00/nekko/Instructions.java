@@ -39,15 +39,15 @@ public class Instructions implements Updatable, Drawable, Touchable {
 
 	public static final float PADDING_WIDTH = 6.0f, PADDING_HEIGHT = 30.0f;
 
-	private static final CharSequence[] TITLES = {
-			"Touch for instructions", "Health", "Stamina", "Pause", "Options",
-			"Attack Buttons", "Jump & Move" };
+	private static final CharSequence[] TITLES = { "Touch for instructions",
+			"Health", "Stamina", "Pause", "Options", "Attack Buttons",
+			"Jump & Move" };
 	private static final CharSequence[] TEXT = {
 			"Touch something!",
 			"The more red this is, the more health you have.\n"
 					+ "Once it turns completely gray, it is game over!\n"
 					+ "You can keep tapping this to regain 1 health for each tap.\n"
-					+ "You can also regain stamina by drinking soda!",
+					+ "You can also regain health by drinking soda!",
 			"The more yellow this is, the more stamina you have.\n"
 					+ "Once it turns completely gray, you can no longer attack!\n"
 					+ "Your stamina decreses everytime you attack.\n"
@@ -89,29 +89,24 @@ public class Instructions implements Updatable, Drawable, Touchable {
 				.getMultiLineBounds(TITLES[0]);
 		widths[0] = bounds.width + PADDING_WIDTH * 2.0f;
 		heights[0] = bounds.height
-				+ KFNekko.resource.arial
-						.getMultiLineBounds(TEXT[0]).height
+				+ KFNekko.resource.arial.getMultiLineBounds(TEXT[0]).height
 				+ PADDING_HEIGHT;
 		for (int i = 1; i < TITLES.length; i++) {
-			bounds = KFNekko.resource.arial
-					.getMultiLineBounds(TEXT[i]);
+			bounds = KFNekko.resource.arial.getMultiLineBounds(TEXT[i]);
 			widths[i] = bounds.width + PADDING_WIDTH * 2.0f;
 			heights[i] = bounds.height
-					+ KFNekko.resource.chunkFive
-							.getMultiLineBounds(TITLES[i]).height
+					+ KFNekko.resource.chunkFive.getMultiLineBounds(TITLES[i]).height
 					+ PADDING_HEIGHT;
 		}
 		currentWidget = Widgets.BEGIN;
 		nextWidget = Widgets.BEGIN;
 		setInstructionIndex();
 		color = new Color(Color.CLEAR);
-		titleTyper = new StringTyper(TITLES[instructionIndex],
-				70000000L);
-		textTyper = new StringTyper(TEXT[instructionIndex],
-				KFNekko.UPDATE_TIME);
+		titleTyper = new StringTyper(TITLES[instructionIndex], 70000000L);
+		textTyper = new StringTyper(TEXT[instructionIndex], KFNekko.UPDATE_TIME);
 
 		// get widget rectangles
-		widgetRects = KFNekko.hud.ui.getScreenRects();
+		widgetRects = KFNekko.hud.ui.getBaseRects();
 		initInstructionRects();
 		bounds = KFNekko.resource.chunkFive.getBounds(BACK);
 		backRect = new Rectangle(KFNekko.settings.viewWidthHalf - bounds.width

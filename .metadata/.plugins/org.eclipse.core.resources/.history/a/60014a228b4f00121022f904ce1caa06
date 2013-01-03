@@ -1,7 +1,0 @@
-package com.vestrel00.nekko.maps;
-
-import com.vestrel00.nekko.interf.LevelManager;
-
-public class LastStandLevelManager implements LevelManager {
-
-}
