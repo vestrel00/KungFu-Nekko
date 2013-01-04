@@ -186,16 +186,24 @@ public class HUDSimple implements HUDUI {
 			player.setCombatState(processor.attackManager
 					.input(ComboAttackManager.INPUT_DOWN));
 		else if (topLeft.contains(x, y)) {
-			if (++player.health >= player.maxHealth)
-				player.health = player.maxHealth;
+			// nothing?
+			// if (++player.health >= player.maxHealth)
+			// player.health = player.maxHealth;
 		} else if (topRight.contains(x, y)) {
-			if ((player.stamina += 2) >= player.maxStamina)
-				player.stamina = player.maxStamina;
-		} else if (pause.contains(x, y)) {
+			// nothing?
+			// if ((player.stamina += 2) >= player.maxStamina)
+			// player.stamina = player.maxStamina;
+			// manually check for overlap to enlarge the detection
+			// without enlarging the texture or using another rectangle
+			// same thing for Instructions.java
+		} else if (x > pause.x && x < pause.x + pause.width
+				&& y > pause.y - 10.0f && y < pause.y + pause.height + 10.0f) {
 			KFNekko.view = KFNekko.VIEW_PAUSED;
 			KFNekko.map.manager.pause();
 			KFNekko.audio.touch();
-		} else if (options.contains(x, y)) {
+		} else if (x > options.x && x < options.x + options.width
+				&& y > options.y - 10.0f
+				&& y < options.y + options.height + 10.0f) {
 			KFNekko.view = KFNekko.VIEW_OPTIONS;
 			KFNekko.map.manager.pause();
 			KFNekko.audio.touch();

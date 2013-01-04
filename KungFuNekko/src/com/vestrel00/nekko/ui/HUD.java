@@ -89,8 +89,8 @@ public class HUD implements Updatable, Drawable, Disposable, Touchable {
 			} else {
 				if (player.horizontalMotionState != HorizontalMotionState.FORCED_MOVING) {
 					// Comment out for desktop build TODO
-					// player.setHorizontalMotionState(HorizontalMotionState.IDLE);
-					// player.location.speed.maxXSpeed = 0.0f;
+					player.setHorizontalMotionState(HorizontalMotionState.IDLE);
+					player.location.speed.maxXSpeed = 0.0f;
 				}
 			}
 		}

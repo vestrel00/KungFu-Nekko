@@ -205,9 +205,14 @@ public class KFNekko implements ApplicationListener {
 		batch.end();
 
 		// draw separately since this conflicts with the SpriteBatch in use
-		// make sure that zoom does not pass a certain amount (1 - 0.065)
+		// make sure that zoom does not pass a certain amount (1 - 0.065) or
+		// (1 + 0.02)
 		if (camera.camera.zoom < 0.935f) {
 			camera.camera.zoom = 0.935f;
+			camera.camera.update();
+			batch.setProjectionMatrix(camera.camera.combined);
+		} else if (camera.camera.zoom > 1.02f) {
+			camera.camera.zoom = 1.02f;
 			camera.camera.update();
 			batch.setProjectionMatrix(camera.camera.combined);
 		}

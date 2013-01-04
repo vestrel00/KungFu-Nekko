@@ -11,3 +11,8 @@ inserted 1 if statement ><
 
 Version name 1.0.d
 Made actual hit boxes for resume and quit buttons
+
+Version name 1.0.e
+Pause and resume buttons now more responsive.
+Touching the health and stamina buttons no longer restore health and stamina.
+Updated the instructions and lessened the maximum zoom out value on projectile attacks.

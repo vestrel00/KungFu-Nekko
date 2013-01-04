@@ -46,14 +46,13 @@ public class Instructions implements Updatable, Drawable, Touchable {
 			"Touch something!",
 			"The more red this is, the more health you have.\n"
 					+ "Once it turns completely gray, it is game over!\n"
-					+ "You can keep tapping this to regain 1 health for each tap.\n"
-					+ "You can also regain health by drinking soda!",
+					+ "You can regain health by drinking soda.",
 			"The more yellow this is, the more stamina you have.\n"
 					+ "Once it turns completely gray, you can no longer attack!\n"
 					+ "Your stamina decreses everytime you attack.\n"
 					+ "Some attacks cost more than the others.\n"
 					+ "You can keep tapping this to regain 2 stamina for each tap.\n"
-					+ "You can also regain stamina by drinking soda!",
+					+ "You can regain stamina by drinking soda!",
 			"Touch this if you need to go to the bathroom!\n"
 					+ "Or for some other reason...\n"
 					+ "You may quit or resume the game by touching\n"
@@ -269,9 +268,18 @@ public class Instructions implements Updatable, Drawable, Touchable {
 				|| widgetRects.get(2).contains(x, y)
 				|| widgetRects.get(3).contains(x, y))
 			nextWidget = Widgets.ATTACK;
-		else if (widgetRects.get(4).contains(x, y))
+		else if (x > widgetRects.get(4).x
+				&& x < widgetRects.get(4).x + widgetRects.get(4).width
+				&& y > widgetRects.get(4).y - 10.0f
+				&& y < widgetRects.get(4).y + widgetRects.get(4).height + 10.0f)
 			nextWidget = Widgets.PAUSE;
-		else if (widgetRects.get(5).contains(x, y))
+		// manually check for overlap to enlarge the detection
+		// without enlarging the texture or using another rectangle
+		// same thing for HUDSimple.java
+		else if (x > widgetRects.get(5).x
+				&& x < widgetRects.get(5).x + widgetRects.get(5).width
+				&& y > widgetRects.get(5).y - 10.0f
+				&& y < widgetRects.get(5).y + widgetRects.get(5).height + 10.0f)
 			nextWidget = Widgets.OPTIONS;
 		else if (widgetRects.get(6).contains(x, y))
 			nextWidget = Widgets.HEALTH;

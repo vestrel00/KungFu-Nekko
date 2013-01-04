@@ -1,9 +1,0 @@
-package com.vestrel00.nekko.interf;
-
-public interface PickUp extends Updatable, Drawable {
-	
-	public void drop();
-	
-	public void pickUp(Nekko nekko)
-
-}
