@@ -27,6 +27,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.vestrel00.nekko.Camera;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.ChessPiece;
+import com.vestrel00.nekko.actors.NekkoAI;
 import com.vestrel00.nekko.actors.components.Location;
 import com.vestrel00.nekko.actors.states.CombatState;
 import com.vestrel00.nekko.actors.states.FaceState;
@@ -204,6 +205,12 @@ public class LSKingsAndQueens extends LastStandHelper {
 	public void setMonsterSpawnDelay(int wave) {
 		if ((monsterSpawnDelay = 5000000000L - (long) wave * 1000000000L) < 1000000000L)
 			monsterSpawnDelay = 1000000000L;
+	}
+
+	@Override
+	public NekkoAI spawnCat(int catType) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

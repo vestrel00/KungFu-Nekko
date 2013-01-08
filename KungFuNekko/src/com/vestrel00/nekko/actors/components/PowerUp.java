@@ -35,13 +35,15 @@ public class PowerUp implements PickUp {
 
 	private Rectangle rect;
 	private AtlasRegion region;
-	private long dropTime;
+	private long dropTime, duration;
 	private int type;
 	private float xDirection, xSpeed, rot = 0.0f;
-	private boolean isActive = false;
+	private boolean isActive = false, mute;
 
-	public PowerUp(int type) {
+	public PowerUp(int type, long duration, boolean mute) {
+		this.duration = duration;
 		this.type = type;
+		this.mute = mute;
 		switch (type) {
 		case INVISIBILITY:
 			region = KFNekko.resource.atlas.findRegion("invisibility");
@@ -111,7 +113,7 @@ public class PowerUp implements PickUp {
 	@Override
 	public void pickUp() {
 		if (isActive) {
-			isActive = !KFNekko.player.powerUp(type);
+			isActive = !KFNekko.player.powerUp(type, duration, mute);
 		}
 	}
 

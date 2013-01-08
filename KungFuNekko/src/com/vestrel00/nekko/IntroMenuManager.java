@@ -75,7 +75,7 @@ public class IntroMenuManager implements Updatable, Drawable, Touchable {
 		creditsRect = new Rectangle(playRect.x, instructionsRect.y
 				- playRect.height - 10.0f, playRect.width, playRect.height);
 		titleColor = new Color(Color.YELLOW);
-		targetTitleColor = Color.PINK;
+		targetTitleColor = new Color(Color.PINK);
 		credits = new Credits();
 		instructions = new Instructions();
 		selection = new IntroSelectionManager(atlas);

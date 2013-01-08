@@ -32,34 +32,36 @@ import com.vestrel00.nekko.actors.components.effects.AfterImage;
 import com.vestrel00.nekko.actors.states.CombatState;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.HorizontalMotionState;
-import com.vestrel00.nekko.actors.states.StatusState;
 import com.vestrel00.nekko.actors.states.Visibility;
 
 public class NekkoSprite extends Sprite {
 
+	public static long lastCombatSound, lastStepSound;
+
 	// animation frames
-	private AtlasRegion[] idle, walk, jump, dying, hurt, doubleJump, spinKick,
-			powerShot, fastShot, flyingKick, superUppercut, oneTwoCombo,
-			lowMiddleKick, highKick, downwardKick, twoSidedAttack, roundKick,
-			uppercut, beatdown, lightningKicks, speedyHands, gattlingShot,
-			jumpShot, superShot;
+	protected AtlasRegion[] idle, walk, jump, dying, hurt, doubleJump,
+			spinKick, powerShot, fastShot, flyingKick, superUppercut,
+			oneTwoCombo, lowMiddleKick, highKick, downwardKick, twoSidedAttack,
+			roundKick, uppercut, beatdown, lightningKicks, speedyHands,
+			gattlingShot, jumpShot, superShot;
 	public int idleIndex = 0, walkIndex = 0, jumpIndex = 0, hurtIndex = 0,
 			doubleJumpIndex = 0, dyingIndex;
 
 	// projectiles
-	private Projectile[] projectiles;
-	private AtlasRegion[] fastShotRegions, jumpShotRegions, powerShotRegions,
+	protected Projectile[] projectiles;
+	protected AtlasRegion[] fastShotRegions, jumpShotRegions, powerShotRegions,
 			superShotRegions;
 	// afterImages
-	private AfterImage[] combatImages, effectImages;
-	private int combatImgIndex = 0, effectImgIndex = 0, projectileIndex = 0;
-	private AtlasRegion attackEffect1, smokeEffect;
+	protected AfterImage[] combatImages, effectImages;
+	protected int combatImgIndex = 0, effectImgIndex = 0, projectileIndex = 0;
+	protected AtlasRegion attackEffect1, smokeEffect;
 
-	private Nekko nekko;
-	public long speedUp, lastCombatImage, lastStepTime;
+	protected Nekko nekko;
+	public long speedUp, lastCombatImage;
 	public int damageMultiplier;
 	public Color targetColor;
 	public float colorSpeed;
+	public boolean cameraEffect = false;
 
 	public NekkoSprite(Nekko nekko, TextureAtlas atlas, Color color) {
 		super(nekko, color);
@@ -73,7 +75,7 @@ public class NekkoSprite extends Sprite {
 		targetColor = new Color(color);
 	}
 
-	private void initProjectiles(TextureAtlas atlas) {
+	protected void initProjectiles(TextureAtlas atlas) {
 		projectiles = new Projectile[30];
 		for (int i = 0; i < projectiles.length; i++)
 			projectiles[i] = new Projectile(KFNekko.enemies);
@@ -90,7 +92,7 @@ public class NekkoSprite extends Sprite {
 		}
 	}
 
-	private void initEffects(TextureAtlas atlas) {
+	protected void initEffects(TextureAtlas atlas) {
 		combatImages = new AfterImage[10];
 		effectImages = new AfterImage[10];
 		for (int i = 0; i < combatImages.length; i++)
@@ -101,7 +103,7 @@ public class NekkoSprite extends Sprite {
 		smokeEffect = atlas.findRegion("smokeEffect");
 	}
 
-	private void initTextures(TextureAtlas atlas) {
+	protected void initTextures(TextureAtlas atlas) {
 		hurt = new AtlasRegion[2];
 		idle = new AtlasRegion[4];
 		doubleJump = new AtlasRegion[4];
@@ -238,8 +240,8 @@ public class NekkoSprite extends Sprite {
 		if (switchStatusState())
 			return;
 
-		// animate
-		if (switchCombatState())
+		if (nekko.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK
+				&& switchCombatState())
 			return;
 		if (nekko.horizontalMotionState != HorizontalMotionState.KNOCKED_BACK
 				&& switchVerticalMotionState())
@@ -248,22 +250,23 @@ public class NekkoSprite extends Sprite {
 		switchHorizontalMotionState();
 	}
 
-	private boolean switchStatusState() {
+	protected boolean switchStatusState() {
 		switch (nekko.statusState) {
 		case DYING:
 			if (++dyingIndex == dying.length) {
-				dyingIndex = 0;
-				nekko.statusState = StatusState.DEAD;
+				dyingIndex = dying.length - 2;
+				KFNekko.map.manager.getHelper().gameOver();
+				// nekko.statusState = StatusState.DEAD;
 			}
 			currentTexture = dying[dyingIndex];
-			animationDelay = 80000000L;
+			animationDelay = 160000000L;
 			return true;
 		default:
 			return false;
 		}
 	}
 
-	private void stepForward(float amount) {
+	protected void stepForward(float amount) {
 		// step forward
 		nekko.location.speed.xSpeed = amount;
 		nekko.location.speed.xDirection = (nekko.faceState == FaceState.LEFT) ? Speed.DIRECTION_LEFT
@@ -272,14 +275,15 @@ public class NekkoSprite extends Sprite {
 		nekko.location.speed.xSpeed = nekko.location.speed.maxXSpeed;
 
 		if ((nekko.location.onSlope || nekko.location.onPlatform)
-				&& TimeUtils.nanoTime() - lastStepTime > 100000000L) {
-			lastStepTime = TimeUtils.nanoTime();
+				&& TimeUtils.nanoTime() - lastStepSound > 100000000L) {
+			lastStepSound = TimeUtils.nanoTime();
 			KFNekko.audio.footStep(nekko.location.x);
 		}
 	}
 
-	private void activateEffect() {
-		KFNekko.bumpWC(0.1f, 0.1f, 0.1f);
+	protected void activateEffect() {
+		if (cameraEffect)
+			KFNekko.bumpWC(0.1f, 0.1f, 0.1f);
 		float zoomAmount = 0.0f;
 		// do not exceed a certain value (maybe 20?) since it might cause you to
 		// fall of the map!
@@ -322,10 +326,14 @@ public class NekkoSprite extends Sprite {
 							0.08f, 0.3f, true, 0.0f, color);
 			}
 			if (nekko.location.onPlatform || nekko.location.onSlope) {
-				KFNekko.camera.setEffect(Camera.EFFECT_SHAKE, 1.0f, 4.0f,
-						300000000L);
+				if (cameraEffect)
+					KFNekko.camera.setEffect(Camera.EFFECT_SHAKE, 1.0f, 4.0f,
+							300000000L);
 				activateSmoke();
-				KFNekko.audio.groundBoom(nekko.location.x);
+				if (TimeUtils.nanoTime() - lastCombatSound > 100000000L) {
+					lastCombatSound = TimeUtils.nanoTime();
+					KFNekko.audio.groundBoom(nekko.location.x);
+				}
 			}
 			break;
 		case JAB:
@@ -491,10 +499,12 @@ public class NekkoSprite extends Sprite {
 			zoomAmount = 0.07f;
 			break;
 		}
-		KFNekko.camera.setEffect(Camera.EFFECT_ZOOM, zoomAmount, 0.0063f, 0L);
+		if (cameraEffect)
+			KFNekko.camera.setEffect(Camera.EFFECT_ZOOM, zoomAmount, 0.0063f,
+					0L);
 	}
 
-	private void switchCombatImages() {
+	protected void switchCombatImages() {
 		float alphaFade = 0.04f;
 		switch (nekko.combatState) {
 		case BEATDOWN:
@@ -539,11 +549,12 @@ public class NekkoSprite extends Sprite {
 			// draw projectiles
 			for (int i = 0; i < projectiles.length; i++)
 				projectiles[i].draw(batch);
-			batch.setColor(KFNekko.worldColor);
+			if (cameraEffect)
+				batch.setColor(KFNekko.worldColor);
 		}
 	}
 
-	private boolean switchHorizontalMotionState() {
+	protected boolean switchHorizontalMotionState() {
 		if (nekko.location.onPlatform || nekko.location.onSlope)
 			switch (nekko.horizontalMotionState) {
 			case IDLE:
@@ -554,8 +565,11 @@ public class NekkoSprite extends Sprite {
 				return true;
 			case KNOCKED_BACK:
 				if (++hurtIndex == hurt.length) {
-					KFNekko.audio.meow(nekko.location.x);
 					hurtIndex = 0;
+					if (TimeUtils.nanoTime() - lastCombatSound > 100000000L) {
+						lastCombatSound = TimeUtils.nanoTime();
+						KFNekko.audio.meow(nekko.location.x);
+					}
 				}
 				currentTexture = hurt[hurtIndex];
 				animationDelay = 100000000L;
@@ -566,7 +580,10 @@ public class NekkoSprite extends Sprite {
 
 				// footstep
 				if (walkIndex == 0 || walkIndex == 4)
-					KFNekko.audio.footStep(nekko.location.x);
+					if (TimeUtils.nanoTime() - lastStepSound > 100000000L) {
+						lastStepSound = TimeUtils.nanoTime();
+						KFNekko.audio.footStep(nekko.location.x);
+					}
 
 				currentTexture = walk[walkIndex];
 				if (nekko.location.onSlope)
@@ -581,7 +598,7 @@ public class NekkoSprite extends Sprite {
 			return false;
 	}
 
-	private boolean switchVerticalMotionState() {
+	protected boolean switchVerticalMotionState() {
 		if (nekko.location.doubleJumped) {
 			if (++doubleJumpIndex >= doubleJump.length)
 				doubleJumpIndex = 0;
@@ -602,7 +619,7 @@ public class NekkoSprite extends Sprite {
 		}
 	}
 
-	private boolean switchCombatState() {
+	protected boolean switchCombatState() {
 		switch (nekko.combatState) {
 		case SPIN:
 			if (++combatIndex == spinKick.length) {
@@ -610,7 +627,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 7 || combatIndex == spinKick.length - 1) {
-				nekko.attack(2 * damageMultiplier, true, 10.0f);
+				nekko.attack(2 * damageMultiplier, attackAOE, 10.0f);
 				activateEffect();
 			}
 			currentTexture = spinKick[combatIndex];
@@ -622,7 +639,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 4) {
-				nekko.attack(1 * damageMultiplier, true, 20.0f);
+				nekko.attack(1 * damageMultiplier, attackAOE, 20.0f);
 				activateEffect();
 			}
 			currentTexture = fastShot[combatIndex];
@@ -635,7 +652,7 @@ public class NekkoSprite extends Sprite {
 			}
 			if (combatIndex == 0 || combatIndex == 3 || combatIndex == 6
 					|| combatIndex == 7) {
-				nekko.attack(2 * damageMultiplier, true, 150.0f);
+				nekko.attack(2 * damageMultiplier, attackAOE, 150.0f);
 				activateEffect();
 			}
 			currentTexture = flyingKick[combatIndex];
@@ -647,7 +664,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 0 || combatIndex == 2 || combatIndex == 5) {
-				nekko.attack(4 * damageMultiplier, true, 40.0f);
+				nekko.attack(4 * damageMultiplier, attackAOE, 40.0f);
 				activateEffect();
 			}
 			currentTexture = superUppercut[combatIndex];
@@ -659,7 +676,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 4 || combatIndex == 7) {
-				nekko.attack(1 * damageMultiplier, true, 20.0f);
+				nekko.attack(1 * damageMultiplier, attackAOE, 20.0f);
 				activateEffect();
 			}
 			currentTexture = oneTwoCombo[combatIndex];
@@ -671,7 +688,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 2 || combatIndex == 8) {
-				nekko.attack(1 * damageMultiplier, true, 40.0f);
+				nekko.attack(1 * damageMultiplier, attackAOE, 40.0f);
 				activateEffect();
 			}
 			currentTexture = lowMiddleKick[combatIndex];
@@ -683,7 +700,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 2) {
-				nekko.attack(2 * damageMultiplier, true, 40.0f);
+				nekko.attack(2 * damageMultiplier, attackAOE, 40.0f);
 				activateEffect();
 			}
 			currentTexture = highKick[combatIndex];
@@ -695,7 +712,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 7) {
-				nekko.attack(2 * damageMultiplier, true, 20.0f);
+				nekko.attack(2 * damageMultiplier, attackAOE, 20.0f);
 				activateEffect();
 			}
 			currentTexture = downwardKick[combatIndex];
@@ -708,7 +725,7 @@ public class NekkoSprite extends Sprite {
 			}
 			stepForward(14.0f);
 			if (combatIndex == 6) {
-				nekko.attack(5 * damageMultiplier, true, 100.0f);
+				nekko.attack(5 * damageMultiplier, attackAOE, 100.0f);
 				activateEffect();
 			}
 			currentTexture = twoSidedAttack[combatIndex];
@@ -720,7 +737,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 5) {
-				nekko.attack(3 * damageMultiplier, true, 100.0f);
+				nekko.attack(3 * damageMultiplier, attackAOE, 100.0f);
 				activateEffect();
 			}
 			currentTexture = roundKick[combatIndex];
@@ -732,7 +749,7 @@ public class NekkoSprite extends Sprite {
 				nekko.onDeactivateCombat();
 			}
 			if (combatIndex == 4) {
-				nekko.attack(3 * damageMultiplier, true, 20.0f);
+				nekko.attack(3 * damageMultiplier, attackAOE, 20.0f);
 				activateEffect();
 			}
 			currentTexture = uppercut[combatIndex];
@@ -752,8 +769,11 @@ public class NekkoSprite extends Sprite {
 						nekko.location.x, nekko.location.y - 6.0f,
 						(nekko.faceState == FaceState.LEFT) ? -20.0f : 20.0f,
 						0, 10000000000L, 30000000L, 1 * damageMultiplier,
-						20.0f, true);
-				KFNekko.audio.punch(nekko.location.x);
+						20.0f, attackAOE);
+				if (TimeUtils.nanoTime() - lastCombatSound > 100000000L) {
+					lastCombatSound = TimeUtils.nanoTime();
+					KFNekko.audio.punch(nekko.location.x);
+				}
 				activateEffect();
 			}
 			currentTexture = fastShot[combatIndex];
@@ -771,8 +791,11 @@ public class NekkoSprite extends Sprite {
 						nekko.location.x, nekko.location.y - 6.0f,
 						(nekko.faceState == FaceState.LEFT) ? -15.0f : 15.0f,
 						0, 10000000000L, 30000000L, 3 * damageMultiplier,
-						100.0f, true);
-				KFNekko.audio.punchSpecial(nekko.location.x, 0.75f);
+						100.0f, attackAOE);
+				if (TimeUtils.nanoTime() - lastCombatSound > 100000000L) {
+					lastCombatSound = TimeUtils.nanoTime();
+					KFNekko.audio.punchSpecial(nekko.location.x, 0.75f);
+				}
 				activateEffect();
 			}
 			currentTexture = powerShot[combatIndex];
@@ -790,8 +813,11 @@ public class NekkoSprite extends Sprite {
 						nekko.location.x, nekko.location.y,
 						(nekko.faceState == FaceState.LEFT) ? -20.0f : 20.0f,
 						-10.0f, 10000000000L, 30000000L, 1 * damageMultiplier,
-						20.0f, true);
-				KFNekko.audio.punch(nekko.location.x);
+						20.0f, attackAOE);
+				if (TimeUtils.nanoTime() - lastCombatSound > 100000000L) {
+					lastCombatSound = TimeUtils.nanoTime();
+					KFNekko.audio.punch(nekko.location.x);
+				}
 				activateEffect();
 			}
 			currentTexture = jumpShot[combatIndex];
@@ -809,8 +835,11 @@ public class NekkoSprite extends Sprite {
 						nekko.location.x, nekko.location.y,
 						(nekko.faceState == FaceState.LEFT) ? -15.0f : 15.0f,
 						0, 10000000000L, 30000000L, 5 * damageMultiplier,
-						200.0f, true);
-				KFNekko.audio.punchSpecial(nekko.location.x, 0.5f);
+						200.0f, attackAOE);
+				if (TimeUtils.nanoTime() - lastCombatSound > 100000000L) {
+					lastCombatSound = TimeUtils.nanoTime();
+					KFNekko.audio.punchSpecial(nekko.location.x, 0.5f);
+				}
 				activateEffect();
 			}
 			currentTexture = superShot[combatIndex];
@@ -830,8 +859,11 @@ public class NekkoSprite extends Sprite {
 						nekko.location.x, nekko.location.y - 6.0f,
 						(nekko.faceState == FaceState.LEFT) ? -20.0f : 20.0f,
 						0, 10000000000L, 30000000L, 1 * damageMultiplier,
-						20.0f, true);
-				KFNekko.audio.punchSpecial(nekko.location.x, 2.0f);
+						20.0f, attackAOE);
+				if (TimeUtils.nanoTime() - lastCombatSound > 100000000L) {
+					lastCombatSound = TimeUtils.nanoTime();
+					KFNekko.audio.punchSpecial(nekko.location.x, 2.0f);
+				}
 				activateEffect();
 			} else if (combatIndex == 8) {
 				projectileIndex = Methods.incrementIndex(projectileIndex,
@@ -840,11 +872,14 @@ public class NekkoSprite extends Sprite {
 						nekko.location.x, nekko.location.y,
 						(nekko.faceState == FaceState.LEFT) ? -15.0f : 15.0f,
 						0, 10000000000L, 30000000L, 5 * damageMultiplier,
-						200.0f, true);
+						200.0f, attackAOE);
 				stepForward(-14.0f);
 				stepForward(-14.0f);
 				stepForward(-14.0f);
-				KFNekko.audio.punchSpecial(nekko.location.x, 0.5f);
+				if (TimeUtils.nanoTime() - lastCombatSound > 100000000L) {
+					lastCombatSound = TimeUtils.nanoTime();
+					KFNekko.audio.punchSpecial(nekko.location.x, 0.5f);
+				}
 				activateEffect();
 			}
 			currentTexture = gattlingShot[combatIndex];
@@ -878,28 +913,29 @@ public class NekkoSprite extends Sprite {
 		case LIGHTNINGKICKS:
 		case SPEEDYHANDS:
 			if (combatIndex > 2) {
-				nekko.attack(3 * damageMultiplier, true, 100.0f);
+				nekko.attack(3 * damageMultiplier, attackAOE, 100.0f);
 				activateEffect();
 				stepForward(12.0f);
 				stepForward(12.0f);
 			}
 			animationDelay = 100000000L - speedUp;
-			switch (nekko.powerUp) {
-			case PowerUp.RAGE:
-				KFNekko.worldColor.set(Color.BLUE);
-				break;
-			case PowerUp.QUICKFEET:
-				KFNekko.worldColor.set(Color.RED);
-				break;
-			case PowerUp.KUNGFU_MASTER:
-				KFNekko.worldColor.set(Color.WHITE);
-				break;
-			case PowerUp.ENDURANCE:
-				KFNekko.worldColor.set(Color.GREEN);
-				break;
-			default: // None & INVISIBILITY
-				KFNekko.worldColor.set(Color.BLACK);
-			}
+			if (cameraEffect)
+				switch (nekko.powerUp) {
+				case PowerUp.RAGE:
+					KFNekko.worldColor.set(Color.BLUE);
+					break;
+				case PowerUp.QUICKFEET:
+					KFNekko.worldColor.set(Color.RED);
+					break;
+				case PowerUp.KUNGFU_MASTER:
+					KFNekko.worldColor.set(Color.WHITE);
+					break;
+				case PowerUp.ENDURANCE:
+					KFNekko.worldColor.set(Color.GREEN);
+					break;
+				default: // None & INVISIBILITY
+					KFNekko.worldColor.set(Color.BLACK);
+				}
 
 			return true;
 		}

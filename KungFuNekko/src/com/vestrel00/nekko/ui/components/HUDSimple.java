@@ -27,6 +27,7 @@ import com.badlogic.gdx.utils.Array;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.Nekko;
 import com.vestrel00.nekko.interf.HUDUI;
+import com.vestrel00.nekko.maps.Map;
 
 public class HUDSimple implements HUDUI {
 
@@ -44,6 +45,14 @@ public class HUDSimple implements HUDUI {
 
 	private Nekko player;
 	private HUDInputProcessor processor;
+
+	// for CatsInArms mode (I KNOW IT SHOULDN"T BE HERE)
+	// but too lazy to... ehhh XD
+	private AtlasRegion catPortrait;
+	private Rectangle redCatRectBase, blackCatRectBase, pinkCatRectBase,
+			blueCatRectBase, yellowCatRectBase;
+	private Rectangle redCatRect, blackCatRect, pinkCatRect, blueCatRect,
+			yellowCatRect;
 
 	public HUDSimple(Nekko player, HUDInputProcessor processor) {
 		this.player = player;
@@ -70,6 +79,8 @@ public class HUDSimple implements HUDUI {
 		regions.add(pauseRegion);
 		regions.add(optionsRegion);
 
+		// CatsInArms
+		catPortrait = KFNekko.resource.atlas.findRegion("catPortrait");
 	}
 
 	private void initRects() {
@@ -126,6 +137,28 @@ public class HUDSimple implements HUDUI {
 		rects.add(pause);
 		rects.add(options);
 
+		// CatsInArms
+		redCatRectBase = new Rectangle(22, 67,
+				(float) catPortrait.originalWidth,
+				(float) catPortrait.originalHeight);
+		blackCatRectBase = new Rectangle(112, 67,
+				(float) catPortrait.originalWidth,
+				(float) catPortrait.originalHeight);
+		pinkCatRectBase = new Rectangle(202, 67,
+				(float) catPortrait.originalWidth,
+				(float) catPortrait.originalHeight);
+		blueCatRectBase = new Rectangle(292, 67,
+				(float) catPortrait.originalWidth,
+				(float) catPortrait.originalHeight);
+		yellowCatRectBase = new Rectangle(382, 67,
+				(float) catPortrait.originalWidth,
+				(float) catPortrait.originalHeight);
+
+		redCatRect = new Rectangle(redCatRectBase);
+		blackCatRect = new Rectangle(blackCatRectBase);
+		pinkCatRect = new Rectangle(pinkCatRectBase);
+		blueCatRect = new Rectangle(blueCatRectBase);
+		yellowCatRect = new Rectangle(yellowCatRectBase);
 	}
 
 	@Override
@@ -146,6 +179,27 @@ public class HUDSimple implements HUDUI {
 		batch.draw(topRightRegion, topRight.x, topRight.y, topRight.width,
 				topRight.height);
 
+		// CatsInArms
+		if (KFNekko.map.mode == Map.CATS_IN_ARMS) {
+			batch.setColor(1, 0, 0, 0.40f); // red
+			batch.draw(catPortrait, redCatRect.x, redCatRect.y,
+					redCatRect.width, redCatRect.height);
+			batch.setColor(0.25f, 0.25f, 0.25f, 0.40f); // black
+			batch.draw(catPortrait, blackCatRect.x, blackCatRect.y,
+					blackCatRect.width, blackCatRect.height);
+			batch.setColor(1, 0.68f, 0.68f, 0.40f); // pink
+			batch.draw(catPortrait, pinkCatRect.x, pinkCatRect.y,
+					pinkCatRect.width, pinkCatRect.height);
+			batch.setColor(0, 0, 1, 0.40f); // blue
+			batch.draw(catPortrait, blueCatRect.x, blueCatRect.y,
+					blueCatRect.width * 0.5f, blueCatRect.height * 0.5f,
+					blueCatRect.width, blueCatRect.height, -1.0f, 1.0f, 0.0f);
+			batch.setColor(0, 1, 1, 0.40f); // cyan
+			batch.draw(catPortrait, yellowCatRect.x, yellowCatRect.y,
+					yellowCatRect.width * 0.5f, yellowCatRect.height * 0.5f,
+					yellowCatRect.width, yellowCatRect.height, -1.0f, 1.0f,
+					0.0f);
+		}
 		batch.setColor(KFNekko.worldColor);
 	}
 
@@ -160,6 +214,19 @@ public class HUDSimple implements HUDUI {
 		topRight.y = topRightBase.y + KFNekko.camera.rect.y;
 		topLeft.x = topLeftBase.x + KFNekko.camera.rect.x;
 		topLeft.y = topLeftBase.y + KFNekko.camera.rect.y;
+
+		// CatsInArms
+		redCatRect.x = redCatRectBase.x + KFNekko.camera.rect.x;
+		redCatRect.y = redCatRectBase.y + KFNekko.camera.rect.y;
+		blackCatRect.x = blackCatRectBase.x + KFNekko.camera.rect.x;
+		blackCatRect.y = blackCatRectBase.y + KFNekko.camera.rect.y;
+		pinkCatRect.x = pinkCatRectBase.x + KFNekko.camera.rect.x;
+		pinkCatRect.y = pinkCatRectBase.y + KFNekko.camera.rect.y;
+		blueCatRect.x = blueCatRectBase.x + KFNekko.camera.rect.x;
+		blueCatRect.y = blueCatRectBase.y + KFNekko.camera.rect.y;
+		yellowCatRect.x = yellowCatRectBase.x + KFNekko.camera.rect.x;
+		yellowCatRect.y = yellowCatRectBase.y + KFNekko.camera.rect.y;
+
 	}
 
 	/**
@@ -173,6 +240,32 @@ public class HUDSimple implements HUDUI {
 	 */
 	@Override
 	public boolean onTouchDown(float x, float y) {
+		// CatsInArms
+		if (KFNekko.map.mode == Map.CATS_IN_ARMS) {
+			if (redCatRect.contains(x, y)) {
+				if (KFNekko.map.manager.getHelper().spawnCat(1) != null)
+					KFNekko.audio.meow(x);
+				return true;
+			} else if (blackCatRect.contains(x, y)) {
+				if (KFNekko.map.manager.getHelper().spawnCat(2) != null)
+					KFNekko.audio.meow(x);
+				return true;
+			} else if (pinkCatRect.contains(x, y)) {
+				if (KFNekko.map.manager.getHelper().spawnCat(4) != null)
+					KFNekko.audio.meow(x);
+				return true;
+			} else if (blueCatRect.contains(x, y)) {
+				if (KFNekko.map.manager.getHelper().spawnCat(3) != null)
+					KFNekko.audio.meow(x);
+				return true;
+			} else if (yellowCatRect.contains(x, y)) {
+				if (KFNekko.map.manager.getHelper().spawnCat(5) != null)
+					KFNekko.audio.meow(x);
+				return true;
+			}
+
+		}
+
 		if (attack1.contains(x, y))
 			player.setCombatState(processor.attackManager
 					.input(ComboAttackManager.INPUT_LEFT));

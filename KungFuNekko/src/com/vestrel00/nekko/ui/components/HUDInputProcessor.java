@@ -58,6 +58,7 @@ public class HUDInputProcessor implements InputProcessor {
 			case KFNekko.VIEW_GAME:
 				return (KFNekko.hud.onTouchDown(touchPos.x, touchPos.y)) ? true
 						: false;
+			case KFNekko.VIEW_GAME_VICTORY:
 			case KFNekko.VIEW_GAME_OVER:
 				return (KFNekko.map.manager.onTouchDown(touchPos.x, touchPos.y)) ? true
 						: false;

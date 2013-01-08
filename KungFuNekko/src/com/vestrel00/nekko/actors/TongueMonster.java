@@ -45,9 +45,9 @@ public class TongueMonster extends Monster {
 
 	public TongueMonster(TextureAtlas atlas, Location location,
 			Array<Actor> targets, float aggroRange, float motionRange,
-			Color color, int level) {
+			Color color, int level, boolean attackAOE) {
 		super(targets, location, 0, aggroRange, motionRange);
-		tongueSprite = new TongueMonsterSprite(this, atlas, color);
+		tongueSprite = new TongueMonsterSprite(this, atlas, color, attackAOE);
 		sprite = tongueSprite;
 		attackDelay = 2000000000L;
 		location.setActor(this);
@@ -55,14 +55,27 @@ public class TongueMonster extends Monster {
 	}
 
 	@Override
+	protected boolean withinAggroRange(Actor targ) {
+		aggroRect.set(location.x - aggroRange, location.y - 6000.0f,
+				aggroRange * 2.0f, 12000.0f);
+		return aggroRect.overlaps(targ.location.rect);
+	}
+
+	@Override
 	protected void updateMotionState() {
 		super.updateMotionState();
-		if (target != null)
+		if (target != null) {
 			if (location.y > target.location.rect.y
 					+ target.location.rect.height)
 				verticalMotionState = VerticalMotionState.FALLING;
 			else if (location.y < target.location.y)
 				verticalMotionState = VerticalMotionState.FLYING;
+		} else {
+			if (location.y > location.spawnY + location.rect.height)
+				verticalMotionState = VerticalMotionState.FALLING;
+			else if (location.y < location.spawnY - location.rect.height)
+				verticalMotionState = VerticalMotionState.FLYING;
+		}
 	}
 
 	@Override

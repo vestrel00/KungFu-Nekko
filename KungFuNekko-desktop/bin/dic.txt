@@ -14,3 +14,5 @@ rects
 projectile
 melee
 projectiles
+catnip
+cyan

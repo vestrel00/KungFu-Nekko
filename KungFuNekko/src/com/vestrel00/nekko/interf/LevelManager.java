@@ -38,4 +38,6 @@ public interface LevelManager extends Updatable, Drawable, Touchable {
 
 	public LevelHelper getHelper();
 
+	public void drawSecondary(SpriteBatch batch);
+
 }

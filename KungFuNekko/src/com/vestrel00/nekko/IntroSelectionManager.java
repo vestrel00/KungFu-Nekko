@@ -32,52 +32,58 @@ import com.vestrel00.nekko.maps.Map;
 
 public class IntroSelectionManager implements Updatable, Drawable, Touchable {
 
-	private final CharSequence[] MODE_STR = { "The Last Stand", "Coming Soon",
+	private final CharSequence[] MODE_STR = { "The Last Stand", "Cats In Arms",
 			"Coming Soon", "Coming Soon" };
 	private final CharSequence[] LS_MAP_STR = { "Final Fortress",
 			"Road of Martyrs", "King & Queens", "Coming Soon" };
 
+	private final CharSequence[] CIA_MAP_STR = { "Front Lines", "Coming Soon",
+			"Coming Soon", "Coming Soon" };
+
 	public static final int VIEW_MODE = 0, VIEW_MAP = 1, VIEW_MAP_LS = 2,
-			VIEW_MAP_MODE2 = 3, VIEW_MAP_MODE3 = 4, VIEW_MAP_MODE4 = 5;
+			VIEW_MAP_CIA = 3, VIEW_MAP_MODE3 = 4, VIEW_MAP_MODE4 = 5;
 
 	private CharSequence[] chosenMode;
-	private float[] modeWidths, lsMapModeWidths, chosenMapModeWidths;
+	private float[] modeWidths, lsMapModeWidths, chosenMapModeWidths,
+			ciaMapModeWidths;
 	public int view = VIEW_MODE, mapView, phase = 0, nextView;
 	public Color color;
 	private AtlasRegion buttonRegion;
-	private Rectangle lastStandRect, mercenaryRect, collectorRect,
-			adventurerRect;
+	private Rectangle lsRect, ciaRect, collectorRect, adventurerRect;
 
 	public IntroSelectionManager(TextureAtlas atlas) {
 		color = new Color(Color.CLEAR);
 		buttonRegion = atlas.findRegion("button_large");
 		modeWidths = new float[MODE_STR.length];
 		lsMapModeWidths = new float[LS_MAP_STR.length];
+		ciaMapModeWidths = new float[CIA_MAP_STR.length];
 		for (int i = 0; i < modeWidths.length; i++)
 			modeWidths[i] = KFNekko.resource.chunkFive.getBounds(MODE_STR[i]).width;
 		for (int i = 0; i < lsMapModeWidths.length; i++)
 			lsMapModeWidths[i] = KFNekko.resource.chunkFive
 					.getBounds(LS_MAP_STR[i]).width;
+		for (int i = 0; i < ciaMapModeWidths.length; i++)
+			ciaMapModeWidths[i] = KFNekko.resource.chunkFive
+					.getBounds(CIA_MAP_STR[i]).width;
 
-		lastStandRect = new Rectangle(KFNekko.camera.camera.position.x
+		lsRect = new Rectangle(KFNekko.camera.camera.position.x
 				- (float) buttonRegion.originalWidth * 0.5f, 216.0f,
 				(float) buttonRegion.originalWidth,
 				(float) buttonRegion.originalHeight);
-		mercenaryRect = new Rectangle(lastStandRect.x, 150.0f,
-				lastStandRect.width, lastStandRect.height);
-		collectorRect = new Rectangle(lastStandRect.x, 84.0f,
-				lastStandRect.width, lastStandRect.height);
-		adventurerRect = new Rectangle(lastStandRect.x, 20.0f,
-				lastStandRect.width, lastStandRect.height);
+		ciaRect = new Rectangle(lsRect.x, 150.0f, lsRect.width, lsRect.height);
+		collectorRect = new Rectangle(lsRect.x, 84.0f, lsRect.width,
+				lsRect.height);
+		adventurerRect = new Rectangle(lsRect.x, 20.0f, lsRect.width,
+				lsRect.height);
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
 		batch.setColor(color);
-		batch.draw(buttonRegion, lastStandRect.x, lastStandRect.y,
-				lastStandRect.width, lastStandRect.height);
-		batch.draw(buttonRegion, mercenaryRect.x, mercenaryRect.y,
-				mercenaryRect.width, mercenaryRect.height);
+		batch.draw(buttonRegion, lsRect.x, lsRect.y, lsRect.width,
+				lsRect.height);
+		batch.draw(buttonRegion, ciaRect.x, ciaRect.y, ciaRect.width,
+				ciaRect.height);
 		batch.draw(buttonRegion, collectorRect.x, collectorRect.y,
 				collectorRect.width, collectorRect.height);
 		batch.draw(buttonRegion, adventurerRect.x, adventurerRect.y,
@@ -91,12 +97,12 @@ public class IntroSelectionManager implements Updatable, Drawable, Touchable {
 					.setColor(0.4118f, 0.6157f, 1.0f, color.a);
 			KFNekko.resource.chunkFive.draw(batch, MODE_STR[0],
 					KFNekko.camera.camera.position.x - modeWidths[0] * 0.5f,
-					lastStandRect.y + lastStandRect.height - 11.0f);
-			// TODO REMOVE
-			KFNekko.resource.chunkFive.setColor(0.25f, 0.25f, 0.25f, color.a);
+					lsRect.y + lsRect.height - 11.0f);
 			KFNekko.resource.chunkFive.draw(batch, MODE_STR[1],
 					KFNekko.camera.camera.position.x - modeWidths[1] * 0.5f,
-					mercenaryRect.y + mercenaryRect.height - 11.0f);
+					ciaRect.y + ciaRect.height - 11.0f);
+			// TODO REMOVE
+			KFNekko.resource.chunkFive.setColor(0.25f, 0.25f, 0.25f, color.a);
 			KFNekko.resource.chunkFive.draw(batch, MODE_STR[2],
 					KFNekko.camera.camera.position.x - modeWidths[2] * 0.5f,
 					collectorRect.y + collectorRect.height - 11.0f);
@@ -109,12 +115,14 @@ public class IntroSelectionManager implements Updatable, Drawable, Touchable {
 					.setColor(0.4118f, 0.6157f, 1.0f, color.a);
 			KFNekko.resource.chunkFive.draw(batch, chosenMode[0],
 					KFNekko.camera.camera.position.x - chosenMapModeWidths[0]
-							* 0.5f, lastStandRect.y + lastStandRect.height
-							- 11.0f);
+							* 0.5f, lsRect.y + lsRect.height - 11.0f);
+			if (mapView == VIEW_MAP_CIA)
+				// TODO REMOVE
+				KFNekko.resource.chunkFive.setColor(0.25f, 0.25f, 0.25f,
+						color.a);
 			KFNekko.resource.chunkFive.draw(batch, chosenMode[1],
 					KFNekko.camera.camera.position.x - chosenMapModeWidths[1]
-							* 0.5f, mercenaryRect.y + mercenaryRect.height
-							- 11.0f);
+							* 0.5f, ciaRect.y + ciaRect.height - 11.0f);
 			KFNekko.resource.chunkFive.draw(batch, chosenMode[2],
 					KFNekko.camera.camera.position.x - chosenMapModeWidths[2]
 							* 0.5f, collectorRect.y + collectorRect.height
@@ -136,7 +144,7 @@ public class IntroSelectionManager implements Updatable, Drawable, Touchable {
 
 	@Override
 	public boolean onTouchDown(float x, float y) {
-		if (lastStandRect.contains(x, y)) {
+		if (lsRect.contains(x, y)) {
 			// set the InputProcessor to an unresponsive state to prevent
 			// calling the below method more than once
 			KFNekko.hud.processor.isListening = false;
@@ -149,8 +157,10 @@ public class IntroSelectionManager implements Updatable, Drawable, Touchable {
 				case VIEW_MAP_LS:
 					KFNekko.map.setLevel(Map.LAST_STAND, Map.MAP_1);
 					break;
-				case VIEW_MAP_MODE2:
-					// TODO
+				case VIEW_MAP_CIA:
+					KFNekko.map.setLevel(Map.CATS_IN_ARMS, Map.MAP_1);
+					KFNekko.hud.processor.isListening = false;
+					phase = 2;
 					break;
 				case VIEW_MAP_MODE3:
 					// TODO
@@ -168,23 +178,17 @@ public class IntroSelectionManager implements Updatable, Drawable, Touchable {
 				phase = 1;
 			}
 			return true;
-		} else if (mercenaryRect.contains(x, y)) {
-			// set the InputProcessor to an unresponsive state to prevent
-			// calling the below method more than once
-			// KFNekko.hud.processor.isListening = false;
-			// make sure that the parent view (IntroMenuManger) is on this
-			// view
+		} else if (ciaRect.contains(x, y)) {
 			KFNekko.intro.menu.view = IntroMenuManager.VIEW_SELECTION;
 			KFNekko.intro.menu.nextView = IntroMenuManager.VIEW_SELECTION;
 			if (view == VIEW_MAP) {
 				switch (mapView) {
 				case VIEW_MAP_LS:
 					KFNekko.map.setLevel(Map.LAST_STAND, Map.MAP_2);
-					// TODO remove
 					KFNekko.hud.processor.isListening = false;
 					phase = 2;
 					break;
-				case VIEW_MAP_MODE2:
+				case VIEW_MAP_CIA:
 					// TODO
 					break;
 				case VIEW_MAP_MODE3:
@@ -195,14 +199,15 @@ public class IntroSelectionManager implements Updatable, Drawable, Touchable {
 					break;
 				}
 				// TODO
+				// KFNekko.hud.processor.isListening = false;
 				// phase = 2;
 			} else {
-				// TODO
-				// mapView = VIEW_MAP_LS;
-				// chosenMode = LS_MAP_STR;
-				// chosenMapModeWidths = lsMapModeWidths;
-				// nextView = VIEW_MAP;
-				// phase = 1;
+				KFNekko.hud.processor.isListening = false;
+				mapView = VIEW_MAP_CIA;
+				chosenMode = CIA_MAP_STR;
+				chosenMapModeWidths = ciaMapModeWidths;
+				nextView = VIEW_MAP;
+				phase = 1;
 			}
 			return true;
 		} else if (collectorRect.contains(x, y)) {
@@ -221,7 +226,7 @@ public class IntroSelectionManager implements Updatable, Drawable, Touchable {
 					KFNekko.hud.processor.isListening = false;
 					phase = 2;
 					break;
-				case VIEW_MAP_MODE2:
+				case VIEW_MAP_CIA:
 					// TODO
 					break;
 				case VIEW_MAP_MODE3:

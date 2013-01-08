@@ -37,7 +37,12 @@ public class Platform {
 
 	private void setSection(float x, float y) {
 		for (int i = 0; i < sections.size; i++)
-			if (sections.get(i).rect.contains(x, y)) {
+			// cannot use rect.contains because it does not check for equality
+			// on boundaries
+			if (sections.get(i).rect.x <= x
+					&& sections.get(i).rect.x + sections.get(i).rect.width >= x
+					&& sections.get(i).rect.y <= y
+					&& sections.get(i).rect.y + sections.get(i).rect.height >= y) {
 				section = sections.get(i);
 				break;
 			}

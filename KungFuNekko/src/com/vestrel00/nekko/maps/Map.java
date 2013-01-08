@@ -31,23 +31,28 @@ import com.vestrel00.nekko.maps.components.Platform;
 
 public class Map implements Updatable, Drawable {
 
-	public static final int LAST_STAND = 0, MAP_1 = 1, MAP_2 = 2, MAP_3 = 3,
-			MAP_4 = 4;
+	public static final int LAST_STAND = 0, CATS_IN_ARMS = 1, MAP_1 = 4,
+			MAP_2 = 5, MAP_3 = 6, MAP_4 = 7;
 
 	private Array<MapSection> sections;
 	public LevelManager manager;
 	public Platform platform;
 	public float width, height;
+	public int mode;
 
 	public Map() {
 		MapPieceGenerator.init();
 	}
 
 	public void setLevel(int mode, int mapId) {
+		this.mode = mode;
 		sections = new Array<MapSection>();
 		switch (mode) {
 		case LAST_STAND:
 			manager = new LastStand(sections, mapId);
+			break;
+		case CATS_IN_ARMS:
+			manager = new CatsInArms(sections, mapId);
 			break;
 		}
 		platform = new Platform(sections);
@@ -56,8 +61,6 @@ public class Map implements Updatable, Drawable {
 	@Override
 	public void update() {
 		manager.update();
-		for (int i = 0; i < KFNekko.enemies.size; i++)
-			KFNekko.enemies.get(i).update();
 	}
 
 	@Override
@@ -69,6 +72,8 @@ public class Map implements Updatable, Drawable {
 		manager.draw(batch);
 		for (int i = 0; i < KFNekko.enemies.size; i++)
 			KFNekko.enemies.get(i).draw(batch);
+		// draw manager secondary
+		manager.drawSecondary(batch);
 		// set batch back to worldColor
 		batch.setColor(KFNekko.worldColor);
 	}

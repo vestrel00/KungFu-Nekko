@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.CombatStateManager"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.HUDUI"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.ui.components.HUDSimple"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.effects.AfterImage"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.CuteMonsterSprite"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.CuteMonster"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.Monster"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.utils.Disposable"/>
@@ -13,16 +8,13 @@
 <fullyQualifiedTypeName name="com.badlogic.gdx.audio.Music"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.audio.Sound"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.extras.StringTyper"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.LevelManager"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.extras.TextRectangle"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.Nekko"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.Speed"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.maps.components.PowerUp"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.ChessPieceSprite"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.ChessPiece.Piece"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.Location"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.states.StatusState"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.states.CombatState"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Touchable"/>
@@ -35,10 +27,8 @@
 <fullyQualifiedTypeName name="com.vestrel00.nekko.Instructions"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.Credits"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.intro.IntroScreen"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.maps.Map"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.ChessPiece"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.maps.components.MapPieceGenerator"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.states.FaceState"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.interf.PickUp"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.Soda"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.ToungeMonsterSprite"/>
@@ -46,18 +36,28 @@
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.states.VerticalMotionState"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.states.HorizontalMotionState"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.TongueMonster"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.Methods"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Color"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.LevelHelper"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Updatable"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.interf.Drawable"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion"/>
-<fullyQualifiedTypeName name="com.badlogic.gdx.math.Rectangle"/>
-<fullyQualifiedTypeName name="com.badlogic.gdx.utils.TimeUtils"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.Actor"/>
-<fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.KFNekko"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.PowerUp"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.math.Vector2"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.utils.Array"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.LevelManager"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.Nekko"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.LevelHelper"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.NekkoSprite"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.KFNekko"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.Methods"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.math.Rectangle"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.components.NekkoAISprite"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.interf.CombatStateManager"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.NekkoAI"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.states.FaceState"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.states.StatusState"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.maps.Map"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.utils.TimeUtils"/>
+<fullyQualifiedTypeName name="com.vestrel00.nekko.ui.components.SimpleAttackManager"/>
 </qualifiedTypeNameHistroy>

@@ -19,8 +19,14 @@
 
 package com.vestrel00.nekko.interf;
 
+import com.vestrel00.nekko.actors.NekkoAI;
+
 public interface LevelHelper {
 
 	public void gameOver();
+
+	public NekkoAI spawnCat(int catType);
+
+	public void gameWon();
 
 }

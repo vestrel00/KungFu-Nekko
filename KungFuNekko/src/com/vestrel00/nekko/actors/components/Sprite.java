@@ -36,6 +36,7 @@ public abstract class Sprite implements Updatable, Drawable {
 	protected float rotation;
 	protected long animationDelay, lastAnimationTime;
 	public int combatIndex = 0;
+	public boolean attackAOE;
 
 	// used by monsters to prevent too many footstep sounds from being played at
 	// once

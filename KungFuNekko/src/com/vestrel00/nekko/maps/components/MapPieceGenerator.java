@@ -160,9 +160,9 @@ public class MapPieceGenerator {
 		// platform info
 		if (!filler) {
 			piece.horizontal = new float[3];
-			piece.horizontal[0] = -1.0f; // x
+			piece.horizontal[0] = -4.0f; // x
 			piece.horizontal[1] = piece.rect.height; // y2
-			piece.horizontal[2] = piece.rect.width + 1.0f; // x2
+			piece.horizontal[2] = piece.rect.width + 4.0f; // x2
 		}
 
 		piece.regions = new AtlasRegion[columns * rows];

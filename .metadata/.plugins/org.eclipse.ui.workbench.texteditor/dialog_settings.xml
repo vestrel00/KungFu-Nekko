@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="330" key="DIALOG_WIDTH"/>
-		<item value="424" key="DIALOG_Y_ORIGIN"/>
-		<item value="570" key="DIALOG_X_ORIGIN"/>
+		<item value="249" key="DIALOG_Y_ORIGIN"/>
 		<item value="451" key="DIALOG_HEIGHT"/>
+		<item value="536" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="true" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="camera" key="selection"/>
+		<item value="VIEW_GAME_OVER" key="selection"/>
 		<list key="findhistory">
-			<item value="camera"/>
-			<item value="pause"/>
-			<item value="widgetRects.get(4)"/>
-			<item value="widgetRect.get(4)"/>
-			<item value="5"/>
-			<item value="Vec"/>
-			<item value="pauseVec"/>
-			<item value="quitRect"/>
+			<item value="VIEW_GAME_OVER"/>
+			<item value="game"/>
+			<item value="gameVictory"/>
+			<item value="gameWin"/>
+			<item value="win"/>
+			<item value="onDeath"/>
+			<item value="statusState"/>
+			<item value="meow"/>
 		</list>
 		<list key="replacehistory">
-			<item value="options"/>
-			<item value="pause"/>
-			<item value="4"/>
-			<item value="Rect"/>
-			<item value="quitVec"/>
-			<item value="resumeVec"/>
-			<item value="KFNekko.audio.punch(nekko.location.x);"/>
-			<item value="Methods.incrementIndex"/>
+			<item value="catTmp.onDeath();"/>
+			<item value=""/>
+			<item value=" = new Rectangle();"/>
+			<item value="RectBase"/>
+			<item value="catnip"/>
+			<item value="allyPieces"/>
+			<item value="nekkoSprite"/>
+			<item value="nekkoAISprite"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

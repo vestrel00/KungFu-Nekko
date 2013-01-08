@@ -41,9 +41,10 @@ public class SkullMonsterSprite extends Sprite {
 	private SkullMonster monster;
 
 	public SkullMonsterSprite(SkullMonster monster, TextureAtlas atlas,
-			Color color) {
+			Color color, boolean attackAOE) {
 		super(monster, color);
 		this.monster = monster;
+		this.attackAOE = attackAOE;
 		initTextures(atlas);
 	}
 
@@ -128,8 +129,8 @@ public class SkullMonsterSprite extends Sprite {
 			}
 
 			if (combatIndex == 6)
-				monster.attack((int) ((float) monster.damage * 1.5f), true,
-						monster.knockBackDistance);
+				monster.attack((int) ((float) monster.damage * 1.5f),
+						attackAOE, monster.knockBackDistance);
 
 			currentTexture = specialAttack[combatIndex];
 			animationDelay = 70000000L;
@@ -140,7 +141,8 @@ public class SkullMonsterSprite extends Sprite {
 				monster.onDeactivateCombat();
 			}
 			if (combatIndex == 3)
-				monster.attack(monster.damage, true, monster.knockBackDistance);
+				monster.attack(monster.damage, attackAOE,
+						monster.knockBackDistance);
 
 			currentTexture = attack[combatIndex];
 			animationDelay = 80000000L;

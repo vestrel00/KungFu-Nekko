@@ -34,7 +34,7 @@ public class Audio implements Disposable {
 	private Sound superSmack, footStep, cuteGrowl, skullGrowl, groundBoom,
 			meow, touch, spawn, powerup, powerupDrop, sodaOpen, sodaDrop,
 			shotHit, wingFlap;
-	public Music music, gameOver;
+	public Music music, gameOver, victory;
 	private Random rand;
 
 	public Audio() {
@@ -67,6 +67,8 @@ public class Audio implements Disposable {
 		wingFlap = Gdx.audio.newSound(Gdx.files.internal("sound/wingFlap.mp3"));
 
 		gameOver = Gdx.audio.newMusic(Gdx.files.internal("music/gameOver.mp3"));
+		victory = Gdx.audio.newMusic(Gdx.files
+				.internal("music/victoryChant.mp3"));
 		music = Gdx.audio.newMusic(Gdx.files.internal("music/main.mp3"));
 		music.setLooping(true);
 
@@ -95,18 +97,18 @@ public class Audio implements Disposable {
 		disposables.add(gameOver);
 		disposables.add(shotHit);
 		disposables.add(wingFlap);
+		disposables.add(victory);
 	}
 
 	public void touch() {
 		if (KFNekko.settings.soundOn)
 			touch.play();
 	}
-	
+
 	public void wingFlap(float x) {
 		if (KFNekko.settings.soundOn)
 			wingFlap.play(1.0f, 1.0f, getSoundPan(x));
 	}
-
 
 	public void sodaDrop(float x) {
 		if (KFNekko.settings.soundOn)

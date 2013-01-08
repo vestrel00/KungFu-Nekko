@@ -33,26 +33,28 @@ import com.vestrel00.nekko.actors.states.CombatState;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.HorizontalMotionState;
 import com.vestrel00.nekko.actors.states.StatusState;
+import com.vestrel00.nekko.actors.states.Visibility;
 
 public class Nekko extends Actor {
 
-	private final long POWERUP_DURATION = 20000000000L;
-
 	public NekkoSprite nekkoSprite;
-	private long powerUpTime;
+	private long powerUpTime, powerupDuration;
 	private float speedTmp;
 	public int stamina, maxStamina, powerUp;
 
 	public Nekko(TextureAtlas atlas, Location location, Array<Actor> targets,
 			int maxHealth, Color color, int maxStamina) {
 		super(targets, location, maxHealth);
+		this.maxStamina = maxStamina;
 		nekkoSprite = new NekkoSprite(this, atlas, color);
 		sprite = nekkoSprite;
-		this.maxStamina = maxStamina;
+		location.setActor(this);
+		sprite = nekkoSprite;
 		stamina = maxStamina;
+		powerUp = PowerUp.NONE;
 	}
 
-	private void hit(Actor target) {
+	protected void hit(Actor target) {
 		switch (combatState) {
 		case SUPERUPPERCUT:
 		case UPPERCUT:
@@ -77,13 +79,13 @@ public class Nekko extends Actor {
 			}
 			super.update();
 			if (powerUp != PowerUp.NONE
-					&& TimeUtils.nanoTime() - powerUpTime > POWERUP_DURATION) {
+					&& TimeUtils.nanoTime() - powerUpTime > powerupDuration) {
 				onDeactivatePowerUp();
 			}
 		}
 	}
 
-	private void executeCombatMove() {
+	protected void executeCombatMove() {
 		switch (combatState) {
 		case SUPERUPPERCUT:
 			nekkoSprite.activateSmoke();
@@ -199,7 +201,11 @@ public class Nekko extends Actor {
 
 	@Override
 	public void onDeath() {
-		KFNekko.map.manager.getHelper().gameOver();
+		if (statusState == StatusState.ALIVE) {
+			statusState = StatusState.DYING;
+			if (visibility == Visibility.VISIBLE)
+				KFNekko.audio.meow(location.x);
+		}
 	}
 
 	@Override
@@ -224,6 +230,7 @@ public class Nekko extends Actor {
 			break;
 		default:
 			KFNekko.audio.punch(location.x);
+			break;
 		}
 		if (hit) {
 			if (combatState == CombatState.SUPERUPPERCUT
@@ -235,6 +242,8 @@ public class Nekko extends Actor {
 	}
 
 	private void onDeactivatePowerUp() {
+		if (powerUp == PowerUp.NONE)
+			return;
 		// undo changes
 		nekkoSprite.targetColor.set(Color.WHITE);
 		switch (powerUp) {
@@ -263,11 +272,13 @@ public class Nekko extends Actor {
 		powerUp = PowerUp.NONE;
 	}
 
-	public boolean powerUp(int type) {
+	public boolean powerUp(int type, long powerupDuration, boolean mute) {
 		if (powerUp != PowerUp.NONE)
 			return false;
 
-		KFNekko.audio.powerup(location.x);
+		this.powerupDuration = powerupDuration;
+		if (!mute)
+			KFNekko.audio.powerup(location.x);
 		powerUp = type;
 		powerUpTime = TimeUtils.nanoTime();
 		switch (type) {

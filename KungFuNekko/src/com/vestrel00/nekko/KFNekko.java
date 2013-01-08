@@ -46,7 +46,8 @@ public class KFNekko implements ApplicationListener {
 
 	// the public static modifier without the final modifier is not secure.
 	public static final int VIEW_INTRO = 0, VIEW_GAME = 2, VIEW_PAUSED = 3,
-			VIEW_OPTIONS = 4, VIEW_LEVEL_INTRO = 5, VIEW_GAME_OVER = 6;
+			VIEW_OPTIONS = 4, VIEW_LEVEL_INTRO = 5, VIEW_GAME_OVER = 6,
+			VIEW_GAME_VICTORY = 7;
 	public static int view;
 
 	public static SpriteBatch batch;
@@ -102,7 +103,8 @@ public class KFNekko implements ApplicationListener {
 				Color.WHITE), 300);
 		player.setState(FaceState.RIGHT, StatusState.ALIVE, CombatState.IDLE,
 				HorizontalMotionState.IDLE, VerticalMotionState.FALLING);
-		location.setActor(player);
+		// turn camera effects on for this nekko
+		player.nekkoSprite.cameraEffect = true;
 	}
 
 	private void initVars() {
@@ -153,6 +155,7 @@ public class KFNekko implements ApplicationListener {
 				Methods.updateColor(worldColor, targetWorldColor, colorSpeed);
 				Methods.updateColor(worldColor, targetWorldColor, colorSpeed);
 				break;
+			case VIEW_GAME_VICTORY:
 			case VIEW_GAME_OVER:
 				map.manager.update();
 				Methods.updateColor(worldColor, targetWorldColor, colorSpeed);
@@ -179,6 +182,7 @@ public class KFNekko implements ApplicationListener {
 			break;
 		case VIEW_LEVEL_INTRO:
 		case VIEW_GAME:
+		case VIEW_GAME_VICTORY:
 		case VIEW_GAME_OVER:
 			batch.setColor(worldColor);
 			drawGame();

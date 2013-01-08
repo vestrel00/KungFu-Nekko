@@ -41,9 +41,10 @@ public class CuteMonsterSprite extends Sprite {
 	private CuteMonster monster;
 
 	public CuteMonsterSprite(CuteMonster monster, TextureAtlas atlas,
-			Color color) {
+			Color color, boolean attackAOE) {
 		super(monster, color);
 		this.monster = monster;
+		this.attackAOE = attackAOE;
 		initTextures(atlas);
 	}
 
@@ -118,7 +119,8 @@ public class CuteMonsterSprite extends Sprite {
 				monster.onDeactivateCombat();
 			}
 			if (combatIndex == 3)
-				monster.attack(monster.damage, true, monster.knockBackDistance);
+				monster.attack(monster.damage, attackAOE,
+						monster.knockBackDistance);
 
 			currentTexture = attack[combatIndex];
 			animationDelay = 65000000L;

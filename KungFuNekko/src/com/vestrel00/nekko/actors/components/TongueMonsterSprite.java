@@ -40,9 +40,10 @@ public class TongueMonsterSprite extends Sprite {
 	private TongueMonster monster;
 
 	public TongueMonsterSprite(TongueMonster monster, TextureAtlas atlas,
-			Color color) {
+			Color color, boolean attackAOE) {
 		super(monster, color);
 		this.monster = monster;
+		this.attackAOE = attackAOE;
 		initTextures(atlas);
 	}
 
@@ -122,7 +123,7 @@ public class TongueMonsterSprite extends Sprite {
 				monster.onDeactivateCombat();
 			}
 			if (combatIndex == 2)
-				monster.attack(monster.damage, true, monster.knockBackDistance);
+				monster.attack(monster.damage, attackAOE, monster.knockBackDistance);
 
 			currentTexture = attack[combatIndex];
 			animationDelay = 45000000L;

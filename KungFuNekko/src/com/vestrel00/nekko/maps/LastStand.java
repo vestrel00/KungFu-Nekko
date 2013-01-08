@@ -95,7 +95,7 @@ public class LastStand implements LevelManager {
 			KFNekko.settings.lastStand_3 = highscore;
 			break;
 		case Map.MAP_4:
-			// TODO
+			KFNekko.settings.lastStand_4 = highscore;
 			break;
 		}
 		// commit settings (this may be a duplicate call)
@@ -150,6 +150,9 @@ public class LastStand implements LevelManager {
 		gameOverColor = new Color(Color.CLEAR);
 		targetGameOverColor = new Color(Color.WHITE);
 
+		// initialize the player
+		KFNekko.player.nekkoSprite.attackAOE = true;
+
 		// clear the list of enemies
 		KFNekko.enemies.clear();
 		// initialize reusable monsters
@@ -165,11 +168,11 @@ public class LastStand implements LevelManager {
 		powerUps = new Array<PowerUp>();
 		sodas = new Array<Soda>();
 		for (int i = 0; i < 10; i++) {
-			powerUps.add(new PowerUp(PowerUp.INVISIBILITY));
-			powerUps.add(new PowerUp(PowerUp.QUICKFEET));
-			powerUps.add(new PowerUp(PowerUp.RAGE));
-			powerUps.add(new PowerUp(PowerUp.KUNGFU_MASTER));
-			powerUps.add(new PowerUp(PowerUp.ENDURANCE));
+			powerUps.add(new PowerUp(PowerUp.INVISIBILITY, 20000000000L, false));
+			powerUps.add(new PowerUp(PowerUp.QUICKFEET, 20000000000L, false));
+			powerUps.add(new PowerUp(PowerUp.RAGE, 20000000000L, false));
+			powerUps.add(new PowerUp(PowerUp.KUNGFU_MASTER, 20000000000L, false));
+			powerUps.add(new PowerUp(PowerUp.ENDURANCE, 20000000000L, false));
 			sodas.add(new Soda(Soda.HEALTH));
 			sodas.add(new Soda(Soda.STAMINA));
 			sodas.add(new Soda(Soda.MIX));
@@ -242,6 +245,10 @@ public class LastStand implements LevelManager {
 			spawnMonster(helper.rand.nextInt(3));
 			batchCount++;
 		}
+
+		// update enemies
+		for (int i = 0; i < KFNekko.enemies.size; i++)
+			KFNekko.enemies.get(i).update();
 	}
 
 	private void updatePortals() {
@@ -305,7 +312,7 @@ public class LastStand implements LevelManager {
 			CuteMonster cuteMon = new CuteMonster(KFNekko.resource.atlas,
 					new Location(0, 0, 4.0f, 22.0f, 80.0f, 18.0f),
 					KFNekko.allies, KFNekko.map.width, KFNekko.map.width,
-					new Color(Color.WHITE), 1);
+					new Color(Color.WHITE), 1, true);
 			cuteMon.setState(FaceState.RIGHT, StatusState.DEAD,
 					CombatState.IDLE, HorizontalMotionState.IDLE,
 					VerticalMotionState.FALLING);
@@ -313,7 +320,7 @@ public class LastStand implements LevelManager {
 			SkullMonster skullMon = new SkullMonster(KFNekko.resource.atlas,
 					new Location(0, 0, 4.0f, 22.0f, 80.0f, 18.0f),
 					KFNekko.allies, KFNekko.map.width, KFNekko.map.width,
-					new Color(Color.WHITE), 1);
+					new Color(Color.WHITE), 1, true);
 			skullMon.setState(FaceState.RIGHT, StatusState.DEAD,
 					CombatState.IDLE, HorizontalMotionState.IDLE,
 					VerticalMotionState.FALLING);
@@ -322,7 +329,7 @@ public class LastStand implements LevelManager {
 			TongueMonster tongueMon = new TongueMonster(KFNekko.resource.atlas,
 					new Location(0, 0, 4.0f, 8.0f, 80.0f, 18.0f),
 					KFNekko.allies, KFNekko.map.width, KFNekko.map.width,
-					new Color(Color.WHITE), 1);
+					new Color(Color.WHITE), 1, true);
 			tongueMon.setState(FaceState.RIGHT, StatusState.DEAD,
 					CombatState.IDLE, HorizontalMotionState.IDLE,
 					VerticalMotionState.FALLING);
@@ -421,7 +428,7 @@ public class LastStand implements LevelManager {
 	public void monsterDown(Monster monster) {
 		score += monster.level;
 		// power up
-		if (pickUps.size == 20)
+		if (pickUps.size == 30)
 			pickUps.removeIndex(0);
 		if (TimeUtils.nanoTime() - lastPowerUpDrop > POWER_UP_DROP_DELAY
 				&& helper.rand.nextInt(100) < POWER_UP_DROP_CHANCE) {
@@ -430,6 +437,9 @@ public class LastStand implements LevelManager {
 			power.drop(monster.location);
 			pickUps.add(power);
 		}
+		// soda
+		if (pickUps.size == 30)
+			pickUps.removeIndex(0);
 		if ((monster.location.onPlatform || monster.location.onSlope)
 				&& TimeUtils.nanoTime() - lastSodaDrop > SODA_DROP_DELAY
 				&& helper.rand.nextInt(100) < SODA_DROP_CHANCE) {
@@ -478,5 +488,11 @@ public class LastStand implements LevelManager {
 	@Override
 	public LevelHelper getHelper() {
 		return helper;
+	}
+
+	@Override
+	public void drawSecondary(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -36,6 +36,7 @@ public abstract class Monster extends Actor {
 	public long lastAttackTime, attackDelay;
 	protected Rectangle aggroRect;
 	public int level;
+	public FaceState primaryFaceState;
 
 	public Monster(Array<Actor> targets, Location location, int maxHealth,
 			float aggroRange, float motionRange) {
@@ -86,16 +87,15 @@ public abstract class Monster extends Actor {
 			if (primeTarget != null)
 				if (primeTarget.statusState != StatusState.DEAD)
 					target = primeTarget;
-				else
-					target = null;
 
 			if (target != null
 					&& (target.statusState == StatusState.DEAD || !withinAggroRange(target)))
 				target = null;
 			// target selection
 			if (target == null)
-				for (int i = 0; i < targets.size; i++)
-					if (withinAggroRange(targets.get(i))) {
+				for (int i = targets.size - 1; i > -1; i--)
+					if (targets.get(i).statusState == StatusState.ALIVE
+							&& withinAggroRange(targets.get(i))) {
 						target = targets.get(i);
 						break;
 					}
@@ -123,7 +123,10 @@ public abstract class Monster extends Actor {
 		if (target != null) {
 			faceState = (target.location.x >= location.x) ? FaceState.RIGHT
 					: FaceState.LEFT;
-				setHorizontalMotionState(HorizontalMotionState.MOVING);
+			setHorizontalMotionState(HorizontalMotionState.MOVING);
+		} else if (primaryFaceState != null) {
+			faceState = primaryFaceState;
+			setHorizontalMotionState(HorizontalMotionState.MOVING);
 		}
 
 		if (location.x < 30.0f || location.x < location.spawnX - motionRange)
@@ -137,7 +140,7 @@ public abstract class Monster extends Actor {
 	protected boolean withinAggroRange(Actor targ) {
 		aggroRect.set(location.x - aggroRange, location.rect.y,
 				aggroRange * 2.0f, location.rect.height);
-		return aggroRect.overlaps(aggroRect);
+		return aggroRect.overlaps(targ.location.rect);
 	}
 
 	public void setPrimeTarget(Actor primeTarget) {

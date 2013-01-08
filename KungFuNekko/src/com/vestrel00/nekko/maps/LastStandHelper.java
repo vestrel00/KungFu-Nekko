@@ -46,8 +46,8 @@ public abstract class LastStandHelper implements LevelHelper {
 	protected LastStand ls;
 
 	public LastStandHelper(Array<MapSection> sections, LastStand ls) {
-		rand = new Random();
 		this.ls = ls;
+		rand = new Random();
 		spawnRegion = KFNekko.resource.atlas.findRegion("blackHole");
 	}
 
@@ -59,6 +59,10 @@ public abstract class LastStandHelper implements LevelHelper {
 					monsterLocs[i].y - halfHeight,
 					(float) spawnRegion.originalWidth,
 					(float) spawnRegion.originalHeight);
+	}
+
+	@Override
+	public void gameWon() {
 	}
 
 	@Override

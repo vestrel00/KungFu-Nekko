@@ -32,10 +32,6 @@ import com.vestrel00.nekko.interf.Drawable;
 import com.vestrel00.nekko.interf.Touchable;
 import com.vestrel00.nekko.interf.Updatable;
 
-/**
- * You have been hired to defend the King and his two Queens. Defend them for as
- * long as you can for great rewards. It is game over once they fall!
- */
 public class LastStandInst implements Touchable, Updatable, Drawable {
 
 	private static final CharSequence[] TITLES = { "The Last Stand",

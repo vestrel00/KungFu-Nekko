@@ -1,9 +1,0 @@
-package com.vestrel00.nekko;
-
-public class Methods {
-	
-	public static void updateColor(){
-		
-	}
-
-}
