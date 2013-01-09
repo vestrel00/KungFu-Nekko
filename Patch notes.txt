@@ -16,3 +16,11 @@ Version name 1.0.e
 Pause and resume buttons now more responsive.
 Touching the health and stamina buttons no longer restore health and stamina.
 Updated the instructions and lessened the maximum zoom out value on projectile attacks.
+
+Version name 2.0.a
+Added a new game mode Cats In Arms!
+Implemented NekkoAI. Plus some small fixes and more messy coding...
+
+Version name 2.0.b
+Fixed splash screen's shape renderer not aligning properly? (Need to test with actual device)
+Just forgot to set the ShapeRenderer's projection matrix XD

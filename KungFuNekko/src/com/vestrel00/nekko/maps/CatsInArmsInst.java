@@ -54,12 +54,14 @@ public class CatsInArmsInst implements Touchable, Updatable, Drawable {
 					+ "monsters when your bretherens are down\n"
 					+ "and you have no more catnip or stamina!",
 			"You win by destroying all enemy structures.\n"
-					+ "Win it for the epic music at then end!",
+					+ "Win it for the epic music at then end!\n"
+					+ "Unlike your structures, enemy structures\n"
+					+ "fights back even if they are not within your sight!",
 			"These cats do twice the damage of other cats.\n"
 					+ "Cost : 3 catnips",
 			"These cats are kungfu masters.\n"
 					+ "They are the fastest attacking unit in the game!\n"
-					+ "These also have twice the health of normal cats!"
+					+ "These also have twice the health of normal cats!\n"
 					+ "Cost : 2 catnips",
 			"These cats do damage at a distance.\n" + "Cost : 3 catnip",
 			"These cats are the fastest moving units in the game!\n"

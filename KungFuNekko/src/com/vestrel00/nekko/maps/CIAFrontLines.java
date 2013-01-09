@@ -146,6 +146,8 @@ public class CIAFrontLines extends CatsInArmsHelper {
 				.add(new ChessPiece(KFNekko.allies, ChessPiece.KING,
 						new Location(3114.0f, 128.0f, 0, 0, 0, 0),
 						FaceState.LEFT, 5000));
+		for (int i = 0; i < enemyPieces.size; i++)
+			enemyPieces.get(i).attackAnytime = true;
 		KFNekko.enemies.clear();
 		KFNekko.enemies.addAll(enemyPieces);
 		// save the staticEnemyCount

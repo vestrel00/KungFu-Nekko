@@ -138,10 +138,8 @@ public class IntroScreen implements Updatable, Drawable, Disposable, Touchable {
 	public void draw(SpriteBatch batch) {
 		switch (view) {
 		case VIEW_SPLASH_HOALW:
-			// forgetting to set the projection matrix may (most likely)
-			// have been the cause of the bug in the Intro!
+			// forgetting to set the projection matrix may have been the cause of the bug in the Intro!
 			shape.setProjectionMatrix(KFNekko.camera.camera.combined);
-			/////////
 			shape.begin(ShapeType.FilledRectangle);
 			if (phase == 2)
 				shape.setColor(color.a, color.a, color.a, color.a);

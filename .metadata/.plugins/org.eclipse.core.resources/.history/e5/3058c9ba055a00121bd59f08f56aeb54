@@ -23,7 +23,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.vestrel00.nekko.Camera;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.ChessPiece;
@@ -38,6 +37,8 @@ import com.vestrel00.nekko.maps.components.MapPieceGenerator;
 import com.vestrel00.nekko.maps.components.MapSection;
 
 public class CIAFrontLines extends CatsInArmsHelper {
+
+	private NekkoAI catTmp = null;
 
 	public CIAFrontLines(Array<MapSection> sections, CatsInArms cia) {
 		super(sections, cia);
@@ -102,11 +103,13 @@ public class CIAFrontLines extends CatsInArmsHelper {
 		// init the pieces
 		initAllyChessPieces();
 		initEnemyChessPieces();
+		// init the cats!
+		initCats();
 
 		// initialize the spawn locations
 		spawnLocs = new Vector2[2];
-		spawnLocs[0] = new Vector2(92.0f, 307.0f);
-		spawnLocs[1] = new Vector2(3106.0f, 307.0f);
+		spawnLocs[0] = new Vector2(160.0f, 307.0f);
+		spawnLocs[1] = new Vector2(3038.0f, 307.0f);
 		// only have 1 so (this is for monsters)
 		chosenSpawnLoc = spawnLocs[1];
 
@@ -122,19 +125,19 @@ public class CIAFrontLines extends CatsInArmsHelper {
 		enemyPieces
 				.add(new ChessPiece(KFNekko.allies, ChessPiece.PAWN,
 						new Location(2152.0f, 128.0f, 0, 0, 0, 0),
-						FaceState.LEFT, 800));
+						FaceState.LEFT, 1000));
 		enemyPieces
 				.add(new ChessPiece(KFNekko.allies, ChessPiece.BISHOP,
 						new Location(2344.0f, 128.0f, 0, 0, 0, 0),
-						FaceState.LEFT, 1000));
+						FaceState.LEFT, 1500));
 		enemyPieces
 				.add(new ChessPiece(KFNekko.allies, ChessPiece.KNIGHT,
 						new Location(2540.0f, 128.0f, 0, 0, 0, 0),
-						FaceState.LEFT, 1400));
+						FaceState.LEFT, 2000));
 		enemyPieces
 				.add(new ChessPiece(KFNekko.allies, ChessPiece.ROOK,
 						new Location(2727.0f, 128.0f, 0, 0, 0, 0),
-						FaceState.LEFT, 2000));
+						FaceState.LEFT, 3000));
 		enemyPieces
 				.add(new ChessPiece(KFNekko.allies, ChessPiece.QUEEN,
 						new Location(2922.0f, 128.0f, 0, 0, 0, 0),
@@ -142,7 +145,7 @@ public class CIAFrontLines extends CatsInArmsHelper {
 		enemyPieces
 				.add(new ChessPiece(KFNekko.allies, ChessPiece.KING,
 						new Location(3114.0f, 128.0f, 0, 0, 0, 0),
-						FaceState.LEFT, 6000));
+						FaceState.LEFT, 5000));
 		KFNekko.enemies.clear();
 		KFNekko.enemies.addAll(enemyPieces);
 		// save the staticEnemyCount
@@ -154,15 +157,15 @@ public class CIAFrontLines extends CatsInArmsHelper {
 		allyPieces
 				.add(new ChessPiece(KFNekko.enemies, ChessPiece.PAWN,
 						new Location(1050.0f, 128.0f, 0, 0, 0, 0),
-						FaceState.RIGHT, 800));
+						FaceState.RIGHT, 400));
 		allyPieces
 				.add(new ChessPiece(KFNekko.enemies, ChessPiece.BISHOP,
 						new Location(856.0f, 128.0f, 0, 0, 0, 0),
-						FaceState.RIGHT, 1000));
+						FaceState.RIGHT, 600));
 		allyPieces
 				.add(new ChessPiece(KFNekko.enemies, ChessPiece.KNIGHT,
 						new Location(660.0f, 128.0f, 0, 0, 0, 0),
-						FaceState.RIGHT, 1400));
+						FaceState.RIGHT, 1000));
 		allyPieces
 				.add(new ChessPiece(KFNekko.enemies, ChessPiece.ROOK,
 						new Location(472.0f, 128.0f, 0, 0, 0, 0),
@@ -174,7 +177,7 @@ public class CIAFrontLines extends CatsInArmsHelper {
 		allyPieces
 				.add(new ChessPiece(KFNekko.enemies, ChessPiece.KING,
 						new Location(88.0f, 128.0f, 0, 0, 0, 0),
-						FaceState.RIGHT, 6000));
+						FaceState.RIGHT, 5000));
 		KFNekko.allies.clear();
 		KFNekko.allies.add(KFNekko.player);
 		KFNekko.allies.addAll(allyPieces);
@@ -188,78 +191,62 @@ public class CIAFrontLines extends CatsInArmsHelper {
 			allyPieces.get(i).chessSprite.drawIcon(batch, x, 260.0f, 0.15f);
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public void setCamera(int instructionIndex) {
-		NekkoAI catTmp = null;
 		switch (instructionIndex) {
 		case 1: // "Your Structures"
-			KFNekko.camera.normalizeXSpeed = 10;
-			KFNekko.player.nekkoSprite.targetColor.set(Color.DARK_GRAY);
+			KFNekko.camera.normalizeXSpeed = 18;
 			KFNekko.camera.targetActor = allyPieces.get(4);
-			for (int i = 0; i < allyPieces.size; i++) {
+			for (int i = 0; i < allyPieces.size; i++)
 				allyPieces.get(i).chessSprite.targetColor.set(Color.BLUE);
-				// vibrate until next instruction
-				allyPieces.get(i).hit = true;
-				allyPieces.get(i).lastAttackTime = TimeUtils.nanoTime();
-				allyPieces.get(i).vibrationDuration = 10000000000000000L;
-				allyPieces.get(i).forceVibrate = true;
-				allyPieces.get(i).vibrationSpeed = 1.0f;
-				allyPieces.get(i).vibrationDist = 1.0f;
-			}
 			break;
 		case 2: // "Enemy Structures"
 			KFNekko.camera.targetActor = KFNekko.enemies.get(3);
-			// undo changes
-			KFNekko.player.nekkoSprite.targetColor.set(Color.WHITE);
-			for (int i = 0; i < allyPieces.size; i++) {
+			for (int i = 0; i < allyPieces.size; i++)
 				allyPieces.get(i).chessSprite.targetColor.set(Color.WHITE);
-				allyPieces.get(i).resetVibrationState();
-			}
 
-			for (int i = 0; i < enemyPieces.size; i++) {
+			for (int i = 0; i < enemyPieces.size; i++)
 				enemyPieces.get(i).chessSprite.targetColor.set(Color.RED);
-				// vibrate until next instruction
-				enemyPieces.get(i).hit = true;
-				enemyPieces.get(i).lastAttackTime = TimeUtils.nanoTime();
-				enemyPieces.get(i).vibrationDuration = 10000000000000000L;
-				enemyPieces.get(i).forceVibrate = true;
-				enemyPieces.get(i).vibrationSpeed = 1.0f;
-				enemyPieces.get(i).vibrationDist = 1.0f;
-			}
+
 			break;
 		case 3: // "Red Cat"
-			// undo changes
-			KFNekko.player.nekkoSprite.targetColor.set(Color.WHITE);
-			for (int i = 0; i < enemyPieces.size; i++) {
+			for (int i = 0; i < enemyPieces.size; i++)
 				enemyPieces.get(i).chessSprite.targetColor.set(Color.WHITE);
-				enemyPieces.get(i).resetVibrationState();
-			}
 			catTmp = spawnCat(1);
+			catTmp.location.speed.maxXSpeed = 0;
+			cia.catnip = 10;
 			KFNekko.camera.targetActor = catTmp;
 			break;
 		case 4: // "Black Cat"
-			catTmp.statusState = StatusState.DYING;
+			catTmp.onDeath();
 			catTmp = spawnCat(2);
+			catTmp.location.speed.maxXSpeed = 0;
+			cia.catnip = 10;
 			KFNekko.camera.targetActor = catTmp;
 			break;
 		case 5: // "White Cat"
-			catTmp.statusState = StatusState.DYING;
+			catTmp.onDeath();
 			catTmp = spawnCat(4);
+			catTmp.location.speed.maxXSpeed = 0;
+			cia.catnip = 10;
 			KFNekko.camera.targetActor = catTmp;
 			break;
 		case 6: // "Blue Cat"
-			catTmp.statusState = StatusState.DYING;
+			catTmp.onDeath();
 			catTmp = spawnCat(3);
+			catTmp.location.speed.maxXSpeed = 0;
+			cia.catnip = 10;
 			KFNekko.camera.targetActor = catTmp;
 			break;
-		case 7: // "Yellow Cat"
-			catTmp.statusState = StatusState.DYING;
+		case 7: // "Cyan Cat"
+			catTmp.onDeath();
 			catTmp = spawnCat(5);
+			catTmp.location.speed.maxXSpeed = 0;
+			cia.catnip = 10;
 			KFNekko.camera.targetActor = catTmp;
 			break;
 		case 8: // "Black Hole"
-			catTmp.statusState = StatusState.DYING;
+			catTmp.onDeath();
 			KFNekko.camera.targetActor = null;
 			KFNekko.camera.targetLoc.set(spawnLocs[0]);
 			break;

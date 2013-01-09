@@ -37,29 +37,44 @@ public class CatsInArmsInst implements Touchable, Updatable, Drawable {
 
 	private static final CharSequence[] TITLES = { "Cats In Arms",
 			"Your Structures", "Enemy Structures", "Red Cat", "Black Cat",
-			"White Cat", "Blue Cat", "Yellow Cat", "Black Hole" };
+			"Pink Cat", "Blue Cat", "Cyan Cat", "Black Hole" };
 	private static final CharSequence[] TEXT = {
 			"Your cat and his cat buddies has been turned\n"
 					+ "into chess pieces! Your cat is the general of\n"
 					+ "his army. Help him lead his buddies in the fight\n"
 					+ "against a horde of cute monsters. Their goal is to\n"
-					+ "to destroy enemy structures!",
-			"Protect your structures from the cute monsters."
-					+ "Losing all your structures means game over!",
-			"You win by destroying all enemy structures.",
-			"These cats do twice the damage of other cats.",
+					+ "to destroy enemy structures!\n"
+					+ "However, his cat buddies will NOT fight for FREE.\n"
+					+ "Touch one of the cat icons to summon a cat\n"
+					+ "into battle at the cost of some catnip!",
+			"Protect your structures from the cute monsters.\n"
+					+ "Losing all your structures means game over!\n"
+					+ "However, do not hesitate to fall back\n"
+					+ "and use your structures to defeat some\n"
+					+ "monsters when your bretherens are down\n"
+					+ "and you have no more catnip or stamina!",
+			"You win by destroying all enemy structures.\n"
+					+ "Win it for the epic music at then end!",
+			"These cats do twice the damage of other cats.\n"
+					+ "Cost : 3 catnips",
 			"These cats are kungfu masters.\n"
-					+ "They are the fastest attacking unit in the game!",
-			"These cats do damage at a distance.",
+					+ "They are the fastest attacking unit in the game!\n"
+					+ "These also have twice the health of normal cats!"
+					+ "Cost : 2 catnips",
+			"These cats do damage at a distance.\n" + "Cost : 3 catnip",
 			"These cats are the fastest moving units in the game!\n"
-					+ "Make some of these if you need immediate reinforcement!",
+					+ "However, they have less health than other cats!\n"
+					+ "Make some of these if you need immediate reinforcement!\n"
+					+ "Cost : 1 catnip",
 			"These cats are your tanks.\n"
-					+ "They can take twice the damage of other cats\n"
-					+ "before falling.",
-			"This is were your cats spawn from.\n"
+					+ "They have 3 times the health of normal cats\n"
+					+ "However, they move and attack slow.\n"
+					+ "Cost : 2 catnips",
+			"This is were your cats spawn at.\n"
 					+ "The cute monsters also spawn at another black hole\n"
 					+ "on the other side of the map.\n"
-					+ "Enemies drop soda and power ups!" };
+					+ "Enemies drop soda and power ups!\n"
+					+ "Defeating enemies give you more catnip!" };
 	private final CharSequence SKIP = "SKIP", NEXT = "NEXT";
 
 	private CatsInArms level;
@@ -197,17 +212,17 @@ public class CatsInArmsInst implements Touchable, Updatable, Drawable {
 
 		// reset
 		KFNekko.player.nekkoSprite.targetColor.set(Color.WHITE);
-		for (int i = 0; i < level.helper.allyPieces.size; i++) {
+		for (int i = 0; i < level.helper.allyPieces.size; i++)
 			level.helper.allyPieces.get(i).chessSprite.targetColor
 					.set(Color.WHITE);
-			level.helper.allyPieces.get(i).resetVibrationState();
-		}
-		for (int i = 0; i < level.helper.allyPieces.size; i++) {
-			level.helper.allyPieces.get(i).chessSprite.targetColor
+		for (int i = 0; i < level.helper.enemyPieces.size; i++)
+			level.helper.enemyPieces.get(i).chessSprite.targetColor
 					.set(Color.WHITE);
-			level.helper.allyPieces.get(i).resetVibrationState();
-		}
 		level.startTime = TimeUtils.nanoTime();
+		level.catnip = 5;
+		for (int i = level.helper.staticAllyCount; i < KFNekko.allies.size; i++) {
+			KFNekko.allies.removeIndex(level.helper.staticAllyCount);
+		}
 	}
 
 	@Override

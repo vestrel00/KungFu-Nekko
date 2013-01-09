@@ -5,29 +5,39 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.vestrel00.nekko.Camera;
 import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.actors.components.Location;
+import com.vestrel00.nekko.actors.components.NekkoAISprite;
 import com.vestrel00.nekko.actors.components.NekkoSprite;
+import com.vestrel00.nekko.actors.components.PowerUp;
 import com.vestrel00.nekko.actors.states.CombatState;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.actors.states.HorizontalMotionState;
 import com.vestrel00.nekko.actors.states.StatusState;
+import com.vestrel00.nekko.ui.components.SimpleAttackManager;
 
 public class NekkoAI extends Nekko {
 
-	private Actor target, primeTarget;
-	private long lastAttackTime, attackDelay;
-	private int primaryCombo;
-	private float aggroRange;
+	private Actor target;
+	public int primaryCombo;
+	public float aggroRange, motionRange;
 	private Rectangle aggroRect;
+	public FaceState primaryFaceState;
+	private SimpleAttackManager attackManager;
 
 	public NekkoAI(TextureAtlas atlas, Location location, Array<Actor> targets,
-			int maxHealth, Color color, long attackDelay, float aggroRange, float motionRange) {
+			int maxHealth, Color color, float aggroRange, float motionRange) {
 		super(atlas, location, targets, maxHealth, color, 0);
-		this.attackDelay = attackDelay;
 		this.aggroRange = aggroRange;
 		this.motionRange = motionRange;
+		nekkoSprite = new NekkoAISprite(this, atlas, color);
+		sprite = nekkoSprite;
+		location.setActor(this);
 		aggroRect = new Rectangle();
+		nekkoSprite.cameraEffect = false;
+		nekkoSprite.attackAOE = false;
+		attackManager = new SimpleAttackManager(this);
 	}
 
 	@Override
@@ -77,6 +87,15 @@ public class NekkoAI extends Nekko {
 			this.combatState = combatState;
 	}
 
+
+	@Override
+	public void onDeath() {
+		if (statusState == StatusState.ALIVE) {
+			statusState = StatusState.DYING;
+		}
+	}
+
+	
 	@Override
 	public void receiveDamage(int damage) {
 		if (health > 0) {
@@ -89,28 +108,14 @@ public class NekkoAI extends Nekko {
 	@Override
 	public void update() {
 		if (statusState != StatusState.DEAD) {
-			// cannot attack and walk/move/run at the same time while on
-			// platform
-			if (combatState != CombatState.IDLE
-					&& (location.onPlatform || location.onSlope)) {
-				location.speed.xSpeed = 0.0f;
-				horizontalMotionState = HorizontalMotionState.IDLE;
-			}
-			super.update();
-			// make sure that target is still alive and within the aggro range
-			if (primeTarget != null)
-				if (primeTarget.statusState != StatusState.DEAD)
-					target = primeTarget;
-				else
-					target = null;
-
 			if (target != null
 					&& (target.statusState == StatusState.DEAD || !withinAggroRange(target)))
 				target = null;
 			// target selection
 			if (target == null)
-				for (int i = 0; i < targets.size; i++)
-					if (withinAggroRange(targets.get(i))) {
+				for (int i = targets.size - 1; i > -1; i--)
+					if (targets.get(i).statusState == StatusState.ALIVE
+							&& withinAggroRange(targets.get(i))) {
 						target = targets.get(i);
 						break;
 					}
@@ -119,6 +124,15 @@ public class NekkoAI extends Nekko {
 
 			// update motionState
 			updateMotionState();
+
+			// cannot attack and walk/move/run at the same time while on
+			// platform
+			if (combatState != CombatState.IDLE
+					&& (location.onPlatform || location.onSlope)) {
+				location.speed.xSpeed = 0.0f;
+				horizontalMotionState = HorizontalMotionState.IDLE;
+			}
+			super.update();
 		}
 	}
 
@@ -126,6 +140,11 @@ public class NekkoAI extends Nekko {
 		if (target != null) {
 			faceState = (target.location.x >= location.x) ? FaceState.RIGHT
 					: FaceState.LEFT;
+			setHorizontalMotionState(HorizontalMotionState.MOVING);
+			if (target.location.rect.y > location.rect.y + location.rect.height)
+				jump();
+		} else if (primaryFaceState != null) {
+			faceState = primaryFaceState;
 			setHorizontalMotionState(HorizontalMotionState.MOVING);
 		}
 
@@ -136,20 +155,24 @@ public class NekkoAI extends Nekko {
 			faceState = FaceState.LEFT;
 
 	}
+	
+	@Override
+	public void receiveDamage(int damage) {
+		if (powerUp == PowerUp.INVISIBILITY)
+			return;
+		super.receiveDamage(damage);
+	}
 
 	protected boolean withinAggroRange(Actor targ) {
 		aggroRect.set(location.x - aggroRange, location.rect.y,
 				aggroRange * 2.0f, location.rect.height);
-		return aggroRect.overlaps(aggroRect);
+		return aggroRect.overlaps(targ.location.rect);
 	}
 
 	private void updateCombatState() {
-		if (TimeUtils.nanoTime() - lastAttackTime > attackDelay) {
-			lastAttackTime = TimeUtils.nanoTime();
-			if (target != null && sprite.combatIndex == 0
-					&& location.rect.overlaps(target.location.rect)) {
-				setCombatState(CombatState.ATTACK);
-			}
+		if (target != null && sprite.combatIndex == 0
+				&& location.rect.overlaps(target.location.rect)) {
+			setCombatState(attackManager.input(primaryCombo));
 		}
 	}
 }

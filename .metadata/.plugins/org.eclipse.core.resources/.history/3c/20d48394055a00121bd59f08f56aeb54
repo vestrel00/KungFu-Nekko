@@ -47,7 +47,7 @@ public class ChessPiece extends Actor {
 	private float knockBackDistance, vibrateDirection = 1.0f;
 	public float vibrationSpeed = 10.0f, vibrationDist = 5.0f;
 	private boolean aoe;
-	public boolean hit = false, forceVibrate = false, attackAnytime = false;
+	public boolean hit, forceVibrate, attackAnytime;
 
 	public ChessPiece(Array<Actor> targets, int type, Location location,
 			FaceState face, int maxHealth) {

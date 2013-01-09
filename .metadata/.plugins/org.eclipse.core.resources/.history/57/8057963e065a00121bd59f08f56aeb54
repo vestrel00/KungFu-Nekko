@@ -103,6 +103,14 @@ public class HUDInputProcessor implements InputProcessor {
 				player.setCombatState(attackManager
 						.input(ComboAttackManager.INPUT_DOWN));
 				return true;
+			case Keys.Z:
+				if (++player.health >= player.maxHealth)
+					player.health = player.maxHealth;
+				return true;
+			case Keys.X:
+				if (++player.stamina >= player.maxStamina)
+					player.stamina = player.maxStamina;
+				return true;
 			case Keys.S:
 				player.setCombatState(attackManager
 						.input(ComboAttackManager.INPUT_LEFT));
