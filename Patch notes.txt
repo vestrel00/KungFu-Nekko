@@ -24,3 +24,6 @@ Implemented NekkoAI. Plus some small fixes and more messy coding...
 Version name 2.0.b
 Fixed splash screen's shape renderer not aligning properly? (Need to test with actual device)
 Just forgot to set the ShapeRenderer's projection matrix XD
+
+Version name 2.0.c
+High scores for Cats In Arms game mode now proerly being saved.

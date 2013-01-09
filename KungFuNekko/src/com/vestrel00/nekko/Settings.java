@@ -26,9 +26,9 @@ public class Settings {
 
 	public static final String LAST_STAND_1 = "Final Fortress",
 			LAST_STAND_2 = "Road of Martyrs",
-			LAST_STAND_3 = "Kings and Queens", LAST_STAND_4 = "TODO",
-			CATS_IN_ARMS_1 = "TODO", CATS_IN_ARMS_2 = "TODO",
-			CATS_IN_ARMS_3 = "TODO", CATS_IN_ARMS_4 = "TODO";
+			LAST_STAND_3 = "Kings and Queens", LAST_STAND_4 = "TODO1",
+			CATS_IN_ARMS_1 = "Front Lines", CATS_IN_ARMS_2 = "TODO2",
+			CATS_IN_ARMS_3 = "TODO3", CATS_IN_ARMS_4 = "TODO4";
 
 	public Preferences prefs = Gdx.app.getPreferences("Nekko Settings");
 
