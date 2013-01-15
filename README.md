@@ -5,8 +5,8 @@ This code is licensed under the GNU GPL. It is free software and you may
 modify it and/or redistribute it under the terms of this license.
 See http://www.gnu.org/copyleft/gpl.html for details.
 
-Download the game at // TODO link to google play
-More info at // TODO add link to indiedb & OGA
+Download the game at https://play.google.com/store/apps/details?id=com.vestrel00.nekko
+More info at http://www.indiedb.com/games/kungfu-nekko
 
 Code License : GNU GENERAL PUBLIC LICENSE Version 3
 Content License* : Creative Commons 3.0 BY-SA
