@@ -21,8 +21,6 @@ package com.vestrel00.nekko.interf;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.vestrel00.nekko.actors.Monster;
-import com.vestrel00.nekko.interf.Drawable;
-import com.vestrel00.nekko.interf.Updatable;
 
 public interface LevelManager extends Updatable, Drawable, Touchable {
 

@@ -24,7 +24,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.interf.Drawable;
 import com.vestrel00.nekko.interf.Touchable;
 import com.vestrel00.nekko.interf.Updatable;

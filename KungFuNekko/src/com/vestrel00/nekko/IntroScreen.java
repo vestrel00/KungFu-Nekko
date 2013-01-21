@@ -31,8 +31,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.vestrel00.nekko.Audio;
-import com.vestrel00.nekko.KFNekko;
 import com.vestrel00.nekko.extras.StringTyper;
 import com.vestrel00.nekko.interf.Drawable;
 import com.vestrel00.nekko.interf.Touchable;

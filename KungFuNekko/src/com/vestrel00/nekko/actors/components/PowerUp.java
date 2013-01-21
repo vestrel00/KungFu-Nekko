@@ -24,7 +24,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.vestrel00.nekko.KFNekko;
-import com.vestrel00.nekko.actors.components.Location;
 import com.vestrel00.nekko.actors.states.FaceState;
 import com.vestrel00.nekko.interf.PickUp;
 
