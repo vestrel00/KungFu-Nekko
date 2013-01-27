@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.vestrel00.nekko.actors.CuteMonster"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.actors.Monster"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.utils.Disposable"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.TextureAtlas"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="com.vestrel00.nekko.maps.Map"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.utils.TimeUtils"/>
 <fullyQualifiedTypeName name="com.vestrel00.nekko.ui.components.SimpleAttackManager"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
 </qualifiedTypeNameHistroy>

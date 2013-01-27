@@ -48,9 +48,8 @@ public class Instructions implements Updatable, Drawable, Touchable {
 					+ "You can regain health by drinking soda.",
 			"The more yellow this is, the more stamina you have.\n"
 					+ "Once it turns completely gray, you can no longer attack!\n"
-					+ "Your stamina decreses everytime you attack.\n"
+					+ "Your stamina decreases everytime you attack.\n"
 					+ "Some attacks cost more than the others.\n"
-					+ "You can keep tapping this to regain 2 stamina for each tap.\n"
 					+ "You can regain stamina by drinking soda!",
 			"Touch this if you need to go to the bathroom!\n"
 					+ "Or for some other reason...\n"

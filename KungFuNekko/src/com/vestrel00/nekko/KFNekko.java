@@ -152,6 +152,24 @@ public class KFNekko implements ApplicationListener {
 			case VIEW_GAME:
 				for (int i = 0; i < updatables.size; i++)
 					updatables.get(i).update();
+				/*
+				 * Note about the above. I know how to use iterators but choose
+				 * not to because I think using the following methods below
+				 * allocates new object in the heap due to usage of abstract
+				 * iterators. Thus, i use the integer method to iterate through
+				 * all of my loops.
+				 */
+
+				// Alternate method 1
+				// for (Updatable updatable : updatables)
+				// updatable.update();
+
+				// Alternate method 2
+				// Iterator<Updatable> iter = updatables.iterator();
+				// while (iter.hasNext())
+				// iter.next().update();
+				// ///////
+
 				Methods.updateColor(worldColor, targetWorldColor, colorSpeed);
 				Methods.updateColor(worldColor, targetWorldColor, colorSpeed);
 				break;

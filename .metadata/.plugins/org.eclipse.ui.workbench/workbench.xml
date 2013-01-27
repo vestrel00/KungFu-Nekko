@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="23" version="2.0">
+<workbench progressCount="34" version="2.0">
 <workbenchAdvisor/>
 <window height="1028" maximized="true" width="896" x="780" y="5">
 <fastViewData fastViewLocation="1024"/>
@@ -27,7 +27,7 @@
 <coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="com.google.gwt.eclipse.core.editors.gwtJavaEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.PropertiesFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="com.android.ide.eclipse.editors.CommonXmlEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
@@ -37,19 +37,25 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
 </folder>
 </info>
 </editorArea>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="KFNekko.java" partName="KFNekko.java" path="C:/Users/Gundum48/Desktop/KungFuNekko/KungFuNekko/src/com/vestrel00/nekko/KFNekko.java" title="KFNekko.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/KFNekko.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/KungFuNekko/src/com/vestrel00/nekko/KFNekko.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="973" selectionTopPixel="0"/>
+</editor>
 </editors>
 <views>
+<view id="org.eclipse.jdt.ui.TypeHierarchy" partName="Type Hierarchy">
+<viewState hidefields="false" hidelocaltypes="false" hidenonpublic="false" hidestatic="false" input="=KungFuNekko/src&lt;com.vestrel00.nekko.actors{Monster.java[Monster" link_editors="0" mv_vertical_scroll="0" orientation="3" qualified_names="0" ratio="350" selection="=KungFuNekko/src&lt;com.vestrel00.nekko.actors{TongueMonster.java[TongueMonster" showinherited="false" sortbydefiningtype="false" vertical_scroll="0" view="2" workingSetName=""/>
+</view>
 <view id="com.instantiations.assist.eclipse.analysis.auditView" partName="Audit">
 <viewState>
 <com.instantiations.auditView showHigh="t" showLow="t" showMedium="t"/>
 </viewState>
-</view>
-<view id="org.eclipse.jdt.ui.TypeHierarchy" partName="Type Hierarchy">
-<viewState hidefields="false" hidelocaltypes="false" hidenonpublic="false" hidestatic="false" input="=KungFuNekko/src&lt;com.vestrel00.nekko.actors{Monster.java[Monster" link_editors="0" mv_vertical_scroll="0" orientation="3" qualified_names="0" ratio="350" selection="=KungFuNekko/src&lt;com.vestrel00.nekko.actors{TongueMonster.java[TongueMonster" showinherited="false" sortbydefiningtype="false" vertical_scroll="0" view="2" workingSetName=""/>
 </view>
 <view id="org.eclipse.ui.views.ProgressView" partName="Progress">
 <viewState/>
@@ -83,9 +89,6 @@
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
-<expanded>
-<category IMemento.internal.id="Warnings (2 items)"/>
-</expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
@@ -148,15 +151,15 @@
 <viewState/>
 </view>
 <view id="org.eclipse.jdt.ui.SourceView" partName="Declaration"/>
+<view id="com.google.gwt.eclipse.DevModeView" partName="Development Mode">
+<viewState/>
+</view>
 <view id="com.android.ide.eclipse.ddms.views.AllocTrackerView" partName="Allocation Tracker">
 <viewState/>
 </view>
 <view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
-<view id="com.google.gwt.eclipse.DevModeView" partName="Development Mode">
-<viewState/>
-</view>
 </views>
-<perspectives activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jdt.internal.ui.JavaPerspectiveFactory" id="org.eclipse.jdt.ui.JavaPerspective" label="Java"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -370,7 +373,7 @@
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@17e44bb" ratio="0.5" ratioLeft="809" ratioRight="809" relationship="2" relative="org.eclipse.ui.editorss">
-<folder appearance="2" expanded="0">
+<folder appearance="2" expanded="2">
 <page content="com.instantiations.assist.eclipse.analysis.auditView" label="LabelNotFound"/>
 <page content="com.instantiations.assist.eclipse.metricsView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
@@ -382,7 +385,24 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/KFNekko.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/KungFuNekko/src/com/vestrel00/nekko/Instructions.java"/>
+</editors>
+<item historyLabel="KFNekko.java" index="0">
+<position info="not_deleted" x="78" y="0"/>
+</item>
+<item historyLabel="KFNekko.java" index="0">
+<position info="not_deleted" x="5313" y="0"/>
+</item>
+<item historyLabel="Instructions.java" index="1">
+<position info="not_deleted" x="2253" y="0"/>
+</item>
+<item active="true" historyLabel="KFNekko.java" index="0">
+<position info="not_deleted" x="973" y="0"/>
+</item>
+</navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
@@ -414,6 +434,12 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Instructions.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/Instructions.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/Instructions.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="KFNekko.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/KFNekko.java">
+<persistable path="/KungFuNekko/src/com/vestrel00/nekko/KFNekko.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Audio.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/Audio.java">
 <persistable path="/KungFuNekko/src/com/vestrel00/nekko/Audio.java"/>
 </file>
@@ -428,9 +454,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LevelManager.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/interf/LevelManager.java">
 <persistable path="/KungFuNekko/src/com/vestrel00/nekko/interf/LevelManager.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Instructions.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/Instructions.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/Instructions.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PowerUp.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/actors/components/PowerUp.java">
 <persistable path="/KungFuNekko/src/com/vestrel00/nekko/actors/components/PowerUp.java"/>
@@ -455,9 +478,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CatsInArmsInst.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/maps/CatsInArmsInst.java">
 <persistable path="/KungFuNekko/src/com/vestrel00/nekko/maps/CatsInArmsInst.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CIAFrontLines.java" tooltip="KungFuNekko/src/com/vestrel00/nekko/maps/CIAFrontLines.java">
-<persistable path="/KungFuNekko/src/com/vestrel00/nekko/maps/CIAFrontLines.java"/>
 </file>
 </mruList>
 </workbench>
