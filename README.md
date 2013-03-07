@@ -21,10 +21,12 @@ See [http://www.gnu.org/copyleft/gpl.html](http://www.gnu.org/copyleft/gpl.html)
 
 
 **P.S.**  
-* See Assets Licenses.txt for a complete list of all art and audio
-used for the game. Not all art and audio are licensed under CC-BY-SA 3.0
-so you may go to their respective links and check out what other licences,
-if any, are available.  
-
-* I know a lot of code could be optimized/re-written to make things faster and neater
-but I was rushing things so that's that!  
+1. I completely forgot to add a .gitignore from beginning to end!!!!
+This means that binaries (.class files and the like) have been repeatedly commited =(.
+Also image and sound files (.xcf, .png, .mp3) have also been tracked by this repo from beginning to end.
+I know I should not have tracked binaries and put image and sound files on the downloads page of this wiki
+but I was being stupid (I'm sorry T_T). Imagine saving the diffs in binaries... ewww.
+So that is why the size of the repo is 90mb when it should only be
+no more than 5 mb. So if you fork this make sure that you replace the libgdx library in the repo with the
+newest version available at [http://code.google.com/p/libgdx/](http://code.google.com/p/libgdx/).
+Apologies guys, I must look like a real newb monkey to you all XD
