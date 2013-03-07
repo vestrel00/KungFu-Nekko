@@ -1,5 +1,5 @@
-## KungFu Nekko   
-**Copyright (C) 2012 by Vandolf Estrellado**  
+# KungFu Nekko   
+*Copyright (C) 2012 by Vandolf Estrellado*  
 
 This code is licensed under the GNU GPL.   
 It is free software and you may modify it and/or   
