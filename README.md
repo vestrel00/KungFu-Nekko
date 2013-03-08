@@ -30,3 +30,5 @@ So that is why the size of the repo is 90mb when it should only be no more than 
 So if you fork this make sure that you replace the libgdx library in the repo with the  
 newest version available at [http://code.google.com/p/libgdx/](http://code.google.com/p/libgdx/).  
 Apologies guys, I must look like a real newb monkey to you all XD  
+2. I know that the code is messy and that a lot of things can be re-written to make things   
+cleaner and faster but I rushed things to make the 10 day self-challenge.  
