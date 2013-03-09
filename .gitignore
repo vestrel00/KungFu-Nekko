@@ -14,6 +14,8 @@ assets/
 bin/
 libs/
 war/
+gwt-unitCache/
+.gwt/
 .metadata/
 .settings/
 
