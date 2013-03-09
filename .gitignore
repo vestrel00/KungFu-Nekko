@@ -1,0 +1,18 @@
+# By extension
+*.class
+*.log
+*.jar
+*.classpath
+*.project
+
+# By specified file
+desktop.ini
+
+# By folders
+Documents/
+bin/
+libs/
+war/
+.metadata/
+.settings/
+
