@@ -19,7 +19,7 @@ See [http://www.gnu.org/copyleft/gpl.html](http://www.gnu.org/copyleft/gpl.html)
 **Content License :**   
 *Creative Commons 3.0 BY-SA*  
 
-**For Forkers**  
+## For Forkers  
 1. I recently just removed all binaries and put the assets folder (containing .png, .mp3)   
     from the repo and put them in the [Dowloads page](https://bitbucket.org/vestrel00/kungfunekko/downloads)!!!  
     I did this since they shouldn't have been tracked in the first place (read my P.S. below).  
@@ -28,7 +28,7 @@ See [http://www.gnu.org/copyleft/gpl.html](http://www.gnu.org/copyleft/gpl.html)
     and the assets in the [Dowloads page](https://bitbucket.org/vestrel00/kungfunekko/downloads). You can figure it out!   
     If you can't then e-mail me at *vestrel00@gmail.com* and I will post instructions in the wiki when I get the time.  
 
-**P.S.**  
+### P.S.  
 1. I completely forgot to add a .gitignore from beginning to end!!!!  
     This means that binaries (.class files and the like) have been repeatedly commited =(.  
     Also image and sound files (.xcf, .png, .mp3) have also been tracked by this repo  
