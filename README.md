@@ -1,5 +1,6 @@
 # KungFu Nekko   
 *Copyright (C) 2012 by Vandolf Estrellado*  
+![KFNBanner](http://i.imgur.com/UjSbphH.png)  
 
 This code is licensed under the GNU GPL.   
 It is free software and you may modify it and/or   
@@ -7,12 +8,12 @@ redistribute it under the terms of this license.
 See [http://www.gnu.org/copyleft/gpl.html](http://www.gnu.org/copyleft/gpl.html) for details.   
      
 
-**Watch the entire development - line by line, sprite by spritea at:**  
+**Watch the entire development - line by line, sprite by sprite at:**  
 [Youtube - KungFu Nekko](https://www.youtube.com/playlist?list=PLi9SqDCoGexBN2VGR1yg8TTZ8Mxr5PUhH)  
 **Download the game at**   
 [Google Play - KungFu Nekko](https://play.google.com/store/apps/details?id=com.vestrel00.nekko)  
 **More info at**  
-[IndieDB](http://www.indiedb.com/games/kungfu-nekko)  
+[IndieDB - KungFu Nekko](http://www.indiedb.com/games/kungfu-nekko)  
 
 **Code License :**  
 *GNU GENERAL PUBLIC LICENSE Version 3*  
@@ -21,7 +22,7 @@ See [http://www.gnu.org/copyleft/gpl.html](http://www.gnu.org/copyleft/gpl.html)
 
 **For Forkers**  
 1. I recently just removed all binaries and put the assets folder (containing .png, .mp3) from the repo and put them in the [Dowloads page](https://bitbucket.org/vestrel00/kungfunekko/downloads)!!! I did this since they shouldn't have been tracked in the first place (read my P.S. below) but rather should have been placed in the [Dowloads page](https://bitbucket.org/vestrel00/kungfunekko/downloads).  
-2. All you need to have to continue this project is the source codes in the src folders and the assets in the [Dowloads page](https://bitbucket.org/vestrel00/kungfunekko/downloads). You can figure it out! If you can't the e-mail me at vestrel00@gmail.com and I will post instructions in the [Dowloads page](https://bitbucket.org/vestrel00/kungfunekko/downloads) on how to set things up in eclipse.  
+2. All you need to have to continue this project is the source code in the src folders and the assets in the [Dowloads page](https://bitbucket.org/vestrel00/kungfunekko/downloads). You can figure it out! If you can't the e-mail me at vestrel00@gmail.com and I will post instructions in the [Dowloads page](https://bitbucket.org/vestrel00/kungfunekko/downloads) on how to set things up in eclipse.  
 
 **P.S.**  
 1. I completely forgot to add a .gitignore from beginning to end!!!!  
