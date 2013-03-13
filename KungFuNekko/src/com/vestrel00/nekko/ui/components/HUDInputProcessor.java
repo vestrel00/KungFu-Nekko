@@ -50,27 +50,24 @@ public class HUDInputProcessor implements InputProcessor {
 			KFNekko.camera.camera.unproject(touchPos);
 			switch (KFNekko.view) {
 			case KFNekko.VIEW_INTRO:
-				return (KFNekko.intro.onTouchDown(touchPos.x, touchPos.y)) ? true
-						: false;
+				return KFNekko.intro.onTouchDown(touchPos.x, touchPos.y);
 			case KFNekko.VIEW_LEVEL_INTRO:
-				return (KFNekko.map.manager.onTouchDown(touchPos.x, touchPos.y)) ? true
-						: false;
+				return KFNekko.map.manager.onTouchDown(touchPos.x, touchPos.y);
 			case KFNekko.VIEW_GAME:
-				return (KFNekko.hud.onTouchDown(touchPos.x, touchPos.y)) ? true
-						: false;
+				return KFNekko.hud.onTouchDown(touchPos.x, touchPos.y);
 			case KFNekko.VIEW_GAME_VICTORY:
 			case KFNekko.VIEW_GAME_OVER:
-				return (KFNekko.map.manager.onTouchDown(touchPos.x, touchPos.y)) ? true
-						: false;
+				return KFNekko.map.manager.onTouchDown(touchPos.x, touchPos.y);
 			case KFNekko.VIEW_PAUSED:
-				return (KFNekko.pauseManager
-						.onTouchDown(touchPos.x, touchPos.y)) ? true : false;
+				return KFNekko.pauseManager
+						.onTouchDown(touchPos.x, touchPos.y);
 			case KFNekko.VIEW_OPTIONS:
 				if (KFNekko.pauseManager.onTouchDown(touchPos.x, touchPos.y)
 						|| KFNekko.optionsManager.onTouchDown(touchPos.x,
 								touchPos.y))
 					return true;
-				break;
+				else 
+                    return false;
 			}
 		}
 		return false;
