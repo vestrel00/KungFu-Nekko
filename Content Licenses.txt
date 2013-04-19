@@ -3,6 +3,8 @@ KungFu Nekko Assets
 ------------------------------------------------------------------------------------------------
 Assets taken from Dogchicken Under CC-BY 3.0 License:
 -----------------------------------------------------------------------------------------------
+"Cat Fighter Sprite Sheet"
+"Cat FIghter Addon1 [ Energy Force Master Kit ]"
 "Flying Tongue Monster Sprite Sheet"
 "Cute Monster Sprite Sheet"
 "Skull Monster Sprite Sheet"
